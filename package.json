@@ -1,0 +1,18 @@
+{
+  "name": "monitor_display",
+  "version": "1.0.0",
+  "description": "prototype",
+  "main": "js/app.js",
+  "scripts": {
+    "test": "console.log(\"test\");"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rippler7/sizmek_monitor.git"
+  },
+  "keywords": [
+    "monitor"
+  ],
+  "author": "jeremy ancog",
+  "license": "MIT"
+}
