@@ -8,11 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rippler7/sizmek_monitor.git"
+    "url": "git+https://github.com/rippler7/monitor.git"
   },
   "keywords": [
     "monitor"
   ],
   "author": "jeremy ancog",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rippler7/monitor/issues"
+  },
+  "homepage": "https://github.com/rippler7/monitor#readme"
 }
