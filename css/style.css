@@ -1,0 +1,47 @@
+html{
+	background-image:url('../img/homepage-hero.jpg');
+	background-repeat: no-repeat;
+	background-position:right 0px;
+	background-size: cover;
+	min-height:100%;
+}
+body{
+	color:#FFF;
+}
+.row{
+	padding:0px;
+	margin:0px;
+}
+#mainDiv {
+	display:block;
+	position:absolute;
+	margin: 0px;
+	width:100%;
+	height:100%;
+}
+
+#headerBox{
+	height:10%;
+	padding:0px;
+	margin:0px;
+}
+
+#logoBox{
+	width:25%;
+}
+
+#navBox{
+	width:75%;
+	background: url('../img/subtitle.png') right bottom no-repeat;
+	background-size:70%;
+}
+
+svg{
+	
+}
+
+#mainBody{
+	position: absolute;
+	height:auto;
+	margin:0px;
+}
