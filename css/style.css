@@ -1,6 +1,6 @@
 html{
 	background-image:url('../img/homepage-hero.jpg');
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-position:right 0px;
 	background-size: cover;
 	min-height:100%;
