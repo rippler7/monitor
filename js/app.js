@@ -1,6 +1,10 @@
 
 console.log("start");
 
+var qidPendingPR = "1000710";
+var qidAssignedPR = "1000231";
+var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
+
 function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
@@ -15,7 +19,7 @@ function formatAMPM(date) {
 }
 
 function toTimeZone(time, zone) {
-    var format = 'hh:mm:ss A';
+    var format = 'hh:mm A';
     return moment(time, format).tz(zone).format(format);
 }
 
@@ -49,6 +53,59 @@ function liveTime(){
 $(document).ready(function(){
 
 	console.log("ready");
+
+	$.ajax({
+		url:"https://sizmek.quickbase.com/db/bhv6kzfnc",
+		data:{
+			"a":"API_GenResultsTable",
+			"jsa":1,
+			"options":"csv",
+			"qid":qidPendingPR,
+			"apptoken":apptoken,
+			"test":""
+		},
+		dataType:"script",
+		method:"GET",
+		success:function(){
+			console.log(qdb_numcols);
+			console.log(qdb_numrows);
+			console.log(qdb_data);
+			qdb_data.forEach(function(item){
+				console.log(item);
+				console.log(item[10]); //PR status
+			})
+		},
+		complete:function(){
+			
+		}
+	});
+
+	$.ajax({
+		url:"https://sizmek.quickbase.com/db/bhtzcnzkd",
+		data:{
+			"a":"API_GenResultsTable",
+			"jsa":1,
+			"options":"csv",
+			"qid":qidAssignedPR,
+			"apptoken":apptoken,
+			"test":""
+		},
+		dataType:"script",
+		method:"GET",
+		success:function(){
+			console.log(qdb_numcols);
+			console.log(qdb_numrows);
+			console.log(qdb_data);
+			qdb_data.forEach(function(item){
+				console.log(item);
+				console.log(item[3]); //PR status
+			})
+		},
+		complete:function(){
+			
+		}
+	});
+
     $("ul#ticker01").liScroll();
     var liveCount = setInterval(liveTime,1000);
 
