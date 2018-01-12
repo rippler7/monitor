@@ -24,7 +24,9 @@ $(document).ready(function(){
     var yyyy = date.getFullYear();
 
     console.log(monthNames[mm]+"/"+dd+"/"+yyyy);
-
+    $("#bigDate").html(dd);
+    $("#bigMonth").html(monthNames[mm]);
+    $("#bigYear").html(yyyy);
     $("#mnlTime").html(formatAMPM(date).toString());
 
 });

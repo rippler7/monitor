@@ -91,6 +91,13 @@ hr{
 
 #globalTimeBox{
 	text-align:left;
+	font-size:2vh;
+	padding: 0px 10px;
+}
+
+#clockBox{
+	background-color: rgba(0,0,0,0.3);
+	height:100%;
 }
 
 #bigDate{
