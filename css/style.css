@@ -87,6 +87,8 @@ hr{
 #timeBox{
 	background-color:rgba(0,0,0,0.5);
 	width:100%;
+	height:25%;
+	overflow:hidden;
 }
 
 .timezone{
@@ -116,7 +118,7 @@ hr{
 }
 
 #bigYear{
-	font-size:2vh;
+	font-size:3vh;
 	color:rgba(255,255,255,0.5);
 }
 
@@ -179,9 +181,9 @@ margin: 0 10px 0 0;
 
 #slideshow-wrapper {
   width: 317px;
-  height: 150px;
+  height: 100%;
   position: relative;
-  margin: 0px;
+  margin-top: 1%;
   -webkit-perspective: 1000px;
   -moz-perspective: 1000px;
   -o-perspective: 1000px;
@@ -191,7 +193,8 @@ margin: 0 10px 0 0;
 }
 
 #slideshow {
-  position: absolute;
+  position: relative;
+  margin-top:1vh;
   width:100%;
   list-style-type: none;
   padding: 0px 16px;
@@ -203,7 +206,7 @@ margin: 0 10px 0 0;
 
 #slideshow > * {
   display: block;
-  position: absolute;
+  position: relative;
 }
 
 #slideshow img {
@@ -230,6 +233,7 @@ margin: 0 10px 0 0;
 }
 
 #slideshow .right {
+	position:absolute;
   -webkit-transform: rotateX( 90deg ) translateZ( 200px );
   -moz-transform: rotateX( 90deg ) translateZ( 200px );
   -o-transform: rotateX( 90deg ) translateZ( 200px );
@@ -242,6 +246,7 @@ margin: 0 10px 0 0;
 }
 
 #slideshow .left {
+	position:absolute;
   -webkit-transform: rotateX( -90deg ) translateZ( 200px ) translateY(-360px);
   -moz-transform: rotateX( -90deg ) translateZ( 200px ) translateY(-360px);
   -o-transform: rotateX( -90deg ) translateZ( 200px ) translateY(-360px);
