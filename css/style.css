@@ -91,18 +91,17 @@ hr{
 
 #globalTimeBox{
 	text-align:left;
-	font-size:2vh;
+	font-size:3vh;
 	padding: 0px 10px;
 }
 
 #clockBox{
 	background-color: rgba(0,0,0,0.3);
-	height:100%;
 }
 
 #bigDate{
 	font-weight: bolder;
-	font-size:6vh;
+	font-size:8vh;
 	margin:0px !important;
 	padding:0px !important;
 	text-align:center;
@@ -110,7 +109,11 @@ hr{
 }
 
 #bigMonth{
-	font-size:3vh;
+	font-size:5vh;
+}
+
+#bigYear{
+	font-size:2vh;
 }
 
 /* news ticker */
