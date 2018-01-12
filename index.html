@@ -4,7 +4,7 @@
 	<title>Sizmek Creative Team Monitor Display</title>
 	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/jquery.li-scroller.1.0.js"></script>
+	<script type="text/javascript" src="js/jquery.tickerNews.js"></script>
 	<script src="node_modules/moment/moment.js"></script>
 	<script src="node_modules/moment-timezone/builds/moment-timezone-with-data.js"></script>
 	<script src="js/rotator.js"></script>
@@ -73,14 +73,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<div id="newsTicker" class="">
-						<ul id="ticker01">
-							<li><span>ANNOUNCEMENT:</span><a href="#">Monitor display under construction...</a> :: </li>
-						    <li><span>ANNOUNCEMENT:</span><a href="#">Biometrics back to operational</a> :: </li>
-						    <li><span>BRIAN RODGRIGUEZ:</span><a href="#">Check Activity Logging status</a> :: </li>
-						    <li><span>ANNOUNCEMENT:</span><a href="#">Clearance sale at all Metro Stores!</a> :: </li>
-						    <!-- eccetera -->
-						</ul>
+					<div id="newsTicker" class="TickerNews">
+						<div class="ti_wrapper">
+					        <div class="ti_slide">
+					            <div class="ti_content">
+					                <div class="ti_news"><span class="blueText">:: ANNOUNCEMENT:</span>  Monitor display UI under construction, DST auto enabled for timezone clock ::</div>
+									<div class="ti_news"><span class="blueText">:: ANNOUNCEMENT:</span> Biometrics already operational ::</div>
+									<div class="ti_news"><span class="blueText">:: BRIAN RODRIGUEZ:</span> Check log hours ::</div>
+									<div class="ti_news">:: IT'S A FRIDAY! Developer round-table to commence at 11:00PM MNL ::</div>
+					            </div>
+					        </div>
+					    </div>
 					</div>
 				</div>
 			</div>

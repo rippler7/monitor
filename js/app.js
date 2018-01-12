@@ -40,7 +40,7 @@ function liveTime(){
     var timeManila = toTimeZone(date,tz);
     var timeEST = toTimeZone(date,"America/New_York");
     var timePST = toTimeZone(date,"America/Los_Angeles");
-    var timeGMT = toTimeZone(date,"Etc/GMT+0");
+    var timeGMT = toTimeZone(date,"Etc/GMT+0"); 
     var timeAEST = toTimeZone(date,"Australia/Melbourne");
 
     $("#mnlTime").html(timeManila);
@@ -106,7 +106,7 @@ $(document).ready(function(){
 		}
 	});
 
-    $("ul#ticker01").liScroll();
+   	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000);
 
     new slideShow();

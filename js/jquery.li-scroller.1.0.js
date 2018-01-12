@@ -15,7 +15,7 @@
 
 jQuery.fn.liScroll = function(settings) {
 		settings = jQuery.extend({
-		travelocity: 0.07
+		travelocity: 0.2
 		}, settings);		
 		return this.each(function(){
 				var $strip = jQuery(this);
