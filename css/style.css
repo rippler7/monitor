@@ -181,12 +181,13 @@ margin: 0 10px 0 0;
   width: 317px;
   height: 150px;
   position: relative;
-  margin: 0px auto;
+  margin: 0px;
   -webkit-perspective: 1000px;
   -moz-perspective: 1000px;
   -o-perspective: 1000px;
   perspective: 1000px;
   overflow: hidden;
+  padding:0px !important;
 }
 
 #slideshow {
