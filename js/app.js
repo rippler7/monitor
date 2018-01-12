@@ -51,4 +51,7 @@ $(document).ready(function(){
 	console.log("ready");
     $("ul#ticker01").liScroll();
     var liveCount = setInterval(liveTime,1000);
+
+    new slideShow();
+
 });

@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="js/jquery.li-scroller.1.0.js"></script>
 	<script src="node_modules/moment/moment.js"></script>
 	<script src="node_modules/moment-timezone/builds/moment-timezone-with-data.js"></script>
+	<script src="js/rotator.js"></script>
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
@@ -39,8 +40,9 @@
 					</div>
 					<div id="rightSide" class="col-sm-5">
 						<table id="timeBox">
+							<tbody>
 						  <tr>
-						    <td id="clockBox" rowspan="5">
+						    <td id="clockBox">
 						    	<div class="row">
 											<div id="bigDate" class="col-sm-12">16</div>
 										</div>
@@ -50,21 +52,23 @@
 										<div class="row">
 											<div id="bigYear" class="col-sm-12">1982</div>
 										</div>
+								    </td>
+								    <td>
+						    	
+
+						    	<div id="slideshow-wrapper">
+								  <ul id="slideshow" >
+								    <li><div id="mnl" class="timezone">MNL<br /><span id="mnlTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="est" class="timezone">EST<br /><span id="estTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="pst" class="timezone">PST<br /><span id="pstTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="est" class="timezone">GMT<br /><span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="pst" class="timezone">AEST<br /><span id="aestTime" class="globalTZone">00:00:00 AM</span></div></li>
+								  </ul>
+								</div>
+
 						    </td>
-						    <td><div id="mnl" class="timezone">MNL <span id="mnlTime" class="globalTZone">00:00:00 AM</span></div></td>
 						  </tr>
-						  <tr>
-						    <td><div id="est" class="timezone">EST <span id="estTime" class="globalTZone">00:00:00 AM</span></div></td>						   
-						  </tr>
-						  <tr>
-						    <td><div id="pst" class="timezone">PST <span id="pstTime" class="globalTZone">00:00:00 AM</span></div></td>						    
-						  </tr>
-						  <tr>
-						    <td><div id="est" class="timezone">GMT <span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></td>						   
-						  </tr>
-						  <tr>
-						    <td><div id="pst" class="timezone">AEST <span id="aestTime" class="globalTZone">00:00:00 AM</span></div></td>						    
-						  </tr>
+						  </tbody>
 						</table>
 					</div>
 				</div>
