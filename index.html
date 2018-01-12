@@ -38,35 +38,43 @@
 						</div>
 					</div>
 					<div id="rightSide" class="col-sm-5">
-						<div id="timeBox" class="row">
-							<div id="clockBox" class="col-sm-4">
-								<div class="row">
-									<div id="bigDate" class="col-sm-12">16</div>
-								</div>
-								<div class="row">
-									<div id="bigMonth" class="col-sm-12">Mar</div>
-								</div>
-								<div class="row">
-									<div id="bigYear" class="col-sm-12">1982</div>
-								</div>
-							</div>
-							<div id="globalTimeBox" class="col-sm-8">
-								<div class="row"><div id="mnl" class="">MNL <span id="mnlTime" class="globalTZone">00:00:00 AM</span></div></div>
-								<div class="row"><div id="est" class="">EST <span id="estTime" class="globalTZone">00:00:00 AM</span></div></div>
-								<div class="row"><div id="pst" class="">PST <span id="pstTime" class="globalTZone">00:00:00 AM</span></div></div>
-								<div class="row"><div id="est" class="">GMT <span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></div>
-								<div class="row"><div id="pst" class="">AEST <span id="aestTime" class="globalTZone">00:00:00 AM</span></div></div>
-							</div>
-						</div>
+						<table id="timeBox">
+						  <tr>
+						    <td id="clockBox" rowspan="5">
+						    	<div class="row">
+											<div id="bigDate" class="col-sm-12">16</div>
+										</div>
+										<div class="row">
+											<div id="bigMonth" class="col-sm-12">Mar</div>
+										</div>
+										<div class="row">
+											<div id="bigYear" class="col-sm-12">1982</div>
+										</div>
+						    </td>
+						    <td><div id="mnl" class="timezone">MNL <span id="mnlTime" class="globalTZone">00:00:00 AM</span></div></td>
+						  </tr>
+						  <tr>
+						    <td><div id="est" class="timezone">EST <span id="estTime" class="globalTZone">00:00:00 AM</span></div></td>						   
+						  </tr>
+						  <tr>
+						    <td><div id="pst" class="timezone">PST <span id="pstTime" class="globalTZone">00:00:00 AM</span></div></td>						    
+						  </tr>
+						  <tr>
+						    <td><div id="est" class="timezone">GMT <span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></td>						   
+						  </tr>
+						  <tr>
+						    <td><div id="pst" class="timezone">AEST <span id="aestTime" class="globalTZone">00:00:00 AM</span></div></td>						    
+						  </tr>
+						</table>
 					</div>
 				</div>
 				<div class="row">
 					<div id="newsTicker" class="">
 						<ul id="ticker01">
-							<li><span>ANNOUNCEMENT:</span><a href="#">Monitor display under construction...</a></li>
-						    <li><span>ANNOUNCEMENT:</span><a href="#">Biometrics back to operational</a></li>
-						    <li><span>BRIAN RODGRIGUEZ:</span><a href="#">Check Activity Logging status</a></li>
-						    <li><span>ANNOUNCEMENT:</span><a href="#">Clearance sale at all Metro Stores!</a></li>
+							<li><span>ANNOUNCEMENT:</span><a href="#">Monitor display under construction...</a> :: </li>
+						    <li><span>ANNOUNCEMENT:</span><a href="#">Biometrics back to operational</a> :: </li>
+						    <li><span>BRIAN RODGRIGUEZ:</span><a href="#">Check Activity Logging status</a> :: </li>
+						    <li><span>ANNOUNCEMENT:</span><a href="#">Clearance sale at all Metro Stores!</a> :: </li>
 						    <!-- eccetera -->
 						</ul>
 					</div>
