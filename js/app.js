@@ -106,6 +106,18 @@ $(document).ready(function(){
 		}
 	});
 
+	var configProfile = {
+	  "profile": {"screenName": 'sizmek'},
+	  "domId": 'rightContent',
+	  "maxTweets": 2,
+	  "enableLinks": false, 
+	  "showUser": true,
+	  "showTime": true,
+	  "showImages": true,
+	  "lang": 'en'
+	};
+	twitterFetcher.fetch(configProfile);
+
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000);
 

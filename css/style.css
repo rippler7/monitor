@@ -78,6 +78,8 @@ hr{
 #leftSide, #rightSide{
 	margin:0px !important;
 	padding:0px !important;
+	height:85vh;
+	overflow: hidden;
 }
 
 #clockBox{
@@ -129,6 +131,15 @@ hr{
 .blueText{
 	color:#6dcff6;
 }
+
+#rightContent{
+	overflow: hidden !important;
+	display: block;
+	position:absolute;
+	top:25vh;
+	height:85vh;
+}
+
 
 /* news ticker */
 
