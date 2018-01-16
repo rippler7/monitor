@@ -3,10 +3,12 @@
         // '*' to work with any element, not only 'li's
         this.slideWrapper = slideWrap;
         this.slideShow = slideShow;
-        this.slides = $('#'+slideShow+' > *'); 
+        this.slides = $('#'+slideShow+' > li'); 
         this.count = this.slides.length-1;
         this.initslide = 0;
         this.auto = null; 
+
+        console.log("counter: "+this.count);
 
         this.selectTitles();
         this.ActivateAuto();

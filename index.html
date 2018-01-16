@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/flip-slider.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -36,16 +37,21 @@
 						<div class="row">
 							<div id="topLeft" class="">
 								<div id="panelBoard">
-									<div id="slideshow-wrapper-2">
-									  <ul id="slideshow2" >
-									    <li>
-									    	<div id="prPending" class="sizmekDataPanel"><span class="pr">PENDING PR's: </span><span class="prText" id="prPendingText">1</div>
-									    </li>
-									    <li>
-									    	<div id="prAssigned" class="sizmekDataPanel"><span class="pr">ASSIGNED PR's: </span><span class="prText" id="prAssignedText">1</div>
-									    </li>
-									  </ul>
+
+									<div id="flipper" class="flip-slider">
+										<div class="flip-frame">
+											<div class="flip">
+												<div id="prPending" class="slide">PENDING PR's:<span id="prPendingText" class="prText">0</span></div>
+												<div id="prAssigned" class="slide">ASSIGNED PR's:<span id="prAssignedText" class="prText">0</span></div>
+												<div id="fbcPending" class="slide">PENDING FBC's:<span id="fbcPendingText" class="prTextt">0</span></div>
+											</div>
+										</div>
+										<div class="navFlip">
+											<button class="prev">Previous</button>
+											<button class="next">Next</button>
+										</div>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -73,8 +79,8 @@
 								    <li><div id="mnl" class="timezone">MNL<br /><span id="mnlTime" class="globalTZone">00:00:00 AM</span></div></li>
 								    <li><div id="est" class="timezone">EST<br /><span id="estTime" class="globalTZone">00:00:00 AM</span></div></li>
 								    <li><div id="pst" class="timezone">PST<br /><span id="pstTime" class="globalTZone">00:00:00 AM</span></div></li>
-								    <li><div id="est" class="timezone">GMT<br /><span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></li>
-								    <li><div id="pst" class="timezone">AEST<br /><span id="aestTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="gmt" class="timezone">GMT<br /><span id="gmtTime" class="globalTZone">00:00:00 AM</span></div></li>
+								    <li><div id="aest" class="timezone">AEST<br /><span id="aestTime" class="globalTZone">00:00:00 AM</span></div></li>
 								  </ul>
 								</div>
 
@@ -105,6 +111,7 @@
 		</div>
 		
 	</div>
+	<script src="js/flipslide.js"></script>
 	<script src="js/app.js"></script>
 </body>
 </html>

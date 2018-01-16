@@ -187,6 +187,7 @@ function getSizmekData(){
 			});
 			$("#prAssignedText").html(qdb_numrows);
 			*/
+			$("#fbcPendingText").html(qdb_numrows);
 		},
 		complete:function(){
 			
@@ -202,15 +203,14 @@ $(document).ready(function(){
 	getSizmekData();
 
    	$(".TickerNews").newsTicker();
-    var liveCount = setInterval(liveTime,1000);
-
-    
+    var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
     	showTwitter();
     	getSizmekData();
     },15 * 1000);
-	
     new slideShow('slideshow-wrapper','slideshow');
-    new slideShow('slideshow-wrapper-2','slideshow2');
-
+	var flip1 = new FlipSlider({
+		startIndex: 1,
+	    container: document.querySelector("#flipper")
+	});
 });

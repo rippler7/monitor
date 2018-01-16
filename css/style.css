@@ -83,7 +83,8 @@ hr{
 }
 
 #panelBoard{
-
+	height:20vh;
+	overflow: hidden;
 }
 
 #clockBox{
@@ -227,6 +228,9 @@ margin: 0 10px 0 0;
 		margin-right: 10px;
 	}
 
+.flip{
+	font-size:8vh !important;
+}
 
 /* rotator */
 
@@ -243,8 +247,13 @@ margin: 0 10px 0 0;
   padding:0px !important;
 }
 
+#slideshow-wrapper-2 {
+
+}
+
 #slideshow2{
-	font-size:6.5vh;
+	font-size:8vh !important;
+	position: relative;
 }
 
 #slideshow {
@@ -276,10 +285,10 @@ margin: 0 10px 0 0;
 }
 
 #slideshow .front {
-  -webkit-transform: translateZ( 100px );
-  -moz-transform: translateZ( 100px );
-  -o-transform: translateZ( 100px );
-  transform: translateZ( 100px );
+  -webkit-transform: translateZ( 50px );
+  -moz-transform: translateZ( 50px );
+  -o-transform: translateZ( 50px );
+  transform: translateZ( 50px );
   opacity: 1;
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -moz-transition: -moz-transform 1s, opacity 1s;
@@ -288,10 +297,10 @@ margin: 0 10px 0 0;
 }
 
 #slideshow2 .front {
-  -webkit-transform: translateZ( 100px );
-  -moz-transform: translateZ( 100px );
-  -o-transform: translateZ( 100px );
-  transform: translateZ( 100px );
+  -webkit-transform: translateZ( 50px );
+  -moz-transform: translateZ( 50px );
+  -o-transform: translateZ( 50px );
+  transform: translateZ( 50px );
   opacity: 1;
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -moz-transition: -moz-transform 1s, opacity 1s;
@@ -301,10 +310,10 @@ margin: 0 10px 0 0;
 
 #slideshow .right {
 	position:absolute;
-  -webkit-transform: rotateX( 90deg ) translateZ( 100px );
-  -moz-transform: rotateX( 90deg ) translateZ( 100px );
-  -o-transform: rotateX( 90deg ) translateZ( 100px );
-  transform: rotateX( 90deg ) translateZ( 100px );
+  -webkit-transform: rotateX( 90deg ) translateZ( 50px );
+  -moz-transform: rotateX( 90deg ) translateZ( 50px );
+  -o-transform: rotateX( 90deg ) translateZ( 50px );
+  transform: rotateX( 90deg ) translateZ( 50px );
   opacity: 0;
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -moz-transition: -moz-transform 1s, opacity 1s;
@@ -314,10 +323,10 @@ margin: 0 10px 0 0;
 
 #slideshow2 .right {
 	position:absolute;
-  -webkit-transform: rotateX( 90deg ) translateZ( 100px );
-  -moz-transform: rotateX( 90deg ) translateZ( 100px );
-  -o-transform: rotateX( 90deg ) translateZ( 100px );
-  transform: rotateX( 90deg ) translateZ( 100px );
+  -webkit-transform: rotateX( 90deg ) translateZ( 50px );
+  -moz-transform: rotateX( 90deg ) translateZ( 50px );
+  -o-transform: rotateX( 90deg ) translateZ( 50px );
+  transform: rotateX( 90deg ) translateZ( 50px );
   opacity: 0;
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -moz-transition: -moz-transform 1s, opacity 1s;
@@ -327,10 +336,10 @@ margin: 0 10px 0 0;
 
 #slideshow .left {
 	position:absolute;
-  -webkit-transform: rotateX( -90deg ) translateZ( 100px ) translateY(-360px);
-  -moz-transform: rotateX( -90deg ) translateZ( 100px ) translateY(-360px);
-  -o-transform: rotateX( -90deg ) translateZ( 100px ) translateY(-360px);
-  transform: rotateX( -90deg ) translateZ( 100px ) translateY(-360px);
+  -webkit-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  -moz-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  -o-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
   opacity: 0;
   -webkit-transition: -webkit-transform 1s, opacity 1s;
   -moz-transition: -moz-transform 1s, opacity 1s;
