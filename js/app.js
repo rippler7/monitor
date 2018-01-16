@@ -1,9 +1,40 @@
 
 console.log("start");
 
-var qidPendingPR = "1000710";
+var qidPendingPR = "1000443";
 var qidAssignedPR = "1000231";
+var qidPendingFBC = "1000428";
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
+
+var APAC = {
+	"pendingPRs":0,
+	"AssignedPRs":0,
+	"PendingFBCs":0
+}
+
+var EMEA = {
+	"pendingPRs":0,
+	"AssignedPRs":0,
+	"PendingFBCs":0
+}
+
+var NAM_West = {
+	"pendingPRs":0,
+	"AssignedPRs":0,
+	"PendingFBCs":0
+}
+
+var NAM_East = {
+	"pendingPRs":0,
+	"AssignedPRs":0,
+	"PendingFBCs":0
+}
+
+var Name_Programmatic = {
+	"pendingPRs":0,
+	"AssignedPRs":0,
+	"PendingFBCs":0
+}
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -50,10 +81,21 @@ function liveTime(){
     $("#aestTime").html(timeAEST);
 }
 
-$(document).ready(function(){
+function showTwitter(){
+	var configProfile = {
+	  "profile": {"screenName": 'sizmek'},
+	  "domId": 'rightContent',
+	  "maxTweets": 2,
+	  "enableLinks": false, 
+	  "showUser": true,
+	  "showTime": true,
+	  "showImages": true,
+	  "lang": 'en'
+	};
+	twitterFetcher.fetch(configProfile);
+}
 
-	console.log("ready");
-
+function getSizmekData(){
 	$.ajax({
 		url:"https://sizmek.quickbase.com/db/bhv6kzfnc",
 		data:{
@@ -67,13 +109,28 @@ $(document).ready(function(){
 		dataType:"script",
 		method:"GET",
 		success:function(){
-			console.log(qdb_numcols);
-			console.log(qdb_numrows);
+			//console.log(qdb_numcols);
+			console.log("Number of Pending: "+qdb_numrows);
 			console.log(qdb_data);
 			qdb_data.forEach(function(item){
 				console.log(item);
-				console.log(item[10]); //PR status
-			})
+				console.log("Shift: "+item[0]);
+				switch(item[0]){
+					case "APAC":
+						APAC.pendingPRs++;
+						break;
+					case "EMEA":
+						EMEA.pendingPRs++;
+						break;  
+					default:
+						NAM.pendingPRs++;
+				}
+				console.log(item[4]); //PR status
+			});
+			$("#prPendingText").html(qdb_numrows);
+			console.log("APAC: "+APAC.pendingPRs);
+			console.log("EMEA: "+EMEA.pendingPRs);
+			console.log("NAM West: "+NAM_West.pendingPRs);
 		},
 		complete:function(){
 			
@@ -93,34 +150,67 @@ $(document).ready(function(){
 		dataType:"script",
 		method:"GET",
 		success:function(){
-			console.log(qdb_numcols);
+			//console.log(qdb_numcols);
 			console.log(qdb_numrows);
 			console.log(qdb_data);
 			qdb_data.forEach(function(item){
 				console.log(item);
 				console.log(item[3]); //PR status
-			})
+			});
+			$("#prAssignedText").html(qdb_numrows);
 		},
 		complete:function(){
 			
 		}
 	});
 
-	var configProfile = {
-	  "profile": {"screenName": 'sizmek'},
-	  "domId": 'rightContent',
-	  "maxTweets": 2,
-	  "enableLinks": false, 
-	  "showUser": true,
-	  "showTime": true,
-	  "showImages": true,
-	  "lang": 'en'
-	};
-	twitterFetcher.fetch(configProfile);
+	$.ajax({
+		url:"https://sizmek.quickbase.com/db/bhtzcnzkd",
+		data:{
+			"a":"API_GenResultsTable",
+			"jsa":1,
+			"options":"csv",
+			"qid":qidPendingFBC,
+			"apptoken":apptoken,
+			"test":""
+		},
+		dataType:"script",
+		method:"GET",
+		success:function(){
+			//console.log(qdb_numcols);
+			console.log("Pending FBC's: "+qdb_numrows);
+			console.log(qdb_data);
+			/*
+			qdb_data.forEach(function(item){
+				console.log(item);
+				console.log(item[3]); //PR status
+			});
+			$("#prAssignedText").html(qdb_numrows);
+			*/
+		},
+		complete:function(){
+			
+		}
+	});
+
+}
+
+$(document).ready(function(){
+
+	console.log("ready");
+	showTwitter();
+	getSizmekData();
 
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000);
 
-    new slideShow();
+    
+    var showTweet = setInterval(function(){
+    	showTwitter();
+    	getSizmekData();
+    },15 * 1000);
+	
+    new slideShow('slideshow-wrapper','slideshow');
+    new slideShow('slideshow-wrapper-2','slideshow2');
 
 });

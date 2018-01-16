@@ -82,6 +82,10 @@ hr{
 	overflow: hidden;
 }
 
+#panelBoard{
+
+}
+
 #clockBox{
 	text-align:center;
 }
@@ -239,6 +243,10 @@ margin: 0 10px 0 0;
   padding:0px !important;
 }
 
+#slideshow2{
+	font-size:5vh;
+}
+
 #slideshow {
   position: relative;
   margin-top:1vh;
@@ -279,7 +287,32 @@ margin: 0 10px 0 0;
   transition: transform 1s, opacity 1s;
 }
 
+#slideshow2 .front {
+  -webkit-transform: translateZ( 100px );
+  -moz-transform: translateZ( 100px );
+  -o-transform: translateZ( 100px );
+  transform: translateZ( 100px );
+  opacity: 1;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
 #slideshow .right {
+	position:absolute;
+  -webkit-transform: rotateX( 90deg ) translateZ( 100px );
+  -moz-transform: rotateX( 90deg ) translateZ( 100px );
+  -o-transform: rotateX( 90deg ) translateZ( 100px );
+  transform: rotateX( 90deg ) translateZ( 100px );
+  opacity: 0;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+#slideshow2 .right {
 	position:absolute;
   -webkit-transform: rotateX( 90deg ) translateZ( 100px );
   -moz-transform: rotateX( 90deg ) translateZ( 100px );
