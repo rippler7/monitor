@@ -3,37 +3,43 @@ console.log("start");
 
 var qidPendingPR = "1000443";
 var qidAssignedPR = "1000231";
-var qidPendingFBC = "1000428";
+var qidAssignedFBC = "1000428";
+var qidInternalRevPR = "1000159";
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
 
 var APAC = {
 	"pendingPRs":0,
 	"AssignedPRs":0,
-	"PendingFBCs":0
+	"AssignedFBCs":0,
+	"internalReviewPR":0
 }
 
 var EMEA = {
 	"pendingPRs":0,
 	"AssignedPRs":0,
-	"PendingFBCs":0
+	"AssignedFBCs":0,
+	"internalReviewPR":0
 }
 
 var NAM_West = {
 	"pendingPRs":0,
 	"AssignedPRs":0,
-	"PendingFBCs":0
+	"AssignedFBCs":0,
+	"internalReviewPR":0
 }
 
 var NAM_East = {
 	"pendingPRs":0,
 	"AssignedPRs":0,
-	"PendingFBCs":0
+	"AssignedFBCs":0,
+	"internalReviewPR":0
 }
 
 var Name_Programmatic = {
 	"pendingPRs":0,
 	"AssignedPRs":0,
-	"PendingFBCs":0
+	"AssignedFBCs":0,
+	"internalReviewPR":0
 }
 
 function formatAMPM(date) {
@@ -122,8 +128,11 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.pendingPRs++;
 						break;  
+					case "Cebu NAM East/Central":
+						NAM_East.pendingPRs++;
+						break;  
 					default:
-						NAM.pendingPRs++;
+						NAM_West.pendingPRs++;
 				}
 				console.log(item[4]); //PR status
 			});
@@ -155,9 +164,62 @@ function getSizmekData(){
 			console.log(qdb_data);
 			qdb_data.forEach(function(item){
 				console.log(item);
+				switch(item[0]){
+					case "APAC":
+						APAC.AssignedPRs++;
+						break;
+					case "EMEA":
+						EMEA.AssignedPRs++;
+						break;
+					case "Cebu NAM East/Central":
+						NAM_East.AssignedPRs++;
+						break;  
+					default:
+						NAM_West.AssignedPRs++;
+				}
 				console.log(item[3]); //PR status
 			});
 			$("#prAssignedText").html(qdb_numrows);
+		},
+		complete:function(){
+			
+		}
+	});
+
+	$.ajax({
+		url:"https://sizmek.quickbase.com/db/bhv6kzfnc",
+		data:{
+			"a":"API_GenResultsTable",
+			"jsa":1,
+			"options":"csv",
+			"qid":qidAssignedFBC,
+			"apptoken":apptoken,
+			"test":""
+		},
+		dataType:"script",
+		method:"GET",
+		success:function(){
+			//console.log(qdb_numcols);
+			console.log(qdb_numrows);
+			console.log(qdb_data);
+			qdb_data.forEach(function(item){
+				console.log(item);
+				switch(item[0]){
+					case "APAC":
+						APAC.AssignedFBCs++;
+						break;
+					case "EMEA":
+						EMEA.AssignedFBCs++;
+						break;
+					case "Cebu NAM East/Central":
+						NAM_East.AssignedFBCs++;
+						break;  
+					default:
+						NAM_West.AssignedFBCs++;
+				}
+				console.log(item[3]); //PR status
+			});
+			$("#fbcPendingText").html(qdb_numrows);
 		},
 		complete:function(){
 			
@@ -170,7 +232,7 @@ function getSizmekData(){
 			"a":"API_GenResultsTable",
 			"jsa":1,
 			"options":"csv",
-			"qid":qidPendingFBC,
+			"qid":qidInternalRevPR,
 			"apptoken":apptoken,
 			"test":""
 		},
@@ -178,16 +240,26 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log("Pending FBC's: "+qdb_numrows);
+			console.log(this);
 			console.log(qdb_data);
-			/*
+			
 			qdb_data.forEach(function(item){
 				console.log(item);
 				console.log(item[3]); //PR status
+				switch(item[0]){
+					case "APAC":
+						APAC.internalReviewPR++;
+						break;
+					case "EMEA":
+						EMEA.internalReviewPR++;
+						break;
+					case "Cebu NAM East/Central":
+						NAM_East.internalReviewPR++;
+						break;  
+					default:
+						NAM_West.AssignedPRs++;
+				}
 			});
-			$("#prAssignedText").html(qdb_numrows);
-			*/
-			$("#fbcPendingText").html(qdb_numrows);
 		},
 		complete:function(){
 			

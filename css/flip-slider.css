@@ -4,10 +4,11 @@
 
 
 .flip-frame{
-	height: 100%;
-	margin: 20px auto;
+	height: auto;
+	position:relative;
+	margin: 0px auto;
 	/*overflow: hidden;*/
-	width: 100%;
+	width: auto;
 	-webkit-perspective: 1000px;
 	-moz-perspective: 1000px;
 	-ms-perspective: 1000px;
