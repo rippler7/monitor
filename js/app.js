@@ -1,6 +1,3 @@
-
-console.log("start");
-
 var qidPendingPR = "1000443";
 var qidAssignedPR = "1000710";
 var qidAssignedFBC = "1000231";
@@ -45,7 +42,7 @@ var NAM_East = {
 	"hours":0
 }
 
-var Name_Programmatic = {  
+var NAM_Programmatic = {  
 	"pendingPRs":0,
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
@@ -53,6 +50,32 @@ var Name_Programmatic = {
 	"internalReviewFBC":0,
 	"hours":0
 }
+
+var apacBar;
+var emeaBar;
+var programmaticBar;
+var namEastBar;
+var namWestBar;
+var totalBar;
+
+function hoursIndicators(bar,hours,total,div){
+	$(div).html("");
+	$(div).attr("data-preset","fan");
+	var strokeColor;
+	if(hours >= 40){
+		strokeColor = "#55FF33";
+	} else if(hours < 32) {
+		strokeColor = "#FF3333";
+	} else {
+		strokeColor = "#FFF";
+	}
+ 	bar = new ldBar(div, {
+ 		"stroke": strokeColor
+ 	});
+	var percentage = (hours/total)*100;
+	bar.set(percentage);
+}
+
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -142,7 +165,10 @@ function getSizmekData(){
 						break;  
 					case "Cebu NAM East/Central":
 						NAM_East.pendingPRs++;
-						break;  
+						break; 
+					case "Programmatic":
+						NAM_Programmatic.pendingPRs++;
+						break; 
 					default:
 						NAM_West.pendingPRs++;
 				}
@@ -185,7 +211,10 @@ function getSizmekData(){
 						break;
 					case "Cebu NAM East/Central":
 						NAM_East.AssignedPRs++;
-						break;  
+						break;
+					case "Programmatic":
+						NAM_Programmatic.AssignedPRs++;
+						break;   
 					default:
 						NAM_West.AssignedPRs++;
 				}
@@ -225,7 +254,10 @@ function getSizmekData(){
 						break;
 					case "Cebu NAM East/Central":
 						NAM_East.AssignedFBCs++;
-						break;  
+						break;
+					case "Programmatic":
+						NAM_Programmatic.AssignedFBCs++;
+						break;   
 					default:
 						NAM_West.AssignedFBCs++;
 				}
@@ -266,7 +298,10 @@ function getSizmekData(){
 						break;
 					case "Cebu NAM East/Central":
 						NAM_East.internalReviewPR++;
-						break;  
+						break;
+					case "Programmatic":
+						NAM_Programmatic.internalReviewPR++;
+						break;   
 					default:
 						NAM_West.internalReviewPR++;
 				}
@@ -307,6 +342,9 @@ function getSizmekData(){
 						break;
 					case "Cebu NAM East/Central":
 						NAM_East.internalReviewFBC++;
+						break;
+					case "Programmatic":
+						NAM_Programmatic.internalReviewFBC++;
 						break;  
 					default:
 						NAM_West.internalReviewFBC++;
@@ -346,22 +384,27 @@ function getSizmekData(){
 					switch(str){
 						case "apac":
 						APAC.hours = item[12];
+						$("#apacDiv > span").html(APAC.hours+" hours");
 						break;
 
 						case "emea":
 						EMEA.hours = item[12];
+						$("#emeaDiv > span").html(EMEA.hours+" hours");
 						break;
 
 						case "programmatic":
-						Name_Programmatic.hours = item[12];
+						NAM_Programmatic.hours = item[12];
+						$("#programmaticDiv > span").html(NAM_Programmatic.hours+" hours");
 						break;
 
 						case "cebu east":
 						NAM_East.hours = item[12];
+						$("#namEastDiv > span").html(NAM_East.hours+" hours");
 						break;
 
 						case "cebu west":
 						NAM_West.hours = item[12];
+						$("#namWestDiv > span").html(NAM_West.hours+" hours");
 						break;
 
 						default:
@@ -369,9 +412,18 @@ function getSizmekData(){
 					}
 				
 			});
+			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
+			console.log("totals: "+totals);
+			hoursIndicators(apacBar,APAC.hours,40,"#apacLine");
+			hoursIndicators(emeaBar,EMEA.hours,40,"#emeaLine");
+			hoursIndicators(programmaticBar,NAM_Programmatic.hours,40,"#programmaticLine");
+			hoursIndicators(namEastBar,NAM_East.hours,40,"#namEastLine");
+			hoursIndicators(namWestBar,NAM_West.hours,40,"#namWestLine");
+			hoursIndicators(totalBar,totals,40,"#totalLine");
+			$("#totalDiv > span").html(totals+" hours");
 			console.log("APAC.hours: "+APAC.hours);
 			console.log("EMEA.hours: "+EMEA.hours);
-			console.log("NAM_Programmatic.hours: "+Name_Programmatic.hours);
+			console.log("NAM_Programmatic.hours: "+NAM_Programmatic.hours);
 			console.log("NAM_East.hours: "+NAM_East.hours);
 			console.log("NAM_West.hours: "+NAM_West.hours);
 			//$('#fbcInternalReviewText').html(qdb_numrows);
