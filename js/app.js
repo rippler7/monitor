@@ -6,6 +6,7 @@ var qidAssignedPR = "1000710";
 var qidAssignedFBC = "1000231";
 var qidInternalRevPR = "1000428";
 var qidInternalRevFBC = "1000159";
+var qidHours = "-1019418";
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
 
 var APAC = {
@@ -13,7 +14,8 @@ var APAC = {
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
 	"internalReviewPR":0,
-	"internalReviewFBC":0
+	"internalReviewFBC":0,
+	"hours":0
 }
 
 var EMEA = {
@@ -21,7 +23,8 @@ var EMEA = {
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
 	"internalReviewPR":0,
-	"internalReviewFBC":0
+	"internalReviewFBC":0,
+	"hours":0
 }
 
 var NAM_West = {
@@ -29,7 +32,8 @@ var NAM_West = {
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
 	"internalReviewPR":0,
-	"internalReviewFBC":0
+	"internalReviewFBC":0,
+	"hours":0
 }
 
 var NAM_East = {
@@ -37,15 +41,17 @@ var NAM_East = {
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
 	"internalReviewPR":0,
-	"internalReviewFBC":0
+	"internalReviewFBC":0,
+	"hours":0
 }
 
-var Name_Programmatic = {
+var Name_Programmatic = {  
 	"pendingPRs":0,
 	"AssignedPRs":0,
 	"AssignedFBCs":0,
 	"internalReviewPR":0,
-	"internalReviewFBC":0
+	"internalReviewFBC":0,
+	"hours":0
 }
 
 function formatAMPM(date) {
@@ -122,11 +128,11 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log("Number of Pending: "+qdb_numrows);
-			console.log(qdb_data);
+			//console.log("Number of Pending: "+qdb_numrows);
+			//console.log(qdb_data);
 			qdb_data.forEach(function(item){
-				console.log(item);
-				console.log("Shift: "+item[0]);
+				//console.log(item);
+				//console.log("Shift: "+item[0]);
 				switch(item[0]){
 					case "APAC":
 						APAC.pendingPRs++;
@@ -140,7 +146,7 @@ function getSizmekData(){
 					default:
 						NAM_West.pendingPRs++;
 				}
-				console.log(item[4]); //PR status
+				//console.log(item[4]); //PR status
 			});
 			$("#prPendingText").html(qdb_numrows);
 			console.log("APAC: "+APAC.pendingPRs);
@@ -166,10 +172,10 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log(qdb_numrows);
-			console.log(qdb_data);
+			//console.log(qdb_numrows);
+			//console.log(qdb_data);
 			qdb_data.forEach(function(item){
-				console.log(item);
+				//console.log(item);
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedPRs++;
@@ -183,7 +189,7 @@ function getSizmekData(){
 					default:
 						NAM_West.AssignedPRs++;
 				}
-				console.log(item[3]); //PR status
+				//console.log(item[3]); //PR status
 			});
 			$("#prAssignedText").html(qdb_numrows);
 		},
@@ -206,10 +212,10 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log(qdb_numrows);
-			console.log(qdb_data);
+			//console.log(qdb_numrows);
+			//console.log(qdb_data);
 			qdb_data.forEach(function(item){
-				console.log(item);
+				//console.log(item);
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedFBCs++;
@@ -223,7 +229,7 @@ function getSizmekData(){
 					default:
 						NAM_West.AssignedFBCs++;
 				}
-				console.log(item[3]); //PR status
+				//console.log(item[3]); //PR status
 			});
 			$("#fbcPendingText").html(qdb_numrows);
 		},
@@ -246,11 +252,11 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log(this);
-			console.log(qdb_data);
-			console.log(qdb_data.length);
+			//console.log(this);
+			//console.log(qdb_data);
+			//console.log(qdb_data.length);
 			qdb_data.forEach(function(item){
-				console.log(item[3]); //PR status
+				////console.log(item[3]); //PR status
 				switch(item[0]){
 					case "APAC":
 						APAC.internalReviewPR++;
@@ -287,11 +293,11 @@ function getSizmekData(){
 		method:"GET",
 		success:function(){
 			//console.log(qdb_numcols);
-			console.log(this);
-			console.log(qdb_data);
-			console.log(qdb_data.length);
+			//console.log(this);
+			//console.log(qdb_data);
+			//console.log(qdb_data.length);
 			qdb_data.forEach(function(item){
-				console.log(item[3]); //PR status
+				//console.log(item[3]); //PR status
 				switch(item[0]){
 					case "APAC":
 						APAC.internalReviewFBC++;
@@ -313,6 +319,68 @@ function getSizmekData(){
 			
 		}
 	});
+
+	$.ajax({
+		url:"https://sizmek.quickbase.com/db/bhxqi55ba",
+		data:{
+			"a":"API_GenResultsTable",
+			"jsa":1,
+			"qrppg":200,
+			"options":"csv",
+			"qid":qidHours,
+			"apptoken":apptoken,
+			"test":""
+		},
+		dataType:"script",
+		method:"GET",
+		success:function(){
+			//console.log(qdb_numcols);
+			console.log("QB_DATA: ");
+			console.log(qdb_data);
+			console.log("HOURS: ");
+			qdb_data.forEach(function(item){
+					//console.log(item[2]); //display team lead name
+					var str = item[2].toLowerCase();
+					//console.log(item[12]);
+					//console.log(str);
+					switch(str){
+						case "apac":
+						APAC.hours = item[12];
+						break;
+
+						case "emea":
+						EMEA.hours = item[12];
+						break;
+
+						case "programmatic":
+						Name_Programmatic.hours = item[12];
+						break;
+
+						case "cebu east":
+						NAM_East.hours = item[12];
+						break;
+
+						case "cebu west":
+						NAM_West.hours = item[12];
+						break;
+
+						default:
+						break;
+					}
+				
+			});
+			console.log("APAC.hours: "+APAC.hours);
+			console.log("EMEA.hours: "+EMEA.hours);
+			console.log("NAM_Programmatic.hours: "+Name_Programmatic.hours);
+			console.log("NAM_East.hours: "+NAM_East.hours);
+			console.log("NAM_West.hours: "+NAM_West.hours);
+			//$('#fbcInternalReviewText').html(qdb_numrows);
+		},
+		complete:function(){
+			
+		}
+	});
+
 
 }
 
