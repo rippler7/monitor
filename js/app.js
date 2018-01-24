@@ -69,6 +69,7 @@ function hoursIndicators(bar,hours,total,div){
 	} else {
 		strokeColor = "#FFF";
 	}
+	if(div.toLowerCase() == "#totalline") {strokeColor="#FF0";} 
  	bar = new ldBar(div, {
  		"stroke": strokeColor
  	});
