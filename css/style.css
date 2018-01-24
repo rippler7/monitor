@@ -82,8 +82,12 @@ hr{
 	overflow: hidden;
 }
 
+#bottomLeft h1{
+	color: rgba(255,255,255,0.25);
+}
+
 #panelBoard{
-	height:20vh;
+	height:10vh;
 	overflow: hidden;
 }
 
@@ -91,6 +95,10 @@ hr{
 	text-align: center;
 	font-size:2.0em;
 	margin:0px auto 2% auto;
+}
+
+.teamHours{
+	font-size:2em;
 }
 
 .ldBar{
@@ -283,6 +291,10 @@ margin: 0 10px 0 0;
 #slideshow > * {
   display: block;
   position: relative;
+}
+
+.flip-frame .slide{
+	height:20%;
 }
 
 #slideshow img {
