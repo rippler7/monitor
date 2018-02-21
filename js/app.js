@@ -4,6 +4,7 @@ var qidAssignedFBC = "1000231";
 var qidInternalRevPR = "1000428";
 var qidInternalRevFBC = "1000159";
 var qidHours = "-1019627";
+//-1019757
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
 
 var APAC = {
@@ -491,13 +492,13 @@ function getSizmekData(){
 $(document).ready(function(){
 
 	console.log("ready");
-	showTwitter();
+	//showTwitter();
 	getSizmekData();
 
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
-    	showTwitter();
+    	//showTwitter();
     	getSizmekData();
     },15 * 1000);
     new slideShow('slideshow-wrapper','slideshow');

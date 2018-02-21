@@ -15,11 +15,11 @@ https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=cs
 
 https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=-1019418&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 
-
+https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=-1019627&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 
 https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=101&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 
-
+https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=-1019757&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 
 
 https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=-1019627&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
