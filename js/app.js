@@ -3,8 +3,9 @@ var qidAssignedPR = "1000710";
 var qidAssignedFBC = "1000231";
 var qidInternalRevPR = "1000428";
 var qidInternalRevFBC = "1000159";
-var qidHours = "-1019627";
+var qidHours = "-1019757";
 //-1019757
+//-1019627
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
 
 var APAC = {
@@ -14,6 +15,7 @@ var APAC = {
 	"internalReviewPR":0,
 	"internalReviewFBC":0,
 	"hours":0,
+	"twhours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -25,6 +27,7 @@ var EMEA = {
 	"internalReviewPR":0,
 	"internalReviewFBC":0,
 	"hours":0,
+	"twhours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 
@@ -37,6 +40,7 @@ var NAM_West = {
 	"internalReviewPR":0,
 	"internalReviewFBC":0,
 	"hours":0,
+	"twhours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -48,6 +52,7 @@ var NAM_East = {
 	"internalReviewPR":0,
 	"internalReviewFBC":0,
 	"hours":0,
+	"twhours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -59,6 +64,7 @@ var NAM_Programmatic = {
 	"internalReviewPR":0,
 	"internalReviewFBC":0,
 	"hours":0,
+	"twhours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -70,6 +76,24 @@ var programmaticBar;
 var namEastBar;
 var namWestBar;
 var totalBar;
+
+function alertSound(sound){
+	var snd = new Audio(sound);
+	snd.play();
+}
+
+function getGap(dateGiven){
+	var parts = dateGiven.split('-');
+	// Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+	// January - 0, February - 1, etc.
+	var dateNow = new Date();
+	var mydate = new Date(parts[2], parts[0] - 1); 
+	console.log(mydate.toDateString());
+	console.log(dateNow.toDateString());
+	console.log("date parse: "+Date.parse(dateNow));
+	console.log(dateNow-mydate);
+}
+
 
 function hoursIndicators(bar,hours,total,div){
 	$(div).html("");
@@ -167,9 +191,12 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log("Number of Pending: "+qdb_numrows);
 			//console.log(qdb_data);
+			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidPendingPR+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
 				//console.log(item);
 				//console.log("Shift: "+item[0]);
+				console.log(item[5]+', '+item[6]);
+				getGap(item[5]);
 				switch(item[0]){
 					case "APAC":
 						APAC.pendingPRs++;
@@ -397,17 +424,26 @@ function getSizmekData(){
 			NAM_East.nBMPercent = 0;
 			NAM_West.nBMPercent = 0;
 			NAM_Programmatic.nBMPercent = 0;
+			APAC.twhours = 0,
+			EMEA.twhours = 0,
+			NAM_East.twhours = 0,
+			NAM_West.twhours = 0,
+			NAM_Programmatic.twhours = 0,
 			console.log("QB_DATA: ");
 			console.log(qdb_data);
 			console.log("HOURS: ");
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
-					console.log(item[2]);
-					var nBM = item[2];
+					console.log(item[3]);
+					var nBM = item[3];
 					if(!nBM || nBM == '' || nBM == undefined){
 						nBM = '0';
-					}				
-					var str = item[4].toLowerCase();
+					}	
+					var tHours = item[2];
+					if(!tHours || tHours == '' || tHours == undefined){
+						tHours = '0';
+					}			
+					var str = item[5].toLowerCase();
 					//console.log(item[12]);
 					//console.log(str);
 					if(!item[3] || item[3] == '' || item[3] == undefined){
@@ -420,39 +456,44 @@ function getSizmekData(){
 					var totalNon = parseInt(item[3])/parseInt(item[13]);
 					switch(str){
 						case "apac":
-						APAC.hours = item[14];
+						APAC.hours = item[15];
 						APAC.nBMonth += parseInt(nBM);
 						APAC.nBMPercent += totalNon;
+						APAC.twhours += parseInt(tHours);
 						$("#apacDiv > span").html(APAC.hours+" hours");
 						break;
 
 						case "emea":
-						EMEA.hours = item[14];
+						EMEA.hours = item[15];
 						console.log("EMEA non-Billable: "+nBM);
 						console.log(nBM);
 						EMEA.nBMonth += parseInt(nBM);
 						EMEA.nBMPercent += totalNon;
+						EMEA.twhours += parseInt(tHours);
 						$("#emeaDiv > span").html(EMEA.hours+" hours");
 						break;
 
 						case "programmatic":
-						NAM_Programmatic.hours = item[14];
+						NAM_Programmatic.hours = item[15];
 						NAM_Programmatic.nBMonth += parseInt(nBM);
 						NAM_Programmatic.nBMPercent += totalNon;
+						NAM_Programmatic.twhours += parseInt(tHours);
 						$("#programmaticDiv > span").html(NAM_Programmatic.hours+" hours");
 						break;
 
 						case "cebu east":
-						NAM_East.hours = item[14];
+						NAM_East.hours = item[15];
 						NAM_East.nBMonth += parseInt(nBM);
 						NAM_East.nBMPercent += totalNon;
+						NAM_East.twhours += parseInt(tHours);
 						$("#namEastDiv > span").html(NAM_East.hours+" hours");
 						break;
 
 						case "cebu west":
-						NAM_West.hours = item[14];
+						NAM_West.hours = item[15];
 						NAM_West.nBMonth += parseInt(nBM);
 						NAM_West.nBMPercent += totalNon;
+						NAM_West.twhours += parseInt(tHours);
 						$("#namWestDiv > span").html(NAM_West.hours+" hours");
 						break;
 
@@ -464,6 +505,8 @@ function getSizmekData(){
 			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
 			console.log("totals: "+totals);
 			console.log("APAC non-Billable: "+ APAC.nBMonth);
+			console.log("APAC total Hours: "+ APAC.twhours);
+			console.log("APAC nonBillable Percentage: "+ (APAC.nBMonth/APAC.twhours)*100+"%");
 			console.log("EMEA non-Billable: "+ EMEA.nBMonth);
 			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
 			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
@@ -494,6 +537,8 @@ $(document).ready(function(){
 	console.log("ready");
 	//showTwitter();
 	getSizmekData();
+
+	alertSound('../audio/alert1.wav');
 
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
