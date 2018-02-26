@@ -15,7 +15,7 @@ function FlipSlider(options) {
         slides = slider.querySelectorAll(".slide"),
         nextBtn = container.querySelector(".next"),
         PrevBtn = container.querySelector(".prev"),
-        timeout,
+        timeout = options.timeout,
         frontSlide,
         backSlide;
 
@@ -47,10 +47,11 @@ function FlipSlider(options) {
 
             backSlide.classList.add("back");
 
+
             timeout = setTimeout(function() {
                 resetSlides();
                 clearTimeout(timeout);
-            }, 600);
+            }, options.timeout);
         }
     }
 
@@ -97,14 +98,10 @@ function FlipSlider(options) {
         slides[startSlideIndex].classList.add("front");
 
         // Event Bindings
-        var flipTimer = setInterval(instance.nextFlip,4000);
+        var flipTimer = setInterval(instance.nextFlip,timeout);
         //nextBtn.onclick = instance.nextFlip;
         //PrevBtn.onclick = instance.prevFlip;
     })(this);
 }
 
 // Creating Instance of the slider
-var flip1 = new FlipSlider({
-    startIndex: 1,
-    container: document.querySelector(".flip-slider")
-});

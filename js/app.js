@@ -16,6 +16,7 @@ var APAC = {
 	"internalReviewFBC":0,
 	"hours":0,
 	"twhours":0,
+	"nBthours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -28,6 +29,7 @@ var EMEA = {
 	"internalReviewFBC":0,
 	"hours":0,
 	"twhours":0,
+	"nBthours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 
@@ -41,6 +43,7 @@ var NAM_West = {
 	"internalReviewFBC":0,
 	"hours":0,
 	"twhours":0,
+	"nBthours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -53,6 +56,7 @@ var NAM_East = {
 	"internalReviewFBC":0,
 	"hours":0,
 	"twhours":0,
+	"nBthours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -65,6 +69,7 @@ var NAM_Programmatic = {
 	"internalReviewFBC":0,
 	"hours":0,
 	"twhours":0,
+	"nBthours":0,
 	"nBMonth":0,
 	"nBMPercent":0
 }
@@ -76,6 +81,13 @@ var programmaticBar;
 var namEastBar;
 var namWestBar;
 var totalBar;
+
+var apacBillBar;
+var emeaBillBar;
+var programmaticBillBar;
+var namEastBillBar;
+var namWestBillBar;
+var totalBillBar;
 
 function alertSound(sound){
 	var snd = new Audio(sound);
@@ -429,36 +441,56 @@ function getSizmekData(){
 			NAM_East.twhours = 0,
 			NAM_West.twhours = 0,
 			NAM_Programmatic.twhours = 0,
+			APAC.nBthours = 0;
+			EMEA.nBthours = 0,
+			NAM_East.nBthours = 0,
+			NAM_West.nBthours = 0,
+			NAM_Programmatic.nBthours = 0
 			console.log("QB_DATA: ");
 			console.log(qdb_data);
 			console.log("HOURS: ");
+
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
 					console.log(item[3]);
+					if(!item[3] || item[3] == '' || item[3] == undefined){
+						item[3] = '0';
+					}
+					if(!item[4] || item[4] == '' || item[4] == undefined){
+						item[4] = '0';
+					}
+					if(!item[13] || item[13] == '' || item[13] == undefined){
+						item[13] = '0';
+					}
+					if(!item[14] || item[14] == '' || item[14] == undefined){
+						item[14] = '0';
+					}	
 					var nBM = item[3];
 					if(!nBM || nBM == '' || nBM == undefined){
 						nBM = '0';
-					}	
+					}
+					var nBLMonth = parseInt(item[4]);
+					if(!nBLMonth || nBLMonth == '' || nBLMonth == undefined){
+						nBLMonth = '0';
+					}		
 					var tHours = item[2];
 					if(!tHours || tHours == '' || tHours == undefined){
 						tHours = '0';
 					}			
+
+					console.log("tHours: "+tHours);
+
 					var str = item[5].toLowerCase();
 					//console.log(item[12]);
 					//console.log(str);
-					if(!item[3] || item[3] == '' || item[3] == undefined){
-						item[3] = '0';
-					}
-					if(!item[13] || item[13] == '' || item[13] == undefined){
-						item[13] = '0';
-					}	
 					console.log(item[3]+"/"+item[13])*100;
 					var totalNon = parseInt(item[3])/parseInt(item[13]);
 					switch(str){
 						case "apac":
 						APAC.hours = item[15];
-						APAC.nBMonth += parseInt(nBM);
+						APAC.nBMonth += parseInt(nBLMonth);
 						APAC.nBMPercent += totalNon;
+						APAC.nBthours += parseInt(nBM);
 						APAC.twhours += parseInt(tHours);
 						$("#apacDiv > span").html(APAC.hours+" hours");
 						break;
@@ -466,33 +498,37 @@ function getSizmekData(){
 						case "emea":
 						EMEA.hours = item[15];
 						console.log("EMEA non-Billable: "+nBM);
-						console.log(nBM);
-						EMEA.nBMonth += parseInt(nBM);
+						console.log(nBLMonth);
+						EMEA.nBMonth += parseInt(nBLMonth);
 						EMEA.nBMPercent += totalNon;
+						EMEA.nBthours += parseInt(nBM);
 						EMEA.twhours += parseInt(tHours);
 						$("#emeaDiv > span").html(EMEA.hours+" hours");
 						break;
 
 						case "programmatic":
 						NAM_Programmatic.hours = item[15];
-						NAM_Programmatic.nBMonth += parseInt(nBM);
+						NAM_Programmatic.nBMonth += parseInt(nBLMonth);
 						NAM_Programmatic.nBMPercent += totalNon;
+						NAM_Programmatic.nBthours += parseInt(nBM);
 						NAM_Programmatic.twhours += parseInt(tHours);
 						$("#programmaticDiv > span").html(NAM_Programmatic.hours+" hours");
 						break;
 
 						case "cebu east":
 						NAM_East.hours = item[15];
-						NAM_East.nBMonth += parseInt(nBM);
+						NAM_East.nBMonth += parseInt(nBLMonth);
 						NAM_East.nBMPercent += totalNon;
+						NAM_East.nBthours += parseInt(nBM);
 						NAM_East.twhours += parseInt(tHours);
 						$("#namEastDiv > span").html(NAM_East.hours+" hours");
 						break;
 
 						case "cebu west":
 						NAM_West.hours = item[15];
-						NAM_West.nBMonth += parseInt(nBM);
+						NAM_West.nBMonth += parseInt(nBLMonth);
 						NAM_West.nBMPercent += totalNon;
+						NAM_West.nBthours += parseInt(nBM);
 						NAM_West.twhours += parseInt(tHours);
 						$("#namWestDiv > span").html(NAM_West.hours+" hours");
 						break;
@@ -503,10 +539,25 @@ function getSizmekData(){
 				
 			});
 			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
+			var avetwononbillable = ((parseInt(NAM_Programmatic.nBthours)+parseInt(NAM_West.nBthours)+parseInt(NAM_East.nBthours)+parseInt(EMEA.nBthours)+parseInt(APAC.nBthours))/5);
+			var twtotals = ((parseInt(NAM_Programmatic.twhours)+parseInt(NAM_West.twhours)+parseInt(NAM_East.twhours)+parseInt(EMEA.twhours)+parseInt(APAC.twhours))/5);
 			console.log("totals: "+totals);
+			console.log("APAC non-Billable 2 weeks: "+ APAC.nBthours);
+			console.log("APAC hours 2 weeks: "+ APAC.twhours);
+			console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
+			console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
+			console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
+			console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
+			console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
+			console.log("NAM West hours 2 weeks: "+ NAM_West.twhours);
+			console.log("NAM East non-Billable 2 weeks: "+ NAM_East.nBthours);
+			console.log("NAM East hours 2 weeks: "+ NAM_East.twhours);
+			console.log("Total non-Billable 2 weeks: "+ avetwononbillable);
+			console.log("Total hours 2 weeks: "+ twtotals);
+
 			console.log("APAC non-Billable: "+ APAC.nBMonth);
 			console.log("APAC total Hours: "+ APAC.twhours);
-			console.log("APAC nonBillable Percentage: "+ (APAC.nBMonth/APAC.twhours)*100+"%");
+			console.log("APAC nonBillable Percentage: "+ (APAC.nBthours/APAC.twhours)*100+"%");
 			console.log("EMEA non-Billable: "+ EMEA.nBMonth);
 			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
 			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
@@ -516,6 +567,14 @@ function getSizmekData(){
 			hoursIndicators(namEastBar,NAM_East.hours,40,"#namEastLine");
 			hoursIndicators(namWestBar,NAM_West.hours,40,"#namWestLine");
 			hoursIndicators(totalBar,totals,40,"#totalLine");
+
+			hoursIndicators(apacBillBar,APAC.nBthours,APAC.twhours,"#apacBill");
+			hoursIndicators(emeaBillBar,EMEA.nBthours,EMEA.twhours,"#emeaBill");
+			hoursIndicators(programmaticBillBar,NAM_Programmatic.nBthours,NAM_Programmatic.twhours,"#programmaticBill");
+			hoursIndicators(namWestBillBar,NAM_West.nBthours,NAM_West.twhours,"#westBill");
+			hoursIndicators(namEastBillBar,NAM_East.nBthours,NAM_East.twhours,"#eastBill");
+			hoursIndicators(totalBillBar,avetwononbillable,twtotals,"#totalBill");
+
 			$("#totalDiv > span").html(totals+" hours");
 			console.log("APAC.hours: "+APAC.hours);
 			console.log("EMEA.hours: "+EMEA.hours);
@@ -549,6 +608,13 @@ $(document).ready(function(){
     new slideShow('slideshow-wrapper','slideshow');
 	var flip1 = new FlipSlider({
 		startIndex: 1,
-	    container: document.querySelector("#flipper")
+	    container: document.querySelector("#flipper"),
+	    timeout:2000
+	});
+
+	var flip2 = new FlipSlider({
+		startIndex: 0,
+		container: document.querySelector("#graphs"),
+		timeout:4000
 	});
 });
