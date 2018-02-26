@@ -544,8 +544,11 @@ function getSizmekData(){
 			console.log("totals: "+totals);
 			console.log("APAC non-Billable 2 weeks: "+ APAC.nBthours);
 			console.log("APAC hours 2 weeks: "+ APAC.twhours);
+			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hours: "+((APAC.nBthours/APAC.twhours)*100).toFixed(2)+"%");
+			$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hrs");
 			console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
 			console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
+			$("#emeaBillDiv > span").html(EMEA.nBthours+"/"+EMEA.twhours+" hrs");
 			console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
 			console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
 			console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
@@ -560,7 +563,7 @@ function getSizmekData(){
 			console.log("APAC nonBillable Percentage: "+ (APAC.nBthours/APAC.twhours)*100+"%");
 			console.log("EMEA non-Billable: "+ EMEA.nBMonth);
 			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
-			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
+			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent); 
 			hoursIndicators(apacBar,APAC.hours,40,"#apacLine");
 			hoursIndicators(emeaBar,EMEA.hours,40,"#emeaLine");
 			hoursIndicators(programmaticBar,NAM_Programmatic.hours,40,"#programmaticLine");
