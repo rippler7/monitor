@@ -406,7 +406,7 @@ function getSizmekData(){
 			$("#prAssignedText").html(qdb_numrows);
 
 			if(warningBasket.length > 0 || overdueBasket.length > 0){
-				alertSound('./audio/klang.mp3');
+				alertSound('./audio/klang.wav');
 				var contentModal ="";
 				if(warningBasket.length > 0){
 					contentModal += "PRs Due Soon: "+warningBasket+"<br />";
