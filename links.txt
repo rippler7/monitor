@@ -9,6 +9,8 @@ https://sizmek.quickbase.com/db/bhv6kzfnc?qid=10007108&a=API_GenResultsTable&jsa
 https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&qid=-1019400&a=API_GenResultsTable&jsa=1&options=csv&qrppg=200&dlta=fl6.7.118.11.8.9.10.29.26.27.35.92.31.103.104.&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 
 
+https://sizmek.quickbase.com/db/bhv6kzfnc?a=API_GenResultsTable&jsa=1&options=csv&qid=1000710&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
+
 
 https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&options=csv&qid=131&apptoken=dxjuywydk6zb2kxn8pz5daj7fcs
 

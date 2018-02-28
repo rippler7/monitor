@@ -89,21 +89,106 @@ var namEastBillBar;
 var namWestBillBar;
 var totalBillBar;
 
+var warningBasket = [];
+var overdueBasket = [];
+
 function alertSound(sound){
 	var snd = new Audio(sound);
 	snd.play();
 }
 
-function getGap(dateGiven){
+function timeLeft(days){
+	var hours = days.toString();
+	var measuredRes = hours.split(" ");
+	var remaining = Number(measuredRes[0]);
+	var timeMeasure = measuredRes[1].toLowerCase();
+	console.log("days? "+(measuredRes[1] == "days" || measuredRes[1] == "day"));
+	console.log("hours? "+measuredRes[1] == "hours");
+	console.log("mins? "+measuredRes[1] == "mins");
+	if(measuredRes[1] == "days" || measuredRes[1] == "day"){
+		remaining = (remaining*24);
+	} else if (measuredRes[1] == "mins"){
+		remaining = (remaining/60);
+	} 
+	return remaining;
+}
+
+function getGap(dateGiven,timeGiven){
 	var parts = dateGiven.split('-');
 	// Please pay attention to the month (parts[1]); JavaScript counts months from 0:
 	// January - 0, February - 1, etc.
+	var dueDate = new Date(dateGiven+", "+timeGiven);
+	var givenDate = new Date(dateGiven);
+	console.log(dateGiven+", "+timeGiven);
+
+	var timeLower = timeGiven.toLowerCase();
+	var timeConv = timeLower.split(":");
+	var dueHour = timeConv[0];
+	var dueMinute = timeConv[1].split(" ")[0];
+	var ampm = "AM";
+	if(timeGiven.indexOf("AM") < 0){
+		dueHour = dueHour + 12;
+	} else {
+		if(timeConv[0] == 12){
+			dueHour = 0;
+		}
+	}
+
+	console.log("ampm: "+ampm);
+
 	var dateNow = new Date();
 	var mydate = new Date(parts[2], parts[0] - 1); 
-	console.log(mydate.toDateString());
-	console.log(dateNow.toDateString());
-	console.log("date parse: "+Date.parse(dateNow));
-	console.log(dateNow-mydate);
+
+	console.log("parts: "+parts[0]);
+
+	givenDate.setHours(dueHour);
+	givenDate.setMinutes(dueMinute);
+	givenDate.setSeconds(00);
+
+	//console.log("timeGiven: "+timeGiven);
+	console.log("givenDate: "+givenDate);
+	console.log("dateNow: "+dateNow);
+	var dateNowAdjusted = toTimeZone2(dateNow,"America/New_York");
+	var nowYear = dateNow.getFullYear();
+	var nowMonth = dateNow.getMonth()+1;
+	var nowDay = dateNow.getDate();
+
+	var timeNowLower = dateNowAdjusted.toLowerCase();
+	var timeNowConv = timeNowLower.split(":");
+	var nowHour = timeNowConv[0];
+	var nowMinute = timeNowConv[1].split(" ")[0];
+
+	if(timeNowLower.split(' ').indexOf('am') < 1) nowampm = "PM";
+	var nowampm = "AM";
+
+	if(dateNowAdjusted.indexOf('PM') >= 0){
+		nowHour + 12;
+	} else {
+		if(timeNowConv[0] == 12){
+			nowHour = 0;
+		}
+	}
+
+	console.log(timeGiven.indexOf("PM"));
+	console.log(dateNowAdjusted.indexOf("PM"));
+
+	console.log("nowampm: "+nowampm);
+	console.log("nowHour: "+nowHour);
+
+	console.log("dateNow Adjusted EST: "+dateNowAdjusted);
+	console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
+	var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
+	console.log(dateNowString);
+	var adjDateNow = new Date(dateNowAdjusted);
+	console.log(adjDateNow);
+
+
+	var result = (dueDate - adjDateNow)/36e5;
+	console.log(dueDate+" - "+adjDateNow);
+	console.log(result);
+	console.log("GAP: "+(dueDate - adjDateNow)/36e5);
+	console.log("result: "+Number(result)/(1000*7200));
+	return result;
 }
 
 
@@ -128,12 +213,13 @@ function hoursIndicators(bar,hours,total,div){
 
 
 function formatAMPM(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
+	var n = new Date(date);
+  var hours = n.getHours();
+  var minutes = n.getMinutes();
+  var seconds = n.getSeconds();
   var ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
+  hours = hours ? hours : 12; // the hour '12' should be '0'
   minutes = minutes < 10 ? '0'+minutes : minutes;
   seconds = seconds < 10 ? '0'+seconds : seconds;
   var strTime = hours + ':' + minutes + ':' + seconds +' '+ ampm;
@@ -142,6 +228,11 @@ function formatAMPM(date) {
 
 function toTimeZone(time, zone) {
     var format = 'hh:mm A';
+    return moment(time, format).tz(zone).format(format);
+}
+
+function toTimeZone2(time, zone){
+	var format = 'YYYY-MM-DD, hh:mm A';
     return moment(time, format).tz(zone).format(format);
 }
 
@@ -208,7 +299,7 @@ function getSizmekData(){
 				//console.log(item);
 				//console.log("Shift: "+item[0]);
 				console.log(item[5]+', '+item[6]);
-				getGap(item[5]);
+				getGap(item[5],item[6]);
 				switch(item[0]){
 					case "APAC":
 						APAC.pendingPRs++;
@@ -253,8 +344,21 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
 			//console.log(qdb_data);
+			warningBasket = [];
+			overdueBasket = [];
 			qdb_data.forEach(function(item){
 				//console.log(item);
+				console.log(item[2]);
+				var timeLeftItems = Number(timeLeft(item[2]));
+				console.log(timeLeftItems+" -> "+item[0]);
+
+				console.log(timeLeftItems <= 2);
+
+				if(timeLeftItems <= 2 && timeLeftItems > 0){
+					warningBasket.push(item[0]);
+				} else if (timeLeftItems <= 0){
+					overdueBasket.push(item[0]);
+				}
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedPRs++;
@@ -274,6 +378,15 @@ function getSizmekData(){
 				//console.log(item[3]); //PR status
 			});
 			$("#prAssignedText").html(qdb_numrows);
+
+			if(warningBasket.length > 0){
+				alertSound('../audio/alert1.wav')
+				console.log(warningBasket);
+			}
+			if(overdueBasket.length > 0){
+				alertSound('../audio/alert1.wav')
+				console.log(overdueBasket);
+			}
 		},
 		complete:function(){
 			
@@ -452,7 +565,7 @@ function getSizmekData(){
 
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
-					console.log(item[3]);
+					//console.log(item[3]);
 					if(!item[3] || item[3] == '' || item[3] == undefined){
 						item[3] = '0';
 					}
@@ -478,13 +591,13 @@ function getSizmekData(){
 						tHours = '0';
 					}			
 
-					console.log("tHours: "+tHours);
+					//console.log("tHours: "+tHours);
 
 					var str = item[5].toLowerCase();
 					//console.log(item[12]);
 					//console.log(str);
-					console.log(item[3]+"/"+item[13])*100;
-					var totalNon = parseInt(item[3])/parseInt(item[13]);
+					//console.log(item[3]+"/"+item[14])*100;
+					var totalNon = parseInt(item[3])/parseInt(item[14]);
 					switch(str){
 						case "apac":
 						APAC.hours = item[15];
@@ -541,33 +654,36 @@ function getSizmekData(){
 			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
 			var avetwononbillable = ((parseInt(NAM_Programmatic.nBthours)+parseInt(NAM_West.nBthours)+parseInt(NAM_East.nBthours)+parseInt(EMEA.nBthours)+parseInt(APAC.nBthours)));
 			var twtotals = ((parseInt(NAM_Programmatic.twhours)+parseInt(NAM_West.twhours)+parseInt(NAM_East.twhours)+parseInt(EMEA.twhours)+parseInt(APAC.twhours)));
+			/*
 			console.log("totals: "+totals);
 			console.log("APAC non-Billable 2 weeks: "+ APAC.nBthours);
 			console.log("APAC hours 2 weeks: "+ APAC.twhours);
+			*/
 			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hours: "+((APAC.nBthours/APAC.twhours)*100).toFixed(2)+"%");
 			$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hrs");
-			console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
-			console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
+			//console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
+			//console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
 			$("#emeaBillDiv > span").html(EMEA.nBthours+"/"+EMEA.twhours+" hrs");
-			console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
-			console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
+			//console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
+			//console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
 			$("#programmaticBillDiv > span").html(NAM_Programmatic.nBthours+"/"+NAM_Programmatic.twhours+" hrs");
-			console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
-			console.log("NAM West hours 2 weeks: "+ NAM_West.twhours);
+			//console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
+			//console.log("NAM West hours 2 weeks: "+ NAM_West.twhours);
 			$("#westBillDiv > span").html(NAM_West.nBthours+"/"+NAM_West.twhours+" hrs");
-			console.log("NAM East non-Billable 2 weeks: "+ NAM_East.nBthours);
-			console.log("NAM East hours 2 weeks: "+ NAM_East.twhours);
+			//console.log("NAM East non-Billable 2 weeks: "+ NAM_East.nBthours);
+			//console.log("NAM East hours 2 weeks: "+ NAM_East.twhours);
 			$("#eastBillDiv > span").html(NAM_East.nBthours+"/"+NAM_East.twhours+" hrs");
-			console.log("Total non-Billable 2 weeks: "+ avetwononbillable);
-			console.log("Total hours 2 weeks: "+ twtotals);
+			//console.log("Total non-Billable 2 weeks: "+ avetwononbillable);
+			//console.log("Total hours 2 weeks: "+ twtotals);
 			$("#totalBillDiv > span").html(avetwononbillable+"/"+twtotals+" hrs");
-
+			/*
 			console.log("APAC non-Billable: "+ APAC.nBMonth);
 			console.log("APAC total Hours: "+ APAC.twhours);
 			console.log("APAC nonBillable Percentage: "+ (APAC.nBthours/APAC.twhours)*100+"%");
 			console.log("EMEA non-Billable: "+ EMEA.nBMonth);
 			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
-			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent); 
+			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
+			*/ 
 			hoursIndicators(apacBar,APAC.hours,40,"#apacLine");
 			hoursIndicators(emeaBar,EMEA.hours,40,"#emeaLine");
 			hoursIndicators(programmaticBar,NAM_Programmatic.hours,40,"#programmaticLine");
@@ -583,11 +699,13 @@ function getSizmekData(){
 			hoursIndicators(totalBillBar,avetwononbillable,twtotals,"#totalBill");
 
 			$("#totalDiv > span").html(totals+" hours");
+			/*
 			console.log("APAC.hours: "+APAC.hours);
 			console.log("EMEA.hours: "+EMEA.hours);
 			console.log("NAM_Programmatic.hours: "+NAM_Programmatic.hours);
 			console.log("NAM_East.hours: "+NAM_East.hours);
 			console.log("NAM_West.hours: "+NAM_West.hours);
+			*/
 			//$('#fbcInternalReviewText').html(qdb_numrows);
 		},
 		complete:function(){
@@ -604,8 +722,6 @@ $(document).ready(function(){
 	//showTwitter();
 	getSizmekData();
 
-	alertSound('../audio/alert1.wav');
-
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
@@ -619,9 +735,11 @@ $(document).ready(function(){
 	    timeout:2000
 	});
 
-	var flip2 = new FlipSlider({
+	var flip2 = new FlipSlider({ 
 		startIndex: 0,
 		container: document.querySelector("#graphs"),
 		timeout:4000
 	});
+
+	console.log("time difference: "+Number(getGap("02/27/2018","09:13 PM")));
 });
