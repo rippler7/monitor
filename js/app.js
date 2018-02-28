@@ -92,6 +92,15 @@ var totalBillBar;
 var warningBasket = [];
 var overdueBasket = [];
 
+function fadeSound(audio){
+    if(audio.volume > 0){
+        audio.volume -= 0.1;
+        setTimeout(fade, 2);
+    }else{
+        audio.pause();
+    }
+}
+
 function alertSound(sound){
 	var snd = new Audio(sound);
 	snd.play();
@@ -384,11 +393,11 @@ function getSizmekData(){
 			$("#prAssignedText").html(qdb_numrows);
 
 			if(warningBasket.length > 0){
-				alertSound('../audio/alert1.wav')
+				alertSound('./audio/klang.wav')
 				console.log(warningBasket);
 			}
 			if(overdueBasket.length > 0){
-				alertSound('../audio/alert1.wav')
+				alertSound('./audio/klang.wav')
 				console.log(overdueBasket);
 			}
 		},
