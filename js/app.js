@@ -119,7 +119,7 @@ function getGap(dateGiven,timeGiven){
 	// January - 0, February - 1, etc.
 	var dueDate = new Date(dateGiven+", "+timeGiven);
 	var givenDate = new Date(dateGiven);
-	console.log(dateGiven+", "+timeGiven);
+	//console.log(dateGiven+", "+timeGiven);
 
 	var timeLower = timeGiven.toLowerCase();
 	var timeConv = timeLower.split(":");
@@ -139,16 +139,18 @@ function getGap(dateGiven,timeGiven){
 	var dateNow = new Date();
 	var mydate = new Date(parts[2], parts[0] - 1); 
 
-	console.log("parts: "+parts[0]);
+	//console.log("parts: "+parts[0]);
 
 	givenDate.setHours(dueHour);
 	givenDate.setMinutes(dueMinute);
 	givenDate.setSeconds(00);
 
 	//console.log("timeGiven: "+timeGiven);
-	console.log("givenDate: "+givenDate);
-	console.log("dateNow: "+dateNow);
+	//console.log("givenDate: "+givenDate);
+	//console.log("dateNow: "+dateNow);
 	var dateNowAdjusted = toTimeZone2(dateNow,"America/New_York");
+
+	/*
 	var nowYear = dateNow.getFullYear();
 	var nowMonth = dateNow.getMonth()+1;
 	var nowDay = dateNow.getDate();
@@ -157,28 +159,30 @@ function getGap(dateGiven,timeGiven){
 	var timeNowConv = timeNowLower.split(":");
 	var nowHour = timeNowConv[0];
 	var nowMinute = timeNowConv[1].split(" ")[0];
-
 	if(timeNowLower.split(' ').indexOf('am') < 1) nowampm = "PM";
+
 	var nowampm = "AM";
 
 	if(dateNowAdjusted.indexOf('PM') >= 0){
 		nowHour + 12;
 	} else {
-		if(timeNowConv[0] == 12){
+		if(timeNowConv[0] == 12 && dateNowAdjusted.indexOf('PM') < 0){
 			nowHour = 0;
 		}
 	}
 
+	*/
+
 	console.log(timeGiven.indexOf("PM"));
 	console.log(dateNowAdjusted.indexOf("PM"));
 
-	console.log("nowampm: "+nowampm);
-	console.log("nowHour: "+nowHour);
+	//console.log("nowampm: "+nowampm);
+	//console.log("nowHour: "+nowHour);
 
 	console.log("dateNow Adjusted EST: "+dateNowAdjusted);
-	console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
-	var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
-	console.log(dateNowString);
+	//console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
+	//var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
+	//console.log(dateNowString);
 	var adjDateNow = new Date(dateNowAdjusted);
 	console.log(adjDateNow);
 
@@ -727,7 +731,7 @@ $(document).ready(function(){
     var showTweet = setInterval(function(){
     	//showTwitter();
     	getSizmekData();
-    },15 * 1000);
+    },60 * 1000);
     new slideShow('slideshow-wrapper','slideshow');
 	var flip1 = new FlipSlider({
 		startIndex: 1,
@@ -741,5 +745,5 @@ $(document).ready(function(){
 		timeout:4000
 	});
 
-	console.log("time difference: "+Number(getGap("02/27/2018","09:13 PM")));
+	console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });
