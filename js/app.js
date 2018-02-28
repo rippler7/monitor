@@ -362,6 +362,7 @@ function getSizmekData(){
 			qdb_data.forEach(function(item){
 				//console.log(item);
 				console.log(item[2]);
+				/*
 				var timeLeftItems = Number(timeLeft(item[2]));
 				console.log(timeLeftItems+" -> "+item[0]);
 
@@ -370,6 +371,18 @@ function getSizmekData(){
 				if(timeLeftItems <= 2 && timeLeftItems > 0){
 					warningBasket.push(item[0]);
 				} else if (timeLeftItems <= 0){
+					overdueBasket.push(item[0]);
+				}
+				*/
+				if(!item[4] || item[4] == '' || item[4] == undefined){
+						item[4] = '11:59:59 PM';
+					}
+				console.log("to Split: "+item[4]);
+				var gap = Number(getGap(item[3],item[4]));
+				console.log("GAP: "+gap);
+				if(gap <= 2 && gap > 0){
+					warningBasket.push(item[0]);
+				} else if (gap <= 0){
 					overdueBasket.push(item[0]);
 				}
 				switch(item[0]){
@@ -392,13 +405,23 @@ function getSizmekData(){
 			});
 			$("#prAssignedText").html(qdb_numrows);
 
-			if(warningBasket.length > 0){
-				alertSound('./audio/klang.wav')
+			if(warningBasket.length > 0 || overdueBasket.length > 0){
+				alertSound('./audio/klang.wav');
+				var contentModal ="";
+				if(warningBasket.length > 0){
+					contentModal += "PRs Due Soon: "+warningBasket+"<br />";
+				}
+				if(overdueBasket.length > 0){
+					contentModal += "<span class='redText'>PRs Overdue: "+overdueBasket+"</span>";
+				}
+				$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
 				console.log(warningBasket);
-			}
-			if(overdueBasket.length > 0){
-				alertSound('./audio/klang.wav')
 				console.log(overdueBasket);
+				$('#PRFBC_Modal').modal('show');
+				var modalTimeout = setTimeout(function(){
+				  	$('#PRFBC_Modal').modal('hide');
+				  	clearTimeout(modalTimeout);
+				},7000);
 			}
 		},
 		complete:function(){

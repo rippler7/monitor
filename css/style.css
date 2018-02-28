@@ -392,3 +392,21 @@ select {
   padding: 5px;
   height: 28px;
 }
+
+/* MODAL */
+#PRFBC_Modal{
+	color:#000;
+	text-align:center;
+}
+
+#PRFBC_Modal h1{
+	font-weight: bold;
+}
+
+.modal-body{
+	font-size: 3em;
+}
+
+.redText{
+	color: rgba(255,0,0,1.0) !important;
+}
