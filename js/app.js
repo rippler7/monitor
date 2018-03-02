@@ -421,7 +421,6 @@ function getSizmekData(){
 			$("#prAssignedText").html(qdb_numrows);
 
 			if(warningBasket.length > 0 || overdueBasket.length > 0){
-				alertSound('./audio/klang.wav');
 				if(warningBasket.length > 0){
 					contentModal += "<span class='thickText'>PRs Due Soon:</span> "+warningBasket+"<br />";
 				}
@@ -499,7 +498,6 @@ function getSizmekData(){
 				//console.log(item[3]); //PR status
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
-					alertSound('./audio/klang.wav');
 					if(warningBasketFBC.length > 0){
 						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+overdueBasketFBC+"</span>";
 					}
@@ -799,6 +797,7 @@ function callModal(){
 	console.log("callFBC: "+callFBC+", callPR: "+callPR);
 	if(callFBC == 1 && callPR == 1){
 		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
+			alertSound('./audio/beedoh.mp3');
 			$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
 					//console.log(warningBasket);
 					//console.log(overdueBasket);
@@ -823,7 +822,7 @@ $(document).ready(function(){
     	//showTwitter();
     	contentModal ="";
     	getSizmekData();
-    },30 * 1000);
+    },60 * 1000);
     new slideShow('slideshow-wrapper','slideshow');
 	var flip1 = new FlipSlider({
 		startIndex: 1,
