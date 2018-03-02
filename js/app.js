@@ -797,7 +797,7 @@ function callModal(){
 	console.log("callFBC: "+callFBC+", callPR: "+callPR);
 	if(callFBC == 1 && callPR == 1){
 		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
-			alertSound('./audio/beedoh.mp3');
+			alertSound('./audio/klang.wav');
 			$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
 					//console.log(warningBasket);
 					//console.log(overdueBasket);
