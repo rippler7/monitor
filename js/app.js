@@ -92,6 +92,11 @@ var totalBillBar;
 var contentModal ="";
 var warningBasket = [];
 var overdueBasket = [];
+var warningBasketFBC = [];
+var overdueBasketFBC = [];
+
+callFBC = 0;
+callPR = 0;
 
 function fadeSound(audio){
     if(audio.volume > 0){
@@ -292,6 +297,8 @@ function showTwitter(){
 }
 
 function getSizmekData(){
+	callFBC = 0;
+	callPR = 0;
 	$.ajax({
 		url:"https://sizmek.quickbase.com/db/bhv6kzfnc",
 		data:{
@@ -308,7 +315,7 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log("Number of Pending: "+qdb_numrows);
 			//console.log(qdb_data);
-			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidPendingPR+"&apptoken="+apptoken);
+			//console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidPendingPR+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
 				//console.log(item);
 				//console.log("Shift: "+item[0]);
@@ -382,8 +389,8 @@ function getSizmekData(){
 					}
 				//console.log("to Split: "+item[4]);
 				var gap = Number(getGap(item[3],item[4]));
-				//console.log("GAP: "+gap);
-
+				console.log("GAP: "+gap);
+				
 				if(training < 0){
 					if(gap <= 2 && gap > 0){
 						warningBasket.push(item[0]);
@@ -391,6 +398,7 @@ function getSizmekData(){
 						overdueBasket.push(item[0]);
 					}
 				}
+				
 
 				switch(item[0]){
 					case "APAC":
@@ -415,20 +423,14 @@ function getSizmekData(){
 			if(warningBasket.length > 0 || overdueBasket.length > 0){
 				alertSound('./audio/klang.wav');
 				if(warningBasket.length > 0){
-					contentModal += "PRs Due Soon: "+warningBasket+"<br />";
+					contentModal += "<span class='thickText'>PRs Due Soon:</span> "+warningBasket+"<br />";
 				}
 				if(overdueBasket.length > 0){
-					contentModal += "<span class='redText'>PRs Overdue: "+overdueBasket+"</span>";
+					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+overdueBasket+"</span><br />";
 				}
-				$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
-				//console.log(warningBasket);
-				//console.log(overdueBasket);
-				$('#PRFBC_Modal').modal('show');
-				var modalTimeout = setTimeout(function(){
-				  	$('#PRFBC_Modal').modal('hide');
-				  	clearTimeout(modalTimeout);
-				},7000);
 			}
+			callPR = 1;
+			callModal();
 		},
 		complete:function(){
 			
@@ -451,8 +453,33 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
 			//console.log(qdb_data);
+			warningBasketFBC = [];
+			overdueBasketFBC = [];
 			qdb_data.forEach(function(item){
 				//console.log(item);
+				var account = item[6].toLowerCase();
+				var dueDate = item[2];
+				var dueTime = item[1];
+				var notInternal = true;
+				if(dueTime == '' || dueTime == undefined){
+					dueTime = "00:00 AM";
+				}
+				var gap = getGap(dueDate,dueTime);
+				console.log(item[0]);
+				console.log("FBC GAP: "+gap);
+
+				if(account.indexOf("sizmek internal") >= 0){
+					notInternal = false;
+				}
+				if(notInternal ==  true){
+					if(gap < 2 && gap >= 0){
+						warningBasketFBC.push(item[0]);
+					} else if(gap < 0){
+						overdueBasketFBC.push(item[0]);
+					}
+				}
+				console.log("warningFBC: "+warningBasketFBC);
+				console.log("overdueFBC: "+overdueBasketFBC);
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedFBCs++;
@@ -471,7 +498,18 @@ function getSizmekData(){
 				}
 				//console.log(item[3]); //PR status
 			});
+			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
+					alertSound('./audio/klang.wav');
+					if(warningBasketFBC.length > 0){
+						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+overdueBasketFBC+"</span>";
+					}
+					if(overdueBasketFBC.length > 0){
+						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span>";
+					}
+				}
 			$("#fbcPendingText").html(qdb_numrows);
+			callFBC = 1;
+			callModal();
 		},
 		complete:function(){
 			
@@ -754,8 +792,23 @@ function getSizmekData(){
 			
 		}
 	});
+}
 
 
+function callModal(){
+	console.log("callFBC: "+callFBC+", callPR: "+callPR);
+	if(callFBC == 1 && callPR == 1){
+		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
+			$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
+					//console.log(warningBasket);
+					//console.log(overdueBasket);
+					$('#PRFBC_Modal').modal('show');
+					var modalTimeout = setTimeout(function(){
+					  	$('#PRFBC_Modal').modal('hide');
+					  	clearTimeout(modalTimeout);
+					},7000);
+		}
+	}
 }
 
 $(document).ready(function(){
@@ -770,7 +823,7 @@ $(document).ready(function(){
     	//showTwitter();
     	contentModal ="";
     	getSizmekData();
-    },60 * 1000);
+    },30 * 1000);
     new slideShow('slideshow-wrapper','slideshow');
 	var flip1 = new FlipSlider({
 		startIndex: 1,

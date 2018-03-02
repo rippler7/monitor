@@ -410,3 +410,7 @@ select {
 .redText{
 	color: rgba(255,0,0,1.0) !important;
 }
+
+.thickText{
+	font-weight:bold;
+}
