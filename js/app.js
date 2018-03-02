@@ -89,6 +89,7 @@ var namEastBillBar;
 var namWestBillBar;
 var totalBillBar;
 
+var contentModal ="";
 var warningBasket = [];
 var overdueBasket = [];
 
@@ -111,9 +112,9 @@ function timeLeft(days){
 	var measuredRes = hours.split(" ");
 	var remaining = Number(measuredRes[0]);
 	var timeMeasure = measuredRes[1].toLowerCase();
-	console.log("days? "+(measuredRes[1] == "days" || measuredRes[1] == "day"));
-	console.log("hours? "+measuredRes[1] == "hours");
-	console.log("mins? "+measuredRes[1] == "mins");
+	//console.log("days? "+(measuredRes[1] == "days" || measuredRes[1] == "day"));
+	//console.log("hours? "+measuredRes[1] == "hours");
+	//console.log("mins? "+measuredRes[1] == "mins");
 	if(measuredRes[1] == "days" || measuredRes[1] == "day"){
 		remaining = (remaining*24);
 	} else if (measuredRes[1] == "mins"){
@@ -143,7 +144,7 @@ function getGap(dateGiven,timeGiven){
 		}
 	}
 
-	console.log("ampm: "+ampm);
+	//console.log("ampm: "+ampm);
 
 	var dateNow = new Date();
 	var mydate = new Date(parts[2], parts[0] - 1); 
@@ -182,25 +183,25 @@ function getGap(dateGiven,timeGiven){
 
 	*/
 
-	console.log(timeGiven.indexOf("PM"));
-	console.log(dateNowAdjusted.indexOf("PM"));
+	//console.log(timeGiven.indexOf("PM"));
+	//console.log(dateNowAdjusted.indexOf("PM"));
 
 	//console.log("nowampm: "+nowampm);
 	//console.log("nowHour: "+nowHour);
 
-	console.log("dateNow Adjusted EST: "+dateNowAdjusted);
+	//console.log("dateNow Adjusted EST: "+dateNowAdjusted);
 	//console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
 	//var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
 	//console.log(dateNowString);
 	var adjDateNow = new Date(dateNowAdjusted);
-	console.log(adjDateNow);
+	//console.log(adjDateNow);
 
 
 	var result = (dueDate - adjDateNow)/36e5;
-	console.log(dueDate+" - "+adjDateNow);
-	console.log(result);
-	console.log("GAP: "+(dueDate - adjDateNow)/36e5);
-	console.log("result: "+Number(result)/(1000*7200));
+	//console.log(dueDate+" - "+adjDateNow);
+	//console.log(result);
+	//console.log("GAP: "+(dueDate - adjDateNow)/36e5);
+	//console.log("result: "+Number(result)/(1000*7200));
 	return result;
 }
 
@@ -311,7 +312,7 @@ function getSizmekData(){
 			qdb_data.forEach(function(item){
 				//console.log(item);
 				//console.log("Shift: "+item[0]);
-				console.log(item[5]+', '+item[6]);
+				//console.log(item[5]+', '+item[6]);
 				getGap(item[5],item[6]);
 				switch(item[0]){
 					case "APAC":
@@ -332,9 +333,9 @@ function getSizmekData(){
 				//console.log(item[4]); //PR status
 			});
 			$("#prPendingText").html(qdb_numrows);
-			console.log("APAC: "+APAC.pendingPRs);
-			console.log("EMEA: "+EMEA.pendingPRs);
-			console.log("NAM West: "+NAM_West.pendingPRs);
+			//console.log("APAC: "+APAC.pendingPRs);
+			//console.log("EMEA: "+EMEA.pendingPRs);
+			//console.log("NAM West: "+NAM_West.pendingPRs);
 		},
 		complete:function(){
 			
@@ -361,7 +362,7 @@ function getSizmekData(){
 			overdueBasket = [];
 			qdb_data.forEach(function(item){
 				//console.log(item);
-				console.log(item[2]);
+				//console.log(item[2]);
 				/*
 				var timeLeftItems = Number(timeLeft(item[2]));
 				console.log(timeLeftItems+" -> "+item[0]);
@@ -374,17 +375,23 @@ function getSizmekData(){
 					overdueBasket.push(item[0]);
 				}
 				*/
+				var campaign = item[5].toString().toLowerCase();
+				var training = (campaign.indexOf('training'));
 				if(!item[4] || item[4] == '' || item[4] == undefined){
 						item[4] = '11:59:59 PM';
 					}
-				console.log("to Split: "+item[4]);
+				//console.log("to Split: "+item[4]);
 				var gap = Number(getGap(item[3],item[4]));
-				console.log("GAP: "+gap);
-				if(gap <= 2 && gap > 0){
-					warningBasket.push(item[0]);
-				} else if (gap <= 0){
-					overdueBasket.push(item[0]);
+				//console.log("GAP: "+gap);
+
+				if(training < 0){
+					if(gap <= 2 && gap > 0){
+						warningBasket.push(item[0]);
+					} else if (gap <= 0){
+						overdueBasket.push(item[0]);
+					}
 				}
+
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedPRs++;
@@ -407,7 +414,6 @@ function getSizmekData(){
 
 			if(warningBasket.length > 0 || overdueBasket.length > 0){
 				alertSound('./audio/klang.wav');
-				var contentModal ="";
 				if(warningBasket.length > 0){
 					contentModal += "PRs Due Soon: "+warningBasket+"<br />";
 				}
@@ -415,8 +421,8 @@ function getSizmekData(){
 					contentModal += "<span class='redText'>PRs Overdue: "+overdueBasket+"</span>";
 				}
 				$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
-				console.log(warningBasket);
-				console.log(overdueBasket);
+				//console.log(warningBasket);
+				//console.log(overdueBasket);
 				$('#PRFBC_Modal').modal('show');
 				var modalTimeout = setTimeout(function(){
 				  	$('#PRFBC_Modal').modal('hide');
@@ -595,9 +601,9 @@ function getSizmekData(){
 			NAM_East.nBthours = 0,
 			NAM_West.nBthours = 0,
 			NAM_Programmatic.nBthours = 0
-			console.log("QB_DATA: ");
-			console.log(qdb_data);
-			console.log("HOURS: ");
+			//console.log("QB_DATA: ");
+			//console.log(qdb_data);
+			//console.log("HOURS: ");
 
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
@@ -646,8 +652,8 @@ function getSizmekData(){
 
 						case "emea":
 						EMEA.hours = item[15];
-						console.log("EMEA non-Billable: "+nBM);
-						console.log(nBLMonth);
+						//console.log("EMEA non-Billable: "+nBM);
+						//console.log(nBLMonth);
 						EMEA.nBMonth += parseInt(nBLMonth);
 						EMEA.nBMPercent += totalNon;
 						EMEA.nBthours += parseInt(nBM);
@@ -762,6 +768,7 @@ $(document).ready(function(){
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
     	//showTwitter();
+    	contentModal ="";
     	getSizmekData();
     },60 * 1000);
     new slideShow('slideshow-wrapper','slideshow');
@@ -777,5 +784,5 @@ $(document).ready(function(){
 		timeout:4000
 	});
 
-	console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
+	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });
