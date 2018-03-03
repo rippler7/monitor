@@ -90,11 +90,27 @@ var namWestBillBar;
 var totalBillBar;
 
 var contentModal ="";
+
+var teams = [];
+var teams2 = [];
 var warningBasket = [];
 var overdueBasket = [];
 var warningBasketFBC = [];
 var overdueBasketFBC = [];
-
+/*
+var warningBasketPR_APAC = [];
+var overdueBasketPR_APAC = [];
+var warningBasketFBC_APAC = [];
+var overdueBasketFBC_APAC = [];
+var warningBasketPR_EMEA = [];
+var overdueBasketPR_EMEA = [];
+var warningBasketFBC_EMEA = [];
+var overdueBasketFBC_EMEA = [];
+var warningBasketPR_NAM = [];
+var overdueBasketPR_NAM = [];
+var warningBasketFBC_NAM = [];
+var overdueBasketFBC_NAM = [];
+*/
 callFBC = 0;
 callPR = 0;
 
@@ -138,8 +154,8 @@ function getGap(dateGiven,timeGiven){
 
 	var timeLower = timeGiven.toLowerCase();
 	var timeConv = timeLower.split(":");
-	var dueHour = timeConv[0];
-	var dueMinute = timeConv[1].split(" ")[0];
+	var dueHour = Number(timeConv[0]);
+	var dueMinute = Number(timeConv[1].split(" ")[0]);
 	var ampm = "AM";
 	if(timeGiven.indexOf("AM") < 0){
 		dueHour = dueHour + 12;
@@ -159,10 +175,6 @@ function getGap(dateGiven,timeGiven){
 	givenDate.setHours(dueHour);
 	givenDate.setMinutes(dueMinute);
 	givenDate.setSeconds(00);
-
-	//console.log("timeGiven: "+timeGiven);
-	//console.log("givenDate: "+givenDate);
-	//console.log("dateNow: "+dateNow);
 	var dateNowAdjusted = toTimeZone2(dateNow,"America/New_York");
 
 	/*
@@ -199,15 +211,93 @@ function getGap(dateGiven,timeGiven){
 	//var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
 	//console.log(dateNowString);
 	var adjDateNow = new Date(dateNowAdjusted);
-	//console.log(adjDateNow);
+	//console.log(dueDate);
+	//console.log("adjusted Date Now: "+adjDateNow);
 
 
 	var result = (dueDate - adjDateNow)/36e5;
+	//console.log(result +"="+ "("+dueDate+" - "+adjDateNow+")/36e5");
 	//console.log(dueDate+" - "+adjDateNow);
 	//console.log(result);
 	//console.log("GAP: "+(dueDate - adjDateNow)/36e5);
 	//console.log("result: "+Number(result)/(1000*7200));
 	return result;
+}
+
+function getActiveTeams(timeGiven){
+	console.log("get active teams logic...");
+
+	var nowDateDefault = new Date();
+	var timeNowDefault = new Date(toTimeZone2(nowDateDefault,"America/New_York"));
+
+	console.log("timeNowDefault: "+timeNowDefault);
+
+	var nowHours = Number(timeNowDefault.getHours());
+	var nowMinutes = Number(timeNowDefault.getMinutes());
+
+	var timeLower = timeGiven.toLowerCase();
+	var timeConv = timeLower.split(":");
+	var dueHour = Number(timeConv[0]);
+	var dueMinute = Number(timeConv[1].split(" ")[0]);
+
+	var ampm = "AM";
+	if(timeGiven.indexOf("AM") < 0){
+		dueHour = dueHour + 12;
+	} else {
+		if(timeConv[0] == 12){
+			dueHour = 0;
+		}
+	}
+
+	var baseDate = new Date(2000, 0, 1, dueHour, dueMinute);
+	var nowDate = new Date(2000, 0, 1, nowHours, nowMinutes);
+	console.log(nowDate);
+
+	var dateAPACEnd1 = new Date(2000, 0, 1, 03, 00);
+
+	var dateAPACStart = new Date(2000, 0, 1, 18, 00);
+	var dateAPACEnd = new Date(2000, 0, 2, 03, 00);
+
+	var dateEMEAStart = new Date(2000, 0, 1, 03, 00);
+	var dateEMEAEnd = new Date(2000, 0, 1, 12, 00);
+
+	var dateNAMStart = new Date(2000, 0, 1, 09, 00);
+	var dateNAMEnd = new Date(2000, 0, 1, 18, 00);
+
+	(dateAPACStart <= baseDate && baseDate <= dateAPACEnd)? teams.push("apac"):console.log("");
+	(dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd)? teams.push("emea"):console.log("");
+	(dateNAMStart <= baseDate && baseDate <= dateNAMEnd)? teams.push("nam"):console.log("");
+	(baseDate <= dateAPACEnd1)? teams.push("apac"):console.log("");
+
+	(dateAPACStart <= nowDate && nowDate <= dateAPACEnd)? teams2.push("apac"):console.log("");
+	(dateEMEAStart <= nowDate && nowDate <= dateEMEAEnd)? teams2.push("emea"):console.log("");
+	(dateNAMStart <= nowDate && nowDate <= dateNAMEnd)? teams2.push("nam"):console.log("");
+	(nowDate <= dateAPACEnd1)? teams2.push("apac"):console.log("");
+
+	/*
+	switch (true){
+		case (dateAPACStart <= baseDate && baseDate <= dateAPACEnd):
+			if(teams.indexOf("apac") < 0){
+			teams.push("apac");
+			}
+			break;
+		case (dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd):
+			if(teams.indexOf("emea")  < 0){
+			teams.push("emea");
+			}
+			break;
+		case (dateNAMStart <= baseDate && baseDate <= dateNAMEnd):
+			if(teams.indexOf("nam")  < 0){
+			teams.push("nam");
+			}
+			break;
+	}
+
+	TO DO: GET THE DATE NOW, COMPARE RESULTS AND IF RESULTS MATCH, THE RETURN TRUE
+
+	*/
+	//console.log(teams);
+	return true;
 }
 
 
@@ -389,7 +479,7 @@ function getSizmekData(){
 					}
 				//console.log("to Split: "+item[4]);
 				var gap = Number(getGap(item[3],item[4]));
-				console.log("GAP: "+gap);
+				//console.log("GAP: "+gap);
 				
 				if(training < 0){
 					if(gap <= 2 && gap > 0){
@@ -461,24 +551,22 @@ function getSizmekData(){
 				var dueTime = item[1];
 				var notInternal = true;
 				if(dueTime == '' || dueTime == undefined){
-					dueTime = "00:00 AM";
+					dueTime = "11:59 PM";
 				}
 				var gap = getGap(dueDate,dueTime);
-				console.log(item[0]);
-				console.log("FBC GAP: "+gap);
-
 				if(account.indexOf("sizmek internal") >= 0){
 					notInternal = false;
 				}
 				if(notInternal ==  true){
-					if(gap < 2 && gap >= 0){
+
+					if(gap <= 24.0 && gap > 0){
+						console.log("WARNING!!! "+item[0]);
 						warningBasketFBC.push(item[0]);
 					} else if(gap < 0){
+						console.log("OVERDUE!!! "+item[0]);
 						overdueBasketFBC.push(item[0]);
 					}
 				}
-				console.log("warningFBC: "+warningBasketFBC);
-				console.log("overdueFBC: "+overdueBasketFBC);
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedFBCs++;
@@ -499,14 +587,16 @@ function getSizmekData(){
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
 					if(warningBasketFBC.length > 0){
-						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+overdueBasketFBC+"</span>";
+						contentModal += "<br /><span class='thickText'>FBCs Due Soon:</span> "+warningBasketFBC+"</span>";
 					}
 					if(overdueBasketFBC.length > 0){
-						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span>";
+						contentModal += "<br /><span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span><br />";
 					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
 			callFBC = 1;
+			console.log(teams);
+			console.log(teams2);
 			callModal();
 		},
 		complete:function(){
@@ -794,7 +884,6 @@ function getSizmekData(){
 
 
 function callModal(){
-	console.log("callFBC: "+callFBC+", callPR: "+callPR);
 	if(callFBC == 1 && callPR == 1){
 		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
 			alertSound('./audio/klang.wav');
@@ -815,7 +904,7 @@ $(document).ready(function(){
 	console.log("ready");
 	//showTwitter();
 	getSizmekData();
-
+	console.log(getActiveTeams("7:00 PM"));
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
