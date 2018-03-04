@@ -145,6 +145,13 @@ function timeLeft(days){
 }
 
 function getGap(dateGiven,timeGiven){
+	var nowDateDefault = new Date();
+	var EST_Now = (toTimeZone2(nowDateDefault,"America/New_York"));
+	var nowDate = new Date(EST_Now);
+	var dateSample = Date.parse(dateGiven+", "+timeGiven);
+	var testDate = new Date(dateSample);
+	var result = (testDate - nowDate)/36e5;
+	/*
 	var parts = dateGiven.split('-');
 	// Please pay attention to the month (parts[1]); JavaScript counts months from 0:
 	// January - 0, February - 1, etc.
@@ -210,12 +217,12 @@ function getGap(dateGiven,timeGiven){
 	//console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
 	//var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
 	//console.log(dateNowString);
-	var adjDateNow = new Date(dateNowAdjusted);
+	//var adjDateNow = new Date(dateNowAdjusted);
 	//console.log(dueDate);
 	//console.log("adjusted Date Now: "+adjDateNow);
 
 
-	var result = (dueDate - adjDateNow)/36e5;
+	//var result = (dueDate - adjDateNow)/36e5;
 	//console.log(result +"="+ "("+dueDate+" - "+adjDateNow+")/36e5");
 	//console.log(dueDate+" - "+adjDateNow);
 	//console.log(result);
@@ -482,13 +489,14 @@ function getSizmekData(){
 				//console.log("GAP: "+gap);
 				
 				if(training < 0){
-					if(gap <= 2 && gap > 0){
+					if(gap <= 24 && gap > 0){
 						warningBasket.push(item[0]);
 					} else if (gap <= 0){
 						overdueBasket.push(item[0]);
 					}
 				}
 				
+				console.log("PR GAP: "+gap+" => "+item[0]+", campaign: "+item[5]);
 
 				switch(item[0]){
 					case "APAC":
@@ -518,6 +526,7 @@ function getSizmekData(){
 					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+overdueBasket+"</span><br />";
 				}
 			}
+			console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket);
 			callPR = 1;
 			callModal();
 		},
@@ -587,10 +596,10 @@ function getSizmekData(){
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
 					if(warningBasketFBC.length > 0){
-						contentModal += "<br /><span class='thickText'>FBCs Due Soon:</span> "+warningBasketFBC+"</span>";
+						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+warningBasketFBC+"</span>";
 					}
 					if(overdueBasketFBC.length > 0){
-						contentModal += "<br /><span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span><br />";
+						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span><br />";
 					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
