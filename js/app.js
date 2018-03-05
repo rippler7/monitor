@@ -519,14 +519,22 @@ function getSizmekData(){
 			$("#prAssignedText").html(qdb_numrows);
 
 			if(warningBasket.length > 0 || overdueBasket.length > 0){
+				var wItems = "";
+				var oItems = "";
+				for(var w=0;w<warningBasket.length;w++){
+					(w!=warningBasket.length-1)? wItems+= warningBasket[w]+", " : wItems += warningBasket[w]+"<br />";
+				}
+				for(var o=0;o<overdueBasket.length;o++){
+					(o!=overdueBasket.length-1)? oItems+= overdueBasket[o]+", " : oItems += overdueBasket[o]+"<br />";
+				}
 				if(warningBasket.length > 0){
-					contentModal += "<span class='thickText'>PRs Due Soon:</span> "+warningBasket+"<br />";
+					contentModal += "<span class='thickText'>PRs Due Soon:</span> "+wItems+"<br />";
 				}
 				if(overdueBasket.length > 0){
-					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+overdueBasket+"</span><br />";
+					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+oItems+"</span><br />";
 				}
 			}
-			console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket);
+			console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
 			callPR = 1;
 			callModal();
 		},
@@ -595,11 +603,19 @@ function getSizmekData(){
 				//console.log(item[3]); //PR status
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
+					var wItems = "";
+					var oItems = "";
+					for(var w=0;w<warningBasketFBC.length;w++){
+						(w!=warningBasketFBC.length-1)? wItems+= warningBasketFBC[w]+", " : wItems += warningBasketFBC[w]+"<br />";
+					}
+					for(var o=0;o<overdueBasketFBC.length;o++){
+						(o!=overdueBasketFBC.length-1)? oItems+= overdueBasketFBC[o]+", " : oItems += overdueBasketFBC[o]+"<br />";
+					}
 					if(warningBasketFBC.length > 0){
-						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+warningBasketFBC+"</span>";
+						contentModal += "<span class='thickText'>FBCs Due Soon:</span> "+wItems+"</span>";
 					}
 					if(overdueBasketFBC.length > 0){
-						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+overdueBasketFBC+"</span><br />";
+						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+oItems+"</span><br />";
 					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
