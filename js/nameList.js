@@ -62,7 +62,7 @@ function checkTracker() {
                     var nnd = new Date(nutc);
                     var dDiff = (nnd.getTime() - curdate) / 86400000
                     if (dDiff < 0 && PRData[j]["Campaign Name"] != "Cebu Training Campaign" && PRData[j]["Campaign Name"] != "Creative Dev Best Practices Training Prep" && PRData[j]["Campaign Name"] != "Fake Demo Campaign") {
-                        PRColors[i] = "red"
+                        PRColors[i] = "red" 
                     } else if (dDiff > 0 && dDiff < 1 && PRColors[i] != "red") {
                         PRColors[i] = "green"
                     } else if (PRColors[i] != "red") {

@@ -215,11 +215,13 @@
 					<div id="newsTicker" class="TickerNews">
 						<div class="ti_wrapper">
 					        <div class="ti_slide">
-					            <div class="ti_content">
+					            <div id="tickerAnnouncements" class="ti_content">
+					            	<!--
 					                <div class="ti_news"><span class="blueText">:: ANNOUNCEMENT:</span>  Monitor display UI under construction, DST auto enabled for timezone clock ::</div>
 									<div class="ti_news"><span class="blueText">:: ANNOUNCEMENT:</span> Creative Teams restructuring aftermath ::</div>
 									<div class="ti_news"><span class="blueText">:: BRIAN RODRIGUEZ:</span> Check log hours ::</div>
 									<div class="ti_news"><span class="blueText">:: HAPPY BIRTHDAY TO: </span>January celebrants Niko and Joshry!</div>
+								-->
 					            </div>
 					        </div>
 					    </div>
@@ -251,5 +253,14 @@
 </div>
 	<script src="js/flipslide.js"></script>
 	<script src="js/app.js"></script>
+	<script type="text/javascript" src="js/announcementList.js"></script>
+	<script type="text/javascript">
+		showBirthdays();
+		var bdayTime = setInterval(function(){
+			$("#newsTicker .ti_wrapper .ti_slide .ti_content").html();
+			showBirthdays();
+			location.reload();
+		},3600000);
+	</script>
 </body>
 </html>

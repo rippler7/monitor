@@ -522,10 +522,10 @@ function getSizmekData(){
 				var wItems = "";
 				var oItems = "";
 				for(var w=0;w<warningBasket.length;w++){
-					(w!=warningBasket.length-1)? wItems+= warningBasket[w]+", " : wItems += warningBasket[w]+"<br />";
+					(w!=warningBasket.length-1)? wItems+= warningBasket[w]+", " : wItems += warningBasket[w];
 				}
 				for(var o=0;o<overdueBasket.length;o++){
-					(o!=overdueBasket.length-1)? oItems+= overdueBasket[o]+", " : oItems += overdueBasket[o]+"<br />";
+					(o!=overdueBasket.length-1)? oItems+= overdueBasket[o]+", " : oItems += overdueBasket[o];
 				}
 				if(warningBasket.length > 0){
 					contentModal += "<span class='thickText'>PRs Due Soon:</span> "+wItems+"<br />";
