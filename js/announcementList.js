@@ -8,7 +8,7 @@ function showAlerts(){
 		dataType:"script",
 		success:function(data){
 			eval(data);
-			console.log(jan);
+			//console.log(jan);
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
 			alertNear(birthdays);
 			showAnnouncements(announcements);
