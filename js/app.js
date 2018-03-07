@@ -892,14 +892,7 @@ function getSizmekData(){
 			hoursIndicators(totalBillBar,avetwononbillable,twtotals,"#totalBill");
 
 			$("#totalDiv > span").html(totals+" hours");
-			/*
-			console.log("APAC.hours: "+APAC.hours);
-			console.log("EMEA.hours: "+EMEA.hours);
-			console.log("NAM_Programmatic.hours: "+NAM_Programmatic.hours);
-			console.log("NAM_East.hours: "+NAM_East.hours);
-			console.log("NAM_West.hours: "+NAM_West.hours);
-			*/
-			//$('#fbcInternalReviewText').html(qdb_numrows);
+			
 		},
 		complete:function(){
 			

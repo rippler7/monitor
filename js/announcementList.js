@@ -1,4 +1,4 @@
-function showBirthdays(){
+function showAlerts(){
 	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
