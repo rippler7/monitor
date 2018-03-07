@@ -496,7 +496,7 @@ function getSizmekData(){
 					}
 				}
 				
-				console.log("PR GAP: "+gap+" => "+item[0]+", campaign: "+item[5]);
+				//console.log("PR GAP: "+gap+" => "+item[0]+", campaign: "+item[5]);
 
 				switch(item[0]){
 					case "APAC":
@@ -534,7 +534,7 @@ function getSizmekData(){
 					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+oItems+"</span><br />";
 				}
 			}
-			console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
+			//console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
 			callPR = 1;
 			callModal();
 		},
@@ -577,10 +577,10 @@ function getSizmekData(){
 				if(notInternal ==  true){
 
 					if(gap <= 24.0 && gap > 0){
-						console.log("WARNING!!! "+item[0]);
+						//console.log("WARNING!!! "+item[0]);
 						warningBasketFBC.push(item[0]);
 					} else if(gap < 0){
-						console.log("OVERDUE!!! "+item[0]);
+						//console.log("OVERDUE!!! "+item[0]);
 						overdueBasketFBC.push(item[0]);
 					}
 				}
@@ -620,8 +620,8 @@ function getSizmekData(){
 				}
 			$("#fbcPendingText").html(qdb_numrows);
 			callFBC = 1;
-			console.log(teams);
-			console.log(teams2);
+			//console.log(teams);
+			//console.log(teams2);
 			callModal();
 		},
 		complete:function(){
@@ -919,10 +919,10 @@ function callModal(){
 
 $(document).ready(function(){
 
-	console.log("ready");
+	//console.log("ready");
 	//showTwitter();
 	getSizmekData();
-	console.log(getActiveTeams("7:00 PM"));
+	//console.log(getActiveTeams("7:00 PM"));
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
