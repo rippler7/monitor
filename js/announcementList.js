@@ -3,7 +3,7 @@ function showAlerts(){
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 	$.ajax({
-		url:"./js/announcements.js",
+		url:"http://jermanation.com/monitor/announcements.js",
 		method:"GET",
 		dataType:"script",
 		success:function(data){
