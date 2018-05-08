@@ -21,6 +21,7 @@
   "homepage": "https://github.com/rippler7/monitor#readme",
   "devDependencies": {
     "bootstrap": "^3.3.7",
+    "fs": "0.0.1-security",
     "jquery": "^3.2.1",
     "moment-timezone": "^0.5.14"
   },

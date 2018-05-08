@@ -2,8 +2,14 @@ function showAlerts(){
 	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	var currDatRanomizer = Date.now();
+	//var totalHours = currDatRanomizer.getHours();
+	var getRand = Math.floor(Math.random())+currDatRanomizer;
+	console.log("totalHours: "+getRand);
+	var urlRefresh = "./js/announcements.js"+"?rand="+getRand.toString();
+	console.log(urlRefresh);
 	$.ajax({
-		url:"./js/announcements.js",
+		url: urlRefresh,
 		method:"GET",
 		dataType:"script",
 		success:function(data){

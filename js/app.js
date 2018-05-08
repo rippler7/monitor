@@ -3,91 +3,48 @@ var qidAssignedPR = "1000710";
 var qidAssignedFBC = "1000231";
 var qidInternalRevPR = "1000428";
 var qidInternalRevFBC = "1000159";
-var qidHours = "-1019757";
-//-1019757
-//-1019627
+var qidHours = "1000164"; //-1019757
 var apptoken = "dxjuywydk6zb2kxn8pz5daj7fcs";
 
 var APAC = {
-	"pendingPRs":0,
-	"AssignedPRs":0,
-	"AssignedFBCs":0,
-	"internalReviewPR":0,
-	"internalReviewFBC":0,
-	"hours":0,
-	"twhours":0,
-	"nBthours":0,
-	"nBMonth":0,
-	"nBMPercent":0
-}
-
+	id:"APAC",
+	members:["Quinquilleria, Silbeth -Betty","Basadre, Rey -Rey", "DeGuzman, Ediral -Ed", "Hatamosa, Mike -Gab", "Pascual, Christian -Paski"],
+	totalHours:0,
+	totalNonBillable:0
+};
 var EMEA = {
-	"pendingPRs":0,
-	"AssignedPRs":0,
-	"AssignedFBCs":0,
-	"internalReviewPR":0,
-	"internalReviewFBC":0,
-	"hours":0,
-	"twhours":0,
-	"nBthours":0,
-	"nBMonth":0,
-	"nBMPercent":0
+	id: "EMEA",
+	members: ["Guerrero, Ivan -Master Ivan","Africano, Nixon -Nixon", "Cabalida, Stephen -Stephen", "Dramayo, Lorenciano -Ciano", "Calisang, Ebenezer -Boboi", "Rosell, Christian Adam -Christian"],
+	totalHours: 0,
+	totalNonBillable:0
+};
+var NAM_NonAuto_members = {
+	id:"NAM_NonAuto",
+	members:["Pepito, Arniel -Sirs","Baldomero, Abdella -Del", "DeGuzman, Reynaldo -JR", "Laborte, Niko -Niko", "Pagulong, Lauro -Byakuks"],
+	totalHours:0,
+	totalNonBillable:0
+};
+var NAM_Programmatic = {
+	id:"NAM_Programmatic",
+	members:["Ancog, Jeremy -Master","Abellana, Peter John -PJ","Del Rosario, Emmanuel -Mikee","Imus, Jollie Mae -Jollie","Loquinario, Mary Rose -Mary","Madduma, John -Erick"],
+	totalHours:0,
+	totalNonBillable:0
+};
+var Automotive = {
+	id:"Automotive",
+	members:["Lopez, Ryan -Boss","Mingo, Christian -Sexy Meng","Valdehueza, Joshry Jade -Josh","Villas, John Aldwin"],
+	totalHours:0,
+	totalNonBillable:0	
+};
+var Interactive_Designer = {
+	id:"Interactive",
+	members:["Pantoja, Maureen -Mau","Palapar, James -James"],
+	totalHours:0,
+	totalNonBillable:0	
+};
 
-}
 
-var NAM_West = {
-	"pendingPRs":0,
-	"AssignedPRs":0,
-	"AssignedFBCs":0,
-	"internalReviewPR":0,
-	"internalReviewFBC":0,
-	"hours":0,
-	"twhours":0,
-	"nBthours":0,
-	"nBMonth":0,
-	"nBMPercent":0
-}
-
-var NAM_East = {
-	"pendingPRs":0,
-	"AssignedPRs":0,
-	"AssignedFBCs":0,
-	"internalReviewPR":0,
-	"internalReviewFBC":0,
-	"hours":0,
-	"twhours":0,
-	"nBthours":0,
-	"nBMonth":0,
-	"nBMPercent":0
-}
-
-var NAM_Programmatic = {  
-	"pendingPRs":0,
-	"AssignedPRs":0,
-	"AssignedFBCs":0,
-	"internalReviewPR":0,
-	"internalReviewFBC":0,
-	"hours":0,
-	"twhours":0,
-	"nBthours":0,
-	"nBMonth":0,
-	"nBMPercent":0
-}
-
-var apacBar;
-var apacBarN;
-var emeaBar;
-var programmaticBar;
-var namEastBar;
-var namWestBar;
-var totalBar;
-
-var apacBillBar;
-var emeaBillBar;
-var programmaticBillBar;
-var namEastBillBar;
-var namWestBillBar;
-var totalBillBar;
+var Teams = [APAC,EMEA,NAM_NonAuto_members,NAM_Programmatic,Automotive,Interactive_Designer];
 
 var contentModal ="";
 
@@ -97,20 +54,6 @@ var warningBasket = [];
 var overdueBasket = [];
 var warningBasketFBC = [];
 var overdueBasketFBC = [];
-/*
-var warningBasketPR_APAC = [];
-var overdueBasketPR_APAC = [];
-var warningBasketFBC_APAC = [];
-var overdueBasketFBC_APAC = [];
-var warningBasketPR_EMEA = [];
-var overdueBasketPR_EMEA = [];
-var warningBasketFBC_EMEA = [];
-var overdueBasketFBC_EMEA = [];
-var warningBasketPR_NAM = [];
-var overdueBasketPR_NAM = [];
-var warningBasketFBC_NAM = [];
-var overdueBasketFBC_NAM = [];
-*/
 callFBC = 0;
 callPR = 0;
 
@@ -133,9 +76,6 @@ function timeLeft(days){
 	var measuredRes = hours.split(" ");
 	var remaining = Number(measuredRes[0]);
 	var timeMeasure = measuredRes[1].toLowerCase();
-	//console.log("days? "+(measuredRes[1] == "days" || measuredRes[1] == "day"));
-	//console.log("hours? "+measuredRes[1] == "hours");
-	//console.log("mins? "+measuredRes[1] == "mins");
 	if(measuredRes[1] == "days" || measuredRes[1] == "day"){
 		remaining = (remaining*24);
 	} else if (measuredRes[1] == "mins"){
@@ -151,93 +91,44 @@ function getGap(dateGiven,timeGiven){
 	var dateSample = Date.parse(dateGiven+", "+timeGiven);
 	var testDate = new Date(dateSample);
 	var result = (testDate - nowDate)/36e5;
-	/*
-	var parts = dateGiven.split('-');
-	// Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-	// January - 0, February - 1, etc.
-	var dueDate = new Date(dateGiven+", "+timeGiven);
-	var givenDate = new Date(dateGiven);
-	//console.log(dateGiven+", "+timeGiven);
-
-	var timeLower = timeGiven.toLowerCase();
-	var timeConv = timeLower.split(":");
-	var dueHour = Number(timeConv[0]);
-	var dueMinute = Number(timeConv[1].split(" ")[0]);
-	var ampm = "AM";
-	if(timeGiven.indexOf("AM") < 0){
-		dueHour = dueHour + 12;
-	} else {
-		if(timeConv[0] == 12){
-			dueHour = 0;
-		}
-	}
-
-	//console.log("ampm: "+ampm);
-
-	var dateNow = new Date();
-	var mydate = new Date(parts[2], parts[0] - 1); 
-
-	//console.log("parts: "+parts[0]);
-
-	givenDate.setHours(dueHour);
-	givenDate.setMinutes(dueMinute);
-	givenDate.setSeconds(00);
-	var dateNowAdjusted = toTimeZone2(dateNow,"America/New_York");
-
-	/*
-	var nowYear = dateNow.getFullYear();
-	var nowMonth = dateNow.getMonth()+1;
-	var nowDay = dateNow.getDate();
-
-	var timeNowLower = dateNowAdjusted.toLowerCase();
-	var timeNowConv = timeNowLower.split(":");
-	var nowHour = timeNowConv[0];
-	var nowMinute = timeNowConv[1].split(" ")[0];
-	if(timeNowLower.split(' ').indexOf('am') < 1) nowampm = "PM";
-
-	var nowampm = "AM";
-
-	if(dateNowAdjusted.indexOf('PM') >= 0){
-		nowHour + 12;
-	} else {
-		if(timeNowConv[0] == 12 && dateNowAdjusted.indexOf('PM') < 0){
-			nowHour = 0;
-		}
-	}
-
-	*/
-
-	//console.log(timeGiven.indexOf("PM"));
-	//console.log(dateNowAdjusted.indexOf("PM"));
-
-	//console.log("nowampm: "+nowampm);
-	//console.log("nowHour: "+nowHour);
-
-	//console.log("dateNow Adjusted EST: "+dateNowAdjusted);
-	//console.log("now EST: "+nowYear+"-"+nowMonth+"-"+nowDay+", "+nowHour+":"+nowMinute+":"+"00");
-	//var dateNowString = nowYear+"/"+nowMonth+"/"+nowDay+" "+nowHour+":"+nowMinute+":00 EST";
-	//console.log(dateNowString);
-	//var adjDateNow = new Date(dateNowAdjusted);
-	//console.log(dueDate);
-	//console.log("adjusted Date Now: "+adjDateNow);
-
-
-	//var result = (dueDate - adjDateNow)/36e5;
-	//console.log(result +"="+ "("+dueDate+" - "+adjDateNow+")/36e5");
-	//console.log(dueDate+" - "+adjDateNow);
-	//console.log(result);
-	//console.log("GAP: "+(dueDate - adjDateNow)/36e5);
-	//console.log("result: "+Number(result)/(1000*7200));
 	return result;
 }
 
-function getActiveTeams(timeGiven){
-	console.log("get active teams logic...");
+function getActiveTeams(){
+	//console.log("get active teams logic...");
 
 	var nowDateDefault = new Date();
 	var timeNowDefault = new Date(toTimeZone2(nowDateDefault,"America/New_York"));
 
-	console.log("timeNowDefault: "+timeNowDefault);
+	var h = nowDateDefault.getHours();
+	/*
+	var ampmText = "am";
+	if (h >= 12){
+		h = h-12;
+		ampmText = "pm";	
+	}
+	*/
+	var m = nowDateDefault.getMinutes();
+		/*
+	var timeLower = timeGiven.toLowerCase();
+	var timeConv = timeLower.split(":");
+	var dueHour = Number(timeConv[0]);
+	var dueMinute = Number(timeConv[1].split(" ")[0]);
+	var dueAmPm = timeConv[1].split(" ")[1];
+		*/
+	var shiftNow = "NAM";
+
+	if(h >= 7 && h < 14){
+		shiftNow = "APAC";
+	} else if (h >= 14 && h < 20){
+		shiftNow = "EMEA";
+	} else {
+		shiftNow = "NAM"; 
+	}
+
+	/*
+
+	//console.log("timeNowDefault: "+timeNowDefault);
 
 	var nowHours = Number(timeNowDefault.getHours());
 	var nowMinutes = Number(timeNowDefault.getMinutes());
@@ -247,7 +138,7 @@ function getActiveTeams(timeGiven){
 	var dueHour = Number(timeConv[0]);
 	var dueMinute = Number(timeConv[1].split(" ")[0]);
 
-	var ampm = "AM";
+	var ampm = "AM"; 
 	if(timeGiven.indexOf("AM") < 0){
 		dueHour = dueHour + 12;
 	} else {
@@ -258,7 +149,7 @@ function getActiveTeams(timeGiven){
 
 	var baseDate = new Date(2000, 0, 1, dueHour, dueMinute);
 	var nowDate = new Date(2000, 0, 1, nowHours, nowMinutes);
-	console.log(nowDate);
+	//console.log(nowDate);
 
 	var dateAPACEnd1 = new Date(2000, 0, 1, 03, 00);
 
@@ -271,6 +162,7 @@ function getActiveTeams(timeGiven){
 	var dateNAMStart = new Date(2000, 0, 1, 09, 00);
 	var dateNAMEnd = new Date(2000, 0, 1, 18, 00);
 
+		/*
 	(dateAPACStart <= baseDate && baseDate <= dateAPACEnd)? teams.push("apac"):console.log("");
 	(dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd)? teams.push("emea"):console.log("");
 	(dateNAMStart <= baseDate && baseDate <= dateNAMEnd)? teams.push("nam"):console.log("");
@@ -280,31 +172,15 @@ function getActiveTeams(timeGiven){
 	(dateEMEAStart <= nowDate && nowDate <= dateEMEAEnd)? teams2.push("emea"):console.log("");
 	(dateNAMStart <= nowDate && nowDate <= dateNAMEnd)? teams2.push("nam"):console.log("");
 	(nowDate <= dateAPACEnd1)? teams2.push("apac"):console.log("");
-
-	/*
-	switch (true){
-		case (dateAPACStart <= baseDate && baseDate <= dateAPACEnd):
-			if(teams.indexOf("apac") < 0){
-			teams.push("apac");
-			}
-			break;
-		case (dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd):
-			if(teams.indexOf("emea")  < 0){
-			teams.push("emea");
-			}
-			break;
-		case (dateNAMStart <= baseDate && baseDate <= dateNAMEnd):
-			if(teams.indexOf("nam")  < 0){
-			teams.push("nam");
-			}
-			break;
-	}
-
-	TO DO: GET THE DATE NOW, COMPARE RESULTS AND IF RESULTS MATCH, THE RETURN TRUE
-
+		
+	var currTeam;
+	(dateAPACStart <= baseDate && baseDate <= dateAPACEnd)? currTeam = "APAC": console.log("");
+	(dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd)? currTeam = "EMEA": console.log("");
+	(dateNAMStart <= baseDate && baseDate <= dateNAMEnd)? currTeam = "NAM":console.log("");
+	return currTeam;
 	*/
-	//console.log(teams);
-	return true;
+	return shiftNow;
+
 }
 
 
@@ -411,13 +287,14 @@ function getSizmekData(){
 		success:function(){
 			//console.log(qdb_numcols);
 			//console.log("Number of Pending: "+qdb_numrows);
-			//console.log(qdb_data);
-			//console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidPendingPR+"&apptoken="+apptoken);
+			console.log("Get Sizmek Pending PR: ");
+			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidPendingPR+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
 				//console.log(item);
 				//console.log("Shift: "+item[0]);
 				//console.log(item[5]+', '+item[6]);
 				getGap(item[5],item[6]);
+				/*
 				switch(item[0]){
 					case "APAC":
 						APAC.pendingPRs++;
@@ -425,7 +302,7 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.pendingPRs++;
 						break;  
-					case "Cebu NAM East/Central":
+					case "Cebu NAM Producer Managed":
 						NAM_East.pendingPRs++;
 						break; 
 					case "Programmatic":
@@ -434,6 +311,7 @@ function getSizmekData(){
 					default:
 						NAM_West.pendingPRs++;
 				}
+				*/
 				//console.log(item[4]); //PR status
 			});
 			$("#prPendingText").html(qdb_numrows);
@@ -461,11 +339,12 @@ function getSizmekData(){
 		success:function(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
-			//console.log(qdb_data);
+			console.log("Assigned PR: ");
+			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidAssignedPR+"&apptoken="+apptoken);
 			warningBasket = [];
 			overdueBasket = [];
 			qdb_data.forEach(function(item){
-				//console.log(item);
+				//console.log(item[9]);
 				//console.log(item[2]);
 				/*
 				var timeLeftItems = Number(timeLeft(item[2]));
@@ -497,7 +376,7 @@ function getSizmekData(){
 				}
 				
 				//console.log("PR GAP: "+gap+" => "+item[0]+", campaign: "+item[5]);
-
+					/*
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedPRs++;
@@ -505,7 +384,7 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.AssignedPRs++;
 						break;
-					case "Cebu NAM East/Central":
+					case "Cebu NAM Producer Managed":
 						NAM_East.AssignedPRs++;
 						break;
 					case "Programmatic":
@@ -514,6 +393,7 @@ function getSizmekData(){
 					default:
 						NAM_West.AssignedPRs++;
 				}
+				*/
 				//console.log(item[3]); //PR status
 			});
 			$("#prAssignedText").html(qdb_numrows);
@@ -558,7 +438,8 @@ function getSizmekData(){
 		success:function(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
-			//console.log(qdb_data);
+			console.log("Assigned FBC: ");
+			console.log("https://sizmek.quickbase.com/db/bhtzcnzkd"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidAssignedFBC+"&apptoken="+apptoken);
 			warningBasketFBC = [];
 			overdueBasketFBC = [];
 			qdb_data.forEach(function(item){
@@ -584,6 +465,7 @@ function getSizmekData(){
 						overdueBasketFBC.push(item[0]);
 					}
 				}
+				/*
 				switch(item[0]){
 					case "APAC":
 						APAC.AssignedFBCs++;
@@ -591,7 +473,7 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.AssignedFBCs++;
 						break;
-					case "Cebu NAM East/Central":
+					case "Cebu NAM Producer Managed":
 						NAM_East.AssignedFBCs++;
 						break;
 					case "Programmatic":
@@ -600,6 +482,7 @@ function getSizmekData(){
 					default:
 						NAM_West.AssignedFBCs++;
 				}
+				*/
 				//console.log(item[3]); //PR status
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
@@ -645,9 +528,11 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log(this);
 			//console.log(qdb_data);
-			//console.log(qdb_data.length);
+			console.log("Internal Review PR: ");
+			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidInternalRevPR+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
 				////console.log(item[3]); //PR status
+				/*
 				switch(item[0]){
 					case "APAC":
 						APAC.internalReviewPR++;
@@ -655,7 +540,7 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.internalReviewPR++;
 						break;
-					case "Cebu NAM East/Central":
+					case "Cebu NAM Producer Managed":
 						NAM_East.internalReviewPR++;
 						break;
 					case "Programmatic":
@@ -664,6 +549,7 @@ function getSizmekData(){
 					default:
 						NAM_West.internalReviewPR++;
 				}
+				*/
 			});
 
 			$('#prInternalReviewText').html(qdb_numrows);
@@ -689,9 +575,11 @@ function getSizmekData(){
 			//console.log(qdb_numcols);
 			//console.log(this);
 			//console.log(qdb_data);
-			//console.log(qdb_data.length);
+			console.log("Internal Review FBC: ");
+			console.log("https://sizmek.quickbase.com/db/bhtzcnzkd"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidInternalRevFBC+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
-				//console.log(item[3]); //PR status
+				console.log(item[2]); //PR status
+				/*
 				switch(item[0]){
 					case "APAC":
 						APAC.internalReviewFBC++;
@@ -699,7 +587,7 @@ function getSizmekData(){
 					case "EMEA":
 						EMEA.internalReviewFBC++;
 						break;
-					case "Cebu NAM East/Central":
+					case "Cebu Producer Managed":
 						NAM_East.internalReviewFBC++;
 						break;
 					case "Programmatic":
@@ -708,6 +596,7 @@ function getSizmekData(){
 					default:
 						NAM_West.internalReviewFBC++;
 				}
+				*/
 			});
 
 			$('#fbcInternalReviewText').html(qdb_numrows);
@@ -731,7 +620,9 @@ function getSizmekData(){
 		dataType:"script",
 		method:"GET",
 		success:function(){
-			//console.log(qdb_numcols);
+			console.log("HOURS: ");
+			console.log("https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&qid="+qidHours+"&apptoken="+apptoken);
+			/*
 			APAC.nBMonth = 0;
 			EMEA.nBMonth = 0;
 			NAM_East.nBMonth = 0;
@@ -752,48 +643,75 @@ function getSizmekData(){
 			NAM_East.nBthours = 0,
 			NAM_West.nBthours = 0,
 			NAM_Programmatic.nBthours = 0
+			*/
 			//console.log("QB_DATA: ");
-			//console.log(qdb_data);
+			console.log(qdb_data);
 			//console.log("HOURS: ");
-
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
-					//console.log(item[3]);
+					//console.log("Internal Teams: "+item[5].toLowerCase());
+					if(!item[1] || item[1] == '' || item[1] == undefined){
+						item[1] = '0';
+					}
+					if(!item[2] || item[2] == '' || item[2] == undefined){
+						item[2] = '0';
+					}
 					if(!item[3] || item[3] == '' || item[3] == undefined){
 						item[3] = '0';
 					}
 					if(!item[4] || item[4] == '' || item[4] == undefined){
 						item[4] = '0';
-					}
-					if(!item[13] || item[13] == '' || item[13] == undefined){
-						item[13] = '0';
-					}
-					if(!item[14] || item[14] == '' || item[14] == undefined){
-						item[14] = '0';
 					}	
-					var nBM = item[3];
+					var nBM = item[2];
 					if(!nBM || nBM == '' || nBM == undefined){
 						nBM = '0';
 					}
-					var nBLMonth = parseInt(item[4]);
+					var nBLMonth = parseInt(item[2]);
 					if(!nBLMonth || nBLMonth == '' || nBLMonth == undefined){
 						nBLMonth = '0';
 					}		
-					var tHours = item[2];
+					var tHours = item[1];
 					if(!tHours || tHours == '' || tHours == undefined){
 						tHours = '0';
 					}			
-
+					var Name = item[0].split(" ");
+					var firstName = Name[0];
+					var lastName = Name[Name.length-1];
+					var hoursTeam;
+					console.log(lastName+", "+firstName); 
 					//console.log("tHours: "+tHours);
-
-					var str = item[5].toLowerCase();
+					
+					for(var i=0;i<Teams.length;i++){
+						var counter = Teams[i].members.length;
+						for(var j=0;j<counter;j++){
+							var tmember = Teams[i].members[j];
+							var tlastName = tmember.split(",")[0];
+							var tfirstName = tmember.split(",")[1].split("-")[0].split(" ")[1];
+							var tnickName = tmember.split(",")[1].split("-")[1];
+							if((tfirstName.indexOf(firstName) > -1) && (tlastName.indexOf(lastName) > -1)){
+								console.log(tfirstName+".indexOf("+firstName+") = "+tfirstName.indexOf(firstName));
+								console.log(tlastName+".indexOf("+lastName+") = "+tlastName.indexOf(lastName));
+								console.log(tfirstName+" == "+firstName);
+								hoursTeam = Teams[i].id;
+								Teams[i].totalHours+=Number(item[1]);
+								Teams[i].totalNonBillable+=parseInt(item[2]);
+							}
+						}
+						//console.log(Teams[i].totalHours);
+						//console.log(Teams[i].totalHours);
+					}
+						
+					console.log(hoursTeam);
+					
+					var str = item[0].toLowerCase();
 					//console.log(item[12]);
 					//console.log(str);
 					//console.log(item[3]+"/"+item[14])*100;
-					var totalNon = parseInt(item[3])/parseInt(item[14]);
+					var totalNon = parseInt(item[2])/parseInt(item[1]);
+					/*
 					switch(str){
 						case "apac":
-						APAC.hours = item[15];
+						APAC.hours = item[1];
 						APAC.nBMonth += parseInt(nBLMonth);
 						APAC.nBMPercent += totalNon;
 						APAC.nBthours += parseInt(nBM);
@@ -802,7 +720,7 @@ function getSizmekData(){
 						break;
 
 						case "emea":
-						EMEA.hours = item[15];
+						EMEA.hours = item[1];
 						//console.log("EMEA non-Billable: "+nBM);
 						//console.log(nBLMonth);
 						EMEA.nBMonth += parseInt(nBLMonth);
@@ -813,7 +731,7 @@ function getSizmekData(){
 						break;
 
 						case "programmatic":
-						NAM_Programmatic.hours = item[15];
+						NAM_Programmatic.hours = item[1];
 						NAM_Programmatic.nBMonth += parseInt(nBLMonth);
 						NAM_Programmatic.nBMPercent += totalNon;
 						NAM_Programmatic.nBthours += parseInt(nBM);
@@ -821,8 +739,8 @@ function getSizmekData(){
 						$("#programmaticDiv > span").html(NAM_Programmatic.hours+" hrs");
 						break;
 
-						case "cebu east":
-						NAM_East.hours = item[15];
+						case "cebu nam producer managed":
+						NAM_East.hours = item[1];
 						NAM_East.nBMonth += parseInt(nBLMonth);
 						NAM_East.nBMPercent += totalNon;
 						NAM_East.nBthours += parseInt(nBM);
@@ -831,7 +749,7 @@ function getSizmekData(){
 						break;
 
 						case "cebu west":
-						NAM_West.hours = item[15];
+						NAM_West.hours = item[1];
 						NAM_West.nBMonth += parseInt(nBLMonth);
 						NAM_West.nBMPercent += totalNon;
 						NAM_West.nBthours += parseInt(nBM);
@@ -842,33 +760,39 @@ function getSizmekData(){
 						default:
 						break;
 					}
+					*/
 				
 			});
+			Teams.forEach(function(c){
+				console.log(c.id+" = "+c.totalHours+" in two weeks");
+				console.log(c.id+" = "+c.totalNonBillable+" non-billable in two weeks");
+			});
+			/*
 			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
 			var avetwononbillable = ((parseInt(NAM_Programmatic.nBthours)+parseInt(NAM_West.nBthours)+parseInt(NAM_East.nBthours)+parseInt(EMEA.nBthours)+parseInt(APAC.nBthours)));
 			var twtotals = ((parseInt(NAM_Programmatic.twhours)+parseInt(NAM_West.twhours)+parseInt(NAM_East.twhours)+parseInt(EMEA.twhours)+parseInt(APAC.twhours)));
-			/*
+			
 			console.log("totals: "+totals);
 			console.log("APAC non-Billable 2 weeks: "+ APAC.nBthours);
 			console.log("APAC hours 2 weeks: "+ APAC.twhours);
 			*/
 			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hours: "+((APAC.nBthours/APAC.twhours)*100).toFixed(2)+"%");
-			$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hrs");
+			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!
 			//console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
 			//console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
-			$("#emeaBillDiv > span").html(EMEA.nBthours+"/"+EMEA.twhours+" hrs");
+			//$("#emeaBillDiv > span").html(EMEA.nBthours+"/"+EMEA.twhours+" hrs");  //!!!!!!!!!!!!!!!!!!!!!!
 			//console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
 			//console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
-			$("#programmaticBillDiv > span").html(NAM_Programmatic.nBthours+"/"+NAM_Programmatic.twhours+" hrs");
+			//$("#programmaticBillDiv > span").html(NAM_Programmatic.nBthours+"/"+NAM_Programmatic.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!
 			//console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
 			//console.log("NAM West hours 2 weeks: "+ NAM_West.twhours);
-			$("#westBillDiv > span").html(NAM_West.nBthours+"/"+NAM_West.twhours+" hrs");
+			//$("#westBillDiv > span").html(NAM_West.nBthours+"/"+NAM_West.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!!!
 			//console.log("NAM East non-Billable 2 weeks: "+ NAM_East.nBthours);
 			//console.log("NAM East hours 2 weeks: "+ NAM_East.twhours);
-			$("#eastBillDiv > span").html(NAM_East.nBthours+"/"+NAM_East.twhours+" hrs");
+			//$("#eastBillDiv > span").html(NAM_East.nBthours+"/"+NAM_East.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!
 			//console.log("Total non-Billable 2 weeks: "+ avetwononbillable);
 			//console.log("Total hours 2 weeks: "+ twtotals);
-			$("#totalBillDiv > span").html(avetwononbillable+"/"+twtotals+" hrs");
+			//$("#totalBillDiv > span").html(avetwononbillable+"/"+twtotals+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			/*
 			console.log("APAC non-Billable: "+ APAC.nBMonth);
 			console.log("APAC total Hours: "+ APAC.twhours);
@@ -877,12 +801,13 @@ function getSizmekData(){
 			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
 			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
 			*/ 
-			hoursIndicators(apacBar,APAC.hours,40,"#apacLine");
-			hoursIndicators(emeaBar,EMEA.hours,40,"#emeaLine");
-			hoursIndicators(programmaticBar,NAM_Programmatic.hours,40,"#programmaticLine");
-			hoursIndicators(namEastBar,NAM_East.hours,40,"#namEastLine");
-			hoursIndicators(namWestBar,NAM_West.hours,40,"#namWestLine");
-			hoursIndicators(totalBar,totals,40,"#totalLine");
+			/*
+			hoursIndicators(apacBar,APAC.hours,80,"#apacLine");
+			hoursIndicators(emeaBar,EMEA.hours,80,"#emeaLine");
+			hoursIndicators(programmaticBar,NAM_Programmatic.hours,80,"#programmaticLine");
+			hoursIndicators(namEastBar,NAM_East.hours,80,"#namEastLine");
+			hoursIndicators(namWestBar,NAM_West.hours,80,"#namWestLine");
+			hoursIndicators(totalBar,totals,80,"#totalLine");
 
 			hoursIndicators(apacBillBar,APAC.nBthours,APAC.twhours,"#apacBill");
 			hoursIndicators(emeaBillBar,EMEA.nBthours,EMEA.twhours,"#emeaBill");
@@ -892,6 +817,7 @@ function getSizmekData(){
 			hoursIndicators(totalBillBar,avetwononbillable,twtotals,"#totalBill");
 
 			$("#totalDiv > span").html(totals+" hours");
+			*/
 			
 		},
 		complete:function(){
@@ -921,8 +847,27 @@ $(document).ready(function(){
 
 	//console.log("ready");
 	//showTwitter();
+	var dtNow = new Date();
+	var h = dtNow.getHours();
+	var ampmText = "AM";
+	if (h >= 12){
+		h = h-12;
+		ampmText = "PM";	
+	}
+	var m = dtNow.getMinutes();
 	getSizmekData();
-	//console.log(getActiveTeams("7:00 PM"));
+	console.log("GET DATE NOW: "+ h+":"+m+" "+ampmText);
+	console.log(dtNow);
+	var currTeam = getActiveTeams();
+	console.log("currTeam: "+currTeam);
+	if(currTeam == "APAC"){
+		console.log("It's APAC!");
+		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/red.jpg)";
+	} else if(currTeam == "EMEA"){
+		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/purple.jpg)";
+	} else {
+		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/homepage-hero.jpg)";
+	}
    	$(".TickerNews").newsTicker();
     var liveCount = setInterval(liveTime,1000); 
     var showTweet = setInterval(function(){
