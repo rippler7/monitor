@@ -10,43 +10,61 @@ var APAC = {
 	id:"APAC",
 	members:["Quinquilleria, Silbeth -Betty","Basadre, Rey -Rey", "DeGuzman, Ediral -Ed", "Hatamosa, Mike -Gab", "Pascual, Christian -Paski"],
 	totalHours:0,
+	totalHoursB:0,
 	totalNonBillable:0
 };
 var EMEA = {
 	id: "EMEA",
 	members: ["Guerrero, Ivan -Master Ivan","Africano, Nixon -Nixon", "Cabalida, Stephen -Stephen", "Dramayo, Lorenciano -Ciano", "Calisang, Ebenezer -Boboi", "Rosell, Christian Adam -Christian"],
 	totalHours: 0,
+	totalHoursB:0,
 	totalNonBillable:0
 };
-var NAM_NonAuto_members = {
+var NAM_NonAuto = {
 	id:"NAM_NonAuto",
 	members:["Pepito, Arniel -Sirs","Baldomero, Abdella -Del", "DeGuzman, Reynaldo -JR", "Laborte, Niko -Niko", "Pagulong, Lauro -Byakuks"],
 	totalHours:0,
+	totalHoursB:0,
 	totalNonBillable:0
 };
 var NAM_Programmatic = {
 	id:"NAM_Programmatic",
 	members:["Ancog, Jeremy -Master","Abellana, Peter John -PJ","Del Rosario, Emmanuel -Mikee","Imus, Jollie Mae -Jollie","Loquinario, Mary Rose -Mary","Madduma, John -Erick"],
 	totalHours:0,
+	totalHoursB:0,
 	totalNonBillable:0
 };
 var Automotive = {
 	id:"Automotive",
 	members:["Lopez, Ryan -Boss","Mingo, Christian -Sexy Meng","Valdehueza, Joshry Jade -Josh","Villas, John Aldwin"],
 	totalHours:0,
+	totalHoursB:0,
 	totalNonBillable:0	
 };
 var Interactive_Designer = {
 	id:"Interactive",
 	members:["Pantoja, Maureen -Mau","Palapar, James -James"],
 	totalHours:0,
+	totalHoursB:0,
 	totalNonBillable:0	
 };
 
 
-var Teams = [APAC,EMEA,NAM_NonAuto_members,NAM_Programmatic,Automotive,Interactive_Designer];
+var Teams = [APAC,EMEA,NAM_NonAuto,NAM_Programmatic,Automotive,Interactive_Designer];
 
 var contentModal ="";
+var apacBar;
+var emeaBar;
+var namBar_Programmatic;
+var namBar_NonAuto;
+var namBar_Auto;
+var interDesBar;
+var apacBillBar;
+var emeaBillBar;
+var programmaticBillBar;
+var namBillBar_NonAuto;
+var namBillBar_Auto;
+var interDesBillBar;
 
 var teams = [];
 var teams2 = [];
@@ -91,6 +109,8 @@ function getGap(dateGiven,timeGiven){
 	var dateSample = Date.parse(dateGiven+", "+timeGiven);
 	var testDate = new Date(dateSample);
 	var result = (testDate - nowDate)/36e5;
+	//console.log(testDate+" - "+nowDate+" = "+ (testDate - nowDate)/36e5);
+	//console.log(testDate - nowDate);
 	return result;
 }
 
@@ -99,23 +119,8 @@ function getActiveTeams(){
 
 	var nowDateDefault = new Date();
 	var timeNowDefault = new Date(toTimeZone2(nowDateDefault,"America/New_York"));
-
 	var h = nowDateDefault.getHours();
-	/*
-	var ampmText = "am";
-	if (h >= 12){
-		h = h-12;
-		ampmText = "pm";	
-	}
-	*/
 	var m = nowDateDefault.getMinutes();
-		/*
-	var timeLower = timeGiven.toLowerCase();
-	var timeConv = timeLower.split(":");
-	var dueHour = Number(timeConv[0]);
-	var dueMinute = Number(timeConv[1].split(" ")[0]);
-	var dueAmPm = timeConv[1].split(" ")[1];
-		*/
 	var shiftNow = "NAM";
 
 	if(h >= 7 && h < 14){
@@ -125,77 +130,33 @@ function getActiveTeams(){
 	} else {
 		shiftNow = "NAM"; 
 	}
-
-	/*
-
-	//console.log("timeNowDefault: "+timeNowDefault);
-
-	var nowHours = Number(timeNowDefault.getHours());
-	var nowMinutes = Number(timeNowDefault.getMinutes());
-
-	var timeLower = timeGiven.toLowerCase();
-	var timeConv = timeLower.split(":");
-	var dueHour = Number(timeConv[0]);
-	var dueMinute = Number(timeConv[1].split(" ")[0]);
-
-	var ampm = "AM"; 
-	if(timeGiven.indexOf("AM") < 0){
-		dueHour = dueHour + 12;
-	} else {
-		if(timeConv[0] == 12){
-			dueHour = 0;
-		}
-	}
-
-	var baseDate = new Date(2000, 0, 1, dueHour, dueMinute);
-	var nowDate = new Date(2000, 0, 1, nowHours, nowMinutes);
-	//console.log(nowDate);
-
-	var dateAPACEnd1 = new Date(2000, 0, 1, 03, 00);
-
-	var dateAPACStart = new Date(2000, 0, 1, 18, 00);
-	var dateAPACEnd = new Date(2000, 0, 2, 03, 00);
-
-	var dateEMEAStart = new Date(2000, 0, 1, 03, 00);
-	var dateEMEAEnd = new Date(2000, 0, 1, 12, 00);
-
-	var dateNAMStart = new Date(2000, 0, 1, 09, 00);
-	var dateNAMEnd = new Date(2000, 0, 1, 18, 00);
-
-		/*
-	(dateAPACStart <= baseDate && baseDate <= dateAPACEnd)? teams.push("apac"):console.log("");
-	(dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd)? teams.push("emea"):console.log("");
-	(dateNAMStart <= baseDate && baseDate <= dateNAMEnd)? teams.push("nam"):console.log("");
-	(baseDate <= dateAPACEnd1)? teams.push("apac"):console.log("");
-
-	(dateAPACStart <= nowDate && nowDate <= dateAPACEnd)? teams2.push("apac"):console.log("");
-	(dateEMEAStart <= nowDate && nowDate <= dateEMEAEnd)? teams2.push("emea"):console.log("");
-	(dateNAMStart <= nowDate && nowDate <= dateNAMEnd)? teams2.push("nam"):console.log("");
-	(nowDate <= dateAPACEnd1)? teams2.push("apac"):console.log("");
-		
-	var currTeam;
-	(dateAPACStart <= baseDate && baseDate <= dateAPACEnd)? currTeam = "APAC": console.log("");
-	(dateEMEAStart <= baseDate && baseDate <= dateEMEAEnd)? currTeam = "EMEA": console.log("");
-	(dateNAMStart <= baseDate && baseDate <= dateNAMEnd)? currTeam = "NAM":console.log("");
-	return currTeam;
-	*/
 	return shiftNow;
-
 }
 
 
 function hoursIndicators(bar,hours,total,div){
+	var res = Math.floor(Math.round((hours/total)*100));
 	$(div).html("");
 	$(div).attr("data-preset","fan");
+	console.log(div.toLowerCase().indexOf("bill")+", with hours: "+hours+"/"+total+" = "+(hours/total)*100+"%");
 	var strokeColor;
-	if(hours >= 40){
-		strokeColor = "#55FF33";
-	} else if(hours < 32) {
-		strokeColor = "#FF3333";
+	if(div.toLowerCase().indexOf("bill") > -1){
+		if(res >= 20){
+			strokeColor = "#FF3333";
+		} else if(res < 20 && res > 0) {
+			strokeColor = "#55FF33";
+		} else {
+			strokeColor = "#FFF";
+		}
 	} else {
-		strokeColor = "#FFF";
+		if(res >= 40){
+			strokeColor = "#55FF33";
+		} else if(res < 40) {
+			strokeColor = "#FF3333";
+		} else {
+			strokeColor = "#FFF";
+		}
 	}
-	if(div.toLowerCase() == "#totalline") {strokeColor="#FF0";} 
  	bar = new ldBar(div, {
  		"stroke": strokeColor
  	});
@@ -272,6 +233,16 @@ function showTwitter(){
 function getSizmekData(){
 	callFBC = 0;
 	callPR = 0;
+	var currTeam = getActiveTeams();
+		console.log("currTeam: "+currTeam);
+		if(currTeam == "APAC"){
+			console.log("It's APAC!");
+			document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/red.jpg)";
+		} else if(currTeam == "EMEA"){
+			document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/purple.jpg)";
+		} else {
+			document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/homepage-hero.jpg)";
+		}
 	$.ajax({
 		url:"https://sizmek.quickbase.com/db/bhv6kzfnc",
 		data:{
@@ -294,30 +265,9 @@ function getSizmekData(){
 				//console.log("Shift: "+item[0]);
 				//console.log(item[5]+', '+item[6]);
 				getGap(item[5],item[6]);
-				/*
-				switch(item[0]){
-					case "APAC":
-						APAC.pendingPRs++;
-						break;
-					case "EMEA":
-						EMEA.pendingPRs++;
-						break;  
-					case "Cebu NAM Producer Managed":
-						NAM_East.pendingPRs++;
-						break; 
-					case "Programmatic":
-						NAM_Programmatic.pendingPRs++;
-						break; 
-					default:
-						NAM_West.pendingPRs++;
-				}
-				*/
-				//console.log(item[4]); //PR status
+
 			});
 			$("#prPendingText").html(qdb_numrows);
-			//console.log("APAC: "+APAC.pendingPRs);
-			//console.log("EMEA: "+EMEA.pendingPRs);
-			//console.log("NAM West: "+NAM_West.pendingPRs);
 		},
 		complete:function(){
 			
@@ -344,20 +294,6 @@ function getSizmekData(){
 			warningBasket = [];
 			overdueBasket = [];
 			qdb_data.forEach(function(item){
-				//console.log(item[9]);
-				//console.log(item[2]);
-				/*
-				var timeLeftItems = Number(timeLeft(item[2]));
-				console.log(timeLeftItems+" -> "+item[0]);
-
-				console.log(timeLeftItems <= 2);
-
-				if(timeLeftItems <= 2 && timeLeftItems > 0){
-					warningBasket.push(item[0]);
-				} else if (timeLeftItems <= 0){
-					overdueBasket.push(item[0]);
-				}
-				*/
 				var campaign = item[5].toString().toLowerCase();
 				var training = (campaign.indexOf('training'));
 				if(!item[4] || item[4] == '' || item[4] == undefined){
@@ -374,27 +310,6 @@ function getSizmekData(){
 						overdueBasket.push(item[0]);
 					}
 				}
-				
-				//console.log("PR GAP: "+gap+" => "+item[0]+", campaign: "+item[5]);
-					/*
-				switch(item[0]){
-					case "APAC":
-						APAC.AssignedPRs++;
-						break;
-					case "EMEA":
-						EMEA.AssignedPRs++;
-						break;
-					case "Cebu NAM Producer Managed":
-						NAM_East.AssignedPRs++;
-						break;
-					case "Programmatic":
-						NAM_Programmatic.AssignedPRs++;
-						break;   
-					default:
-						NAM_West.AssignedPRs++;
-				}
-				*/
-				//console.log(item[3]); //PR status
 			});
 			$("#prAssignedText").html(qdb_numrows);
 
@@ -465,25 +380,6 @@ function getSizmekData(){
 						overdueBasketFBC.push(item[0]);
 					}
 				}
-				/*
-				switch(item[0]){
-					case "APAC":
-						APAC.AssignedFBCs++;
-						break;
-					case "EMEA":
-						EMEA.AssignedFBCs++;
-						break;
-					case "Cebu NAM Producer Managed":
-						NAM_East.AssignedFBCs++;
-						break;
-					case "Programmatic":
-						NAM_Programmatic.AssignedFBCs++;
-						break;   
-					default:
-						NAM_West.AssignedFBCs++;
-				}
-				*/
-				//console.log(item[3]); //PR status
 			});
 			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
 					var wItems = "";
@@ -531,25 +427,7 @@ function getSizmekData(){
 			console.log("Internal Review PR: ");
 			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidInternalRevPR+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
-				////console.log(item[3]); //PR status
-				/*
-				switch(item[0]){
-					case "APAC":
-						APAC.internalReviewPR++;
-						break;
-					case "EMEA":
-						EMEA.internalReviewPR++;
-						break;
-					case "Cebu NAM Producer Managed":
-						NAM_East.internalReviewPR++;
-						break;
-					case "Programmatic":
-						NAM_Programmatic.internalReviewPR++;
-						break;   
-					default:
-						NAM_West.internalReviewPR++;
-				}
-				*/
+
 			});
 
 			$('#prInternalReviewText').html(qdb_numrows);
@@ -579,24 +457,7 @@ function getSizmekData(){
 			console.log("https://sizmek.quickbase.com/db/bhtzcnzkd"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidInternalRevFBC+"&apptoken="+apptoken);
 			qdb_data.forEach(function(item){
 				console.log(item[2]); //PR status
-				/*
-				switch(item[0]){
-					case "APAC":
-						APAC.internalReviewFBC++;
-						break;
-					case "EMEA":
-						EMEA.internalReviewFBC++;
-						break;
-					case "Cebu Producer Managed":
-						NAM_East.internalReviewFBC++;
-						break;
-					case "Programmatic":
-						NAM_Programmatic.internalReviewFBC++;
-						break;  
-					default:
-						NAM_West.internalReviewFBC++;
-				}
-				*/
+
 			});
 
 			$('#fbcInternalReviewText').html(qdb_numrows);
@@ -622,31 +483,14 @@ function getSizmekData(){
 		success:function(){
 			console.log("HOURS: ");
 			console.log("https://sizmek.quickbase.com/db/bhxqi55ba?a=API_GenResultsTable&jsa=1&qid="+qidHours+"&apptoken="+apptoken);
-			/*
-			APAC.nBMonth = 0;
-			EMEA.nBMonth = 0;
-			NAM_East.nBMonth = 0;
-			NAM_West.nBMonth = 0;
-			NAM_Programmatic.nBMonth = 0;
-			APAC.nBMPercent = 0;
-			EMEA.nBMPercent = 0;
-			NAM_East.nBMPercent = 0;
-			NAM_West.nBMPercent = 0;
-			NAM_Programmatic.nBMPercent = 0;
-			APAC.twhours = 0,
-			EMEA.twhours = 0,
-			NAM_East.twhours = 0,
-			NAM_West.twhours = 0,
-			NAM_Programmatic.twhours = 0,
-			APAC.nBthours = 0;
-			EMEA.nBthours = 0,
-			NAM_East.nBthours = 0,
-			NAM_West.nBthours = 0,
-			NAM_Programmatic.nBthours = 0
-			*/
-			//console.log("QB_DATA: ");
-			console.log(qdb_data);
+			//console.log(qdb_data);
 			//console.log("HOURS: ");
+			Teams.forEach(function(team){
+				team.totalHours = 0;
+				team.totalHoursB = 0;
+				team.totalNonBillable = 0;
+			});
+
 			qdb_data.forEach(function(item){
 					//console.log(item[2]); //display team lead name
 					//console.log("Internal Teams: "+item[5].toLowerCase());
@@ -678,7 +522,7 @@ function getSizmekData(){
 					var firstName = Name[0];
 					var lastName = Name[Name.length-1];
 					var hoursTeam;
-					console.log(lastName+", "+firstName); 
+					//console.log(lastName+", "+firstName); 
 					//console.log("tHours: "+tHours);
 					
 					for(var i=0;i<Teams.length;i++){
@@ -689,11 +533,14 @@ function getSizmekData(){
 							var tfirstName = tmember.split(",")[1].split("-")[0].split(" ")[1];
 							var tnickName = tmember.split(",")[1].split("-")[1];
 							if((tfirstName.indexOf(firstName) > -1) && (tlastName.indexOf(lastName) > -1)){
+								/*
 								console.log(tfirstName+".indexOf("+firstName+") = "+tfirstName.indexOf(firstName));
 								console.log(tlastName+".indexOf("+lastName+") = "+tlastName.indexOf(lastName));
 								console.log(tfirstName+" == "+firstName);
+								*/
 								hoursTeam = Teams[i].id;
-								Teams[i].totalHours+=Number(item[1]);
+								Teams[i].totalHours+=Number(item[4]);
+								Teams[i].totalHoursB+=Number(item[1]);
 								Teams[i].totalNonBillable+=parseInt(item[2]);
 							}
 						}
@@ -701,123 +548,51 @@ function getSizmekData(){
 						//console.log(Teams[i].totalHours);
 					}
 						
-					console.log(hoursTeam);
+					//console.log(firstName+" is in "+hoursTeam);
 					
 					var str = item[0].toLowerCase();
 					//console.log(item[12]);
 					//console.log(str);
 					//console.log(item[3]+"/"+item[14])*100;
 					var totalNon = parseInt(item[2])/parseInt(item[1]);
-					/*
-					switch(str){
-						case "apac":
-						APAC.hours = item[1];
-						APAC.nBMonth += parseInt(nBLMonth);
-						APAC.nBMPercent += totalNon;
-						APAC.nBthours += parseInt(nBM);
-						APAC.twhours += parseInt(tHours);
-						$("#apacDiv > span").html(APAC.hours+" hrs");
-						break;
-
-						case "emea":
-						EMEA.hours = item[1];
-						//console.log("EMEA non-Billable: "+nBM);
-						//console.log(nBLMonth);
-						EMEA.nBMonth += parseInt(nBLMonth);
-						EMEA.nBMPercent += totalNon;
-						EMEA.nBthours += parseInt(nBM);
-						EMEA.twhours += parseInt(tHours);
-						$("#emeaDiv > span").html(EMEA.hours+" hrs");
-						break;
-
-						case "programmatic":
-						NAM_Programmatic.hours = item[1];
-						NAM_Programmatic.nBMonth += parseInt(nBLMonth);
-						NAM_Programmatic.nBMPercent += totalNon;
-						NAM_Programmatic.nBthours += parseInt(nBM);
-						NAM_Programmatic.twhours += parseInt(tHours);
-						$("#programmaticDiv > span").html(NAM_Programmatic.hours+" hrs");
-						break;
-
-						case "cebu nam producer managed":
-						NAM_East.hours = item[1];
-						NAM_East.nBMonth += parseInt(nBLMonth);
-						NAM_East.nBMPercent += totalNon;
-						NAM_East.nBthours += parseInt(nBM);
-						NAM_East.twhours += parseInt(tHours);
-						$("#namEastDiv > span").html(NAM_East.hours+" hrs");
-						break;
-
-						case "cebu west":
-						NAM_West.hours = item[1];
-						NAM_West.nBMonth += parseInt(nBLMonth);
-						NAM_West.nBMPercent += totalNon;
-						NAM_West.nBthours += parseInt(nBM);
-						NAM_West.twhours += parseInt(tHours);
-						$("#namWestDiv > span").html(NAM_West.hours+" hrs");
-						break;
-
-						default:
-						break;
-					}
-					*/
 				
 			});
+			/*
 			Teams.forEach(function(c){
 				console.log(c.id+" = "+c.totalHours+" in two weeks");
 				console.log(c.id+" = "+c.totalNonBillable+" non-billable in two weeks");
 			});
-			/*
-			var totals = ((parseInt(NAM_Programmatic.hours)+parseInt(NAM_West.hours)+parseInt(NAM_East.hours)+parseInt(EMEA.hours)+parseInt(APAC.hours))/5);
-			var avetwononbillable = ((parseInt(NAM_Programmatic.nBthours)+parseInt(NAM_West.nBthours)+parseInt(NAM_East.nBthours)+parseInt(EMEA.nBthours)+parseInt(APAC.nBthours)));
-			var twtotals = ((parseInt(NAM_Programmatic.twhours)+parseInt(NAM_West.twhours)+parseInt(NAM_East.twhours)+parseInt(EMEA.twhours)+parseInt(APAC.twhours)));
+
+			*/
+			//SHOW NUMBERS TEXT ON BILLABLE
+			$("#apacDiv > span").html(Math.round((APAC.totalHours/APAC.members.length))+"/40 hrs"); //!!!!!!!!!!!!!!!!!!!
+			$("#emeaDiv > span").html(Math.round((EMEA.totalHours/EMEA.members.length))+"/40 hrs");  //!!!!!!!!!!!!!!!!!!!!!!
+			$("#programmaticDiv > span").html(Math.round((NAM_Programmatic.totalHours/NAM_Programmatic.members.length))+"/40 hrs"); //!!!!!!!!!!!!!!!!!!!
+			$("#namWestDiv > span").html(Math.round((NAM_NonAuto.totalHours/NAM_NonAuto.members.length))+"/40 hrs");  //!!!!!!!!!!!!!!!!!!!!!!
+			$("#namEastDiv > span").html(Math.round((Automotive.totalHours/Automotive.members.length))+"/40 hrs"); //!!!!!!!!!!!!!!!!!!!
+			$("#totalDiv > span").html(Math.round((Interactive_Designer.totalHours/Interactive_Designer.members.length))+"/40 hrs");  //!!!!!!!!!!!!!!!!!!!!!!
+
+			$("#apacBillDiv > span").html(Math.round(APAC.totalNonBillable)+"/"+Math.round(APAC.totalHoursB)); //!!!!!!!!!!!!!!!!!!!
+			$("#emeaBillDiv > span").html(Math.round(EMEA.totalNonBillable)+"/"+Math.round(EMEA.totalHoursB));  //!!!!!!!!!!!!!!!!!!!!!!
+			$("#programmaticBillDiv > span").html(Math.round(NAM_Programmatic.totalNonBillable)+"/"+Math.round(NAM_Programmatic.totalHoursB)); //!!!!!!!!!!!!!!!!!!!
+			$("#westBillDiv > span").html(Math.round(NAM_NonAuto.totalNonBillable)+"/"+Math.round(NAM_NonAuto.totalHoursB));  //!!!!!!!!!!!!!!!!!!!!!!
+			$("#eastBillDiv > span").html(Math.round(Automotive.totalNonBillable)+"/"+Math.round(Automotive.totalHoursB)); //!!!!!!!!!!!!!!!!!!!
+			$("#totalBillDiv > span").html(Math.round(Interactive_Designer.totalNonBillable)+"/"+Math.round(Interactive_Designer.totalHoursB));  //!!!!!!!!!!!!!!!!!!!!!!
 			
-			console.log("totals: "+totals);
-			console.log("APAC non-Billable 2 weeks: "+ APAC.nBthours);
-			console.log("APAC hours 2 weeks: "+ APAC.twhours);
-			*/
-			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hours: "+((APAC.nBthours/APAC.twhours)*100).toFixed(2)+"%");
-			//$("#apacBillDiv > span").html(APAC.nBthours+"/"+APAC.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!
-			//console.log("EMEA non-Billable 2 weeks: "+ EMEA.nBthours);
-			//console.log("EMEA hours 2 weeks: "+ EMEA.twhours);
-			//$("#emeaBillDiv > span").html(EMEA.nBthours+"/"+EMEA.twhours+" hrs");  //!!!!!!!!!!!!!!!!!!!!!!
-			//console.log("Programmatic non-Billable 2 weeks: "+ NAM_Programmatic.nBthours);
-			//console.log("Programmatic hours 2 weeks: "+ NAM_Programmatic.twhours);
-			//$("#programmaticBillDiv > span").html(NAM_Programmatic.nBthours+"/"+NAM_Programmatic.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!
-			//console.log("NAM West non-Billable 2 weeks: "+ NAM_West.nBthours);
-			//console.log("NAM West hours 2 weeks: "+ NAM_West.twhours);
-			//$("#westBillDiv > span").html(NAM_West.nBthours+"/"+NAM_West.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!!!
-			//console.log("NAM East non-Billable 2 weeks: "+ NAM_East.nBthours);
-			//console.log("NAM East hours 2 weeks: "+ NAM_East.twhours);
-			//$("#eastBillDiv > span").html(NAM_East.nBthours+"/"+NAM_East.twhours+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!
-			//console.log("Total non-Billable 2 weeks: "+ avetwononbillable);
-			//console.log("Total hours 2 weeks: "+ twtotals);
-			//$("#totalBillDiv > span").html(avetwononbillable+"/"+twtotals+" hrs"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			/*
-			console.log("APAC non-Billable: "+ APAC.nBMonth);
-			console.log("APAC total Hours: "+ APAC.twhours);
-			console.log("APAC nonBillable Percentage: "+ (APAC.nBthours/APAC.twhours)*100+"%");
-			console.log("EMEA non-Billable: "+ EMEA.nBMonth);
-			console.log("APAC non-Billable Percentage: "+ APAC.nBMPercent);
-			console.log("EMEA non-Billable Percentage: "+ EMEA.nBMPercent);
-			*/ 
-			/*
-			hoursIndicators(apacBar,APAC.hours,80,"#apacLine");
-			hoursIndicators(emeaBar,EMEA.hours,80,"#emeaLine");
-			hoursIndicators(programmaticBar,NAM_Programmatic.hours,80,"#programmaticLine");
-			hoursIndicators(namEastBar,NAM_East.hours,80,"#namEastLine");
-			hoursIndicators(namWestBar,NAM_West.hours,80,"#namWestLine");
-			hoursIndicators(totalBar,totals,80,"#totalLine");
+			//SHOW GRAPHS
+			hoursIndicators(apacBar,(APAC.totalHours/APAC.members.length),40,"#apacLine");
+			hoursIndicators(emeaBar,(EMEA.totalHours/EMEA.members.length),40,"#emeaLine");
+			hoursIndicators(namBar_Programmatic,(NAM_Programmatic.totalHours/NAM_Programmatic.members.length),40,"#programmaticLine");
+			hoursIndicators(namBar_NonAuto,(NAM_NonAuto.totalHours/NAM_NonAuto.members.length),40,"#namWestLine");
+			hoursIndicators(namBar_Auto,(Automotive.totalHours/Automotive.members.length),40,"#namEastLine");
+			hoursIndicators(interDesBar,(Interactive_Designer.totalHours/Interactive_Designer.members.length),40,"#totalLine");
 
-			hoursIndicators(apacBillBar,APAC.nBthours,APAC.twhours,"#apacBill");
-			hoursIndicators(emeaBillBar,EMEA.nBthours,EMEA.twhours,"#emeaBill");
-			hoursIndicators(programmaticBillBar,NAM_Programmatic.nBthours,NAM_Programmatic.twhours,"#programmaticBill");
-			hoursIndicators(namWestBillBar,NAM_West.nBthours,NAM_West.twhours,"#westBill");
-			hoursIndicators(namEastBillBar,NAM_East.nBthours,NAM_East.twhours,"#eastBill");
-			hoursIndicators(totalBillBar,avetwononbillable,twtotals,"#totalBill");
-
-			$("#totalDiv > span").html(totals+" hours");
-			*/
+			hoursIndicators(apacBillBar,APAC.totalNonBillable,APAC.totalHoursB,"#apacBill");
+			hoursIndicators(emeaBillBar,EMEA.totalNonBillable,EMEA.totalHoursB,"#emeaBill");
+			hoursIndicators(programmaticBillBar,NAM_Programmatic.totalNonBillable,NAM_Programmatic.totalHoursB,"#programmaticBill");
+			hoursIndicators(namBillBar_NonAuto,NAM_NonAuto.totalNonBillable,NAM_NonAuto.totalHoursB,"#westBill");
+			hoursIndicators(namBillBar_Auto,Automotive.totalNonBillable,Automotive.totalHoursB,"#eastBill");
+			hoursIndicators(interDesBillBar,Interactive_Designer.totalNonBillable,Interactive_Designer.totalHoursB,"#totalBill");
 			
 		},
 		complete:function(){
@@ -858,18 +633,9 @@ $(document).ready(function(){
 	getSizmekData();
 	console.log("GET DATE NOW: "+ h+":"+m+" "+ampmText);
 	console.log(dtNow);
-	var currTeam = getActiveTeams();
-	console.log("currTeam: "+currTeam);
-	if(currTeam == "APAC"){
-		console.log("It's APAC!");
-		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/red.jpg)";
-	} else if(currTeam == "EMEA"){
-		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/purple.jpg)";
-	} else {
-		document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/homepage-hero.jpg)";
-	}
-   	$(".TickerNews").newsTicker();
-    var liveCount = setInterval(liveTime,1000); 
+    var liveCount = setInterval(function(){
+    	liveTime();
+    },1000); 
     var showTweet = setInterval(function(){
     	//showTwitter();
     	contentModal ="";
@@ -887,6 +653,6 @@ $(document).ready(function(){
 		container: document.querySelector("#graphs"),
 		timeout:4000
 	});
-
+	$(".TickerNews").newsTicker();
 	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });

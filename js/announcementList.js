@@ -26,6 +26,7 @@ function showAlerts(){
 		//console.log(currYear);
 		var greeting = "";
 		var annLine = "";
+		$("#tickerAnnouncements").html("");
 		bdays.forEach(function(i,v){
 			var currMonth = v;
 			//console.log(v);
@@ -48,11 +49,11 @@ function showAlerts(){
 			});
 		});
 		//console.log(annLine);
-		$("#tickerAnnouncements").html("");
 		$("#tickerAnnouncements").html(annLine);
 	}
 	function showAnnouncements(ann){
 		var announce = "";
+		$("#tickerAnnouncements").innerHTML="";
 		//console.log(ann);
 		ann.forEach(function(a){
 			announce += '<div class="ti_news"><span class="blueText">::ATT::</span>'+a+'::</div>';
