@@ -11,7 +11,7 @@ function showAlerts(){
 	//var totalHours = currDatRanomizer.getHours();
 	var getRand = Math.floor(Math.random())+currDatRanomizer;
 	console.log("totalHours: "+getRand);
-	var urlRefresh = "./js/announcements.js"+"?rand="+getRand.toString();
+	var urlRefresh = "http://jermanation.com/monitor/announcements.js"+"?rand="+getRand.toString();
 	console.log(urlRefresh);
 	$.ajax({
 		url: urlRefresh,
