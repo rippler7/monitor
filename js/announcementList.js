@@ -1,4 +1,5 @@
 function showAlerts(){
+	var timeOutSet;
 	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -15,8 +16,13 @@ function showAlerts(){
 		success:function(data){
 			eval(data);
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
-			alertNear(birthdays);
-			showAnnouncements(announcements);
+			timeOutSet = setTimeOut(function(){
+				alertNear(birthdays);
+				showAnnouncements(announcements);
+				
+			},100).then(function(){
+				clearTimeout(timeOutSet);
+			});
 		}
 	});
 	function alertNear(bdays){
@@ -26,7 +32,7 @@ function showAlerts(){
 		//console.log(currYear);
 		var greeting = "";
 		var annLine = "";
-		$("#tickerAnnouncements").html("");
+		$("ul#tickerAnnouncements").innerHTML = "";
 		bdays.forEach(function(i,v){
 			var currMonth = v;
 			//console.log(v);
@@ -44,20 +50,19 @@ function showAlerts(){
 				//console.log("BDAY GAP: "+gap);
 				if(gap <= 120 && gap > 0){
 					greeting = "<span class='redText'>HAPPY BIRTHDAY, "+celeb[0]+"</span>this "+monthNames[currMonth]+" "+bDay+"!!! ";
-					annLine += '<div class="ti_news"><span class="blueText">:: BIRTHDAY:</span> '+greeting+'::</div>';
+					annLine += '<li class="ti_news"><div><span class="blueText">:: BIRTHDAY:</span> '+greeting+'::</div></li>';
 				}
 			});
 		});
 		//console.log(annLine);
-		$("#tickerAnnouncements").html(annLine);
+		$("ul#tickerAnnouncements").innerHTML = annLine;
 	}
 	function showAnnouncements(ann){
 		var announce = "";
-		$("#tickerAnnouncements").innerHTML="";
 		//console.log(ann);
 		ann.forEach(function(a){
-			announce += '<div class="ti_news"><span class="blueText">::ATT::</span>'+a+'::</div>';
+			announce += '<li class="ti_news"><div><span class="blueText">::ATT::</span>'+a+'::</div></li>';
 		});
-		$("#tickerAnnouncements").append(announce);
+		$("ul#tickerAnnouncements").append(announce);
 	}
 }

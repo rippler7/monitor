@@ -605,7 +605,6 @@ function getSizmekData(){
 function callModal(){
 	if(callFBC == 1 && callPR == 1){
 		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
-			alertSound('./audio/klang.wav');
 			$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
 					//console.log(warningBasket);
 					//console.log(overdueBasket);
@@ -614,6 +613,7 @@ function callModal(){
 					  	$('#PRFBC_Modal').modal('hide');
 					  	clearTimeout(modalTimeout);
 					},7000);
+					alertSound('./audio/klang.wav');
 		}
 	}
 }
@@ -631,8 +631,6 @@ $(document).ready(function(){
 	}
 	var m = dtNow.getMinutes();
 	getSizmekData();
-	console.log("GET DATE NOW: "+ h+":"+m+" "+ampmText);
-	console.log(dtNow);
     var liveCount = setInterval(function(){
     	liveTime();
     },1000); 
@@ -647,12 +645,12 @@ $(document).ready(function(){
 	    container: document.querySelector("#flipper"),
 	    timeout:2000
 	});
-
 	var flip2 = new FlipSlider({ 
 		startIndex: 0,
 		container: document.querySelector("#graphs"),
 		timeout:4000
 	});
-	$(".TickerNews").newsTicker();
+	//$(".TickerNews").newsTicker();
+	$("ul#tickerAnnouncements").liScroll({travelocity: 0.15});
 	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });
