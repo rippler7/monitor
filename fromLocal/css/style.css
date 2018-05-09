@@ -1,0 +1,465 @@
+html{
+	background-image:url('../img/homepage-hero.jpg');
+	background-repeat: repeat;
+	background-position:right 0px;
+	background-size: cover;
+	min-height:100%;
+}
+body{
+	color:#FFF;
+}
+.row{
+	padding:0px;
+	margin:0px;
+}
+#mainDiv {
+	background-color:rgba(0,0,0,0.5);
+	display:block;
+	position:absolute;
+	margin: 0px;
+	width:100%;
+	height:100%;
+}
+
+#headerBox{
+	width: 100%;
+	height:auto;
+	padding:0px;
+	margin:0px auto;
+}
+
+#logoBox{
+	width:15%;
+}
+
+#navBox{
+	width:auto;
+	background: url('../img/subtitle.png') right bottom no-repeat;
+	background-size:contain;
+	margin:0px !important;
+	padding:0px;
+}
+
+table{
+	margin:3px !important;
+	padding:0px !important;
+}
+
+table>thead>tr>th{
+	border-bottom: 0px solid #ddd !important;
+}
+
+table>tbody>tr>th{
+	border-top: 0px solid #ddd !important;
+}
+
+svg{
+	display: block;
+	position:relative;
+	margin:0px auto;
+}
+
+hr{
+	padding:0px;
+	margin:0px;
+}
+
+#navHead{
+	width:100%;
+}
+
+#mainBody{
+	width: 100%;
+	height:95%;
+	padding:0px;
+	margin:0px auto;
+}
+
+#leftSide, #rightSide{
+	margin:0px !important;
+	padding:0px !important;
+	height:85vh;
+	overflow: hidden;
+}
+
+#bottomLeft h1{
+	color: rgba(255,255,0,1);
+}
+
+#panelBoard{
+	height:10vh;
+	overflow: hidden;
+}
+
+.teamDiv{
+	text-align: center;
+	font-size:2.0em;
+	margin:0px auto 2% auto;
+}
+
+.teamHours{
+	font-size:1.75em;
+}
+
+.billTeamHours{
+	font-size:1.35em;
+}
+
+
+.ldBar{
+	width:auto !important;
+	height:auto !important;
+	text-align:center;
+}
+
+#clockBox{
+	text-align:center;
+}
+
+#timeBox{
+	background-color:rgba(0,0,0,0.5);
+	width:100%;
+	height:25%;
+	overflow:hidden;
+}
+
+.timezone{
+	text-align:left;
+	font-size:6.5vh;
+	padding: 0px 10px;
+	color:#6dcff6;
+}
+
+#clockBox{
+	background-color: rgba(0,0,0,0.5);
+}
+
+#bigDate{
+	font-weight: bolder;
+	font-size:8vh;
+	margin:0px !important;
+	padding:0px !important;
+	text-align:center;
+	width: 100%;
+	display:inline-grid;
+}
+
+#bigMonth{
+	font-size:4vh;
+	color:rgba(255,255,255,0.8);
+}
+
+#bigYear{
+	font-size:3vh;
+	color:rgba(255,255,255,0.5);
+}
+
+.globalTZone{
+	color:#FFF;
+}
+
+.blueText{
+	color:#6dcff6;
+}
+
+#rightContent{
+	overflow: hidden !important;
+	display: block;
+	position:absolute;
+	top:25vh;
+	height:85vh;
+}
+
+
+/* news ticker */
+
+#flipper .flip-frame .flip{
+	font-size:8vh !important;
+}
+
+/* rotator */
+
+#slideshow-wrapper {
+  width: 317px;
+  height: 100%;
+  position: relative;
+  margin-top: 1%;
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  -o-perspective: 1000px;
+  perspective: 1000px;
+  overflow: hidden;
+  padding:0px !important;
+}
+
+#slideshow-wrapper-2 {
+
+}
+
+#slideshow2{
+	font-size:8vh !important;
+	position: relative;
+}
+
+#slideshow {
+  position: relative;
+  margin-top:1vh;
+  width:100%;
+  list-style-type: none;
+  padding: 0px 16px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+#slideshow > * {
+  display: block;
+  position: relative;
+}
+
+.flip-frame .slide{
+	height:20%;
+}
+
+#slideshow img {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px #ccc;
+}
+
+#slideshow .front {
+  -webkit-transform: translateZ( 50px );
+  -moz-transform: translateZ( 50px );
+  -o-transform: translateZ( 50px );
+  transform: translateZ( 50px );
+  opacity: 1;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+#slideshow2 .front {
+  -webkit-transform: translateZ( 50px );
+  -moz-transform: translateZ( 50px );
+  -o-transform: translateZ( 50px );
+  transform: translateZ( 50px );
+  opacity: 1;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+#slideshow .right {
+	position:absolute;
+  -webkit-transform: rotateX( 90deg ) translateZ( 50px );
+  -moz-transform: rotateX( 90deg ) translateZ( 50px );
+  -o-transform: rotateX( 90deg ) translateZ( 50px );
+  transform: rotateX( 90deg ) translateZ( 50px );
+  opacity: 0;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+#slideshow2 .right {
+	position:absolute;
+  -webkit-transform: rotateX( 90deg ) translateZ( 50px );
+  -moz-transform: rotateX( 90deg ) translateZ( 50px );
+  -o-transform: rotateX( 90deg ) translateZ( 50px );
+  transform: rotateX( 90deg ) translateZ( 50px );
+  opacity: 0;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+#slideshow .left {
+	position:absolute;
+  -webkit-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  -moz-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  -o-transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  transform: rotateX( -90deg ) translateZ( 50px ) translateY(-360px);
+  opacity: 0;
+  -webkit-transition: -webkit-transform 1s, opacity 1s;
+  -moz-transition: -moz-transform 1s, opacity 1s;
+  -o-transition: -o-transform 1s, opacity 1s;
+  transition: transform 1s, opacity 1s;
+}
+
+select {
+  position: absolute;
+  display:none;
+  right: 50%;
+  bottom: -50px;
+  margin-right: -100px;
+  width: 200px;
+  background: #000;
+  color: #fff;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.7em;
+  padding: 5px;
+  height: 28px;
+}
+
+/* MODAL */
+#PRFBC_Modal{
+	color:#000;
+	text-align:center;
+}
+
+#PRFBC_Modal h1{
+	font-weight: bold;
+}
+
+.modal-body{
+	font-size: 3em;
+}
+
+.redText{
+	color: rgba(255,0,0,1.0) !important;
+}
+
+.thickText{
+	font-weight:bold;
+}
+
+/* liScroll styles */
+
+#newsTicker{
+	width:100%;
+	background-color: rgba(0,0,0,0.3);
+	font-size:5vh;
+	height:7%;
+	display:block;
+	position: absolute;
+	bottom:0px;
+	left:0px;
+	color:#FFF;
+}
+
+ul#tickerAnnouncements{
+	width:100% !important;
+	height:100%;
+	display:block;
+	position:absolute;
+	bottom:0px;
+}
+
+.tickercontainer { /* the outer div with the black border */
+border: none;
+background: transparent; 
+width: 100%; 
+height: 50px; 
+margin: 0; 
+padding: 0;
+overflow: hidden; 
+}
+.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
+position: relative;
+left: 0px;
+bottom:0px;
+width: 100%;
+height: 50px;
+overflow: hidden;
+}
+ul#tickerAnnouncements { /* that's your list */
+position: relative;
+left: 0px;
+list-style-type: none;
+margin: 0;
+padding: 0;
+width:100%;
+}
+ul#tickerAnnouncements li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+}
+ul#tickerAnnouncements a {
+white-space: nowrap;
+padding: 0;
+color: #fff;
+} 
+ul#tickerAnnouncements span {
+} 
+
+.tickercontainer { /* the outer div with the black border */
+width: 100%; 
+height: 100%; 
+margin: 0; 
+padding: 0;
+overflow: hidden; 
+position:relative;
+}
+.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
+position: relative;
+left: 0px;
+width: 100%;
+height:100%;
+overflow: hidden;
+}
+ul#tickerAnnouncements { /* that's your list */
+position: relative;
+left: 0;
+list-style-type: none;
+margin: 0;
+padding: 0;
+
+}
+ul#tickerAnnouncements li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+}
+u#tickerAnnouncements a {
+white-space: nowrap;
+padding: 0;
+color: #FFF;
+} 
+ul#tickerAnnouncements span {
+margin: 0 10px 0 0;
+} 
+
+.TickerNews{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+	}
+	.ti_wrapper{
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		height: 50px;
+	}
+	.ti_slide{
+		width: 30000px;
+		position: relative;
+		left: 0;
+		top: 0;
+	}
+	.ti_content{
+		width: 100%;
+		position: relative;
+		float:left;
+	}
+	.ti_news{
+		float:left;
+	}
+	.ti_news a{
+		display: block;
+		margin-right: 10px;
+	}
+
+
