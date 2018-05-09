@@ -173,87 +173,6 @@ hr{
 
 /* news ticker */
 
-#newsTicker{
-	width:100%;
-	background-color: rgba(0,0,0,0.3);
-	font-size:5vh;
-	height:7%;
-	display:block;
-	position: absolute;
-	bottom:0px;
-	left:0px;
-	color:#FFF;
-}
-
-
-/* liScroll styles */
-
-.tickercontainer { /* the outer div with the black border */
-width: 100%; 
-height: 100%; 
-margin: 0; 
-padding: 0;
-overflow: hidden; 
-position:relative;
-}
-.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
-position: relative;
-left: 0px;
-width: 100%;
-overflow: hidden;
-}
-ul.newsticker { /* that's your list */
-position: relative;
-left: 0;
-list-style-type: none;
-margin: 0;
-padding: 0;
-
-}
-ul.newsticker li {
-float: left; /* important: display inline gives incorrect results when you check for elem's width */
-margin: 0;
-padding: 0;
-}
-ul.newsticker a {
-white-space: nowrap;
-padding: 0;
-color: #FFF;
-} 
-ul.newsticker span {
-margin: 0 10px 0 0;
-} 
-
-.TickerNews{
-		width: 100%;
-		height: 50px;
-		line-height: 50px;
-	}
-	.ti_wrapper{
-		width: 100%;
-		position: relative;
-		overflow: hidden;
-		height: 50px;
-	}
-	.ti_slide{
-		width: 30000px;
-		position: relative;
-		left: 0;
-		top: 0;
-	}
-	.ti_content{
-		width: 8000px;
-		position: relative;
-		float:left;
-	}
-	.ti_news{
-		float:left;
-	}
-	.ti_news a{
-		display: block;
-		margin-right: 10px;
-	}
-
 #flipper .flip-frame .flip{
 	font-size:8vh !important;
 }
@@ -418,44 +337,129 @@ select {
 
 /* liScroll styles */
 
+#newsTicker{
+	width:100%;
+	background-color: rgba(0,0,0,0.3);
+	font-size:5vh;
+	height:7%;
+	display:block;
+	position: absolute;
+	bottom:0px;
+	left:0px;
+	color:#FFF;
+}
+
+ul#tickerAnnouncements{
+	width:100% !important;
+	height:100%;
+	display:block;
+	position:absolute;
+	bottom:0px;
+}
+
 .tickercontainer { /* the outer div with the black border */
 border: none;
 background: transparent; 
 width: 100%; 
-height: 27px; 
+height: 50px; 
 margin: 0; 
 padding: 0;
 overflow: hidden; 
 }
 .tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
 position: relative;
-left: 10px;
-top: 8px;
-width: 718px;
+left: 0px;
+bottom:0px;
+width: 100%;
+height: 50px;
 overflow: hidden;
 }
-ul.newsticker { /* that's your list */
+ul#tickerAnnouncements { /* that's your list */
 position: relative;
-left: 750px;
-font: bold 10px Verdana;
+left: 0px;
+list-style-type: none;
+margin: 0;
+padding: 0;
+width:100%;
+}
+ul#tickerAnnouncements li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+}
+ul#tickerAnnouncements a {
+white-space: nowrap;
+padding: 0;
+color: #fff;
+} 
+ul#tickerAnnouncements span {
+} 
+
+.tickercontainer { /* the outer div with the black border */
+width: 100%; 
+height: 100%; 
+margin: 0; 
+padding: 0;
+overflow: hidden; 
+position:relative;
+}
+.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
+position: relative;
+left: 0px;
+width: 100%;
+height:100%;
+overflow: hidden;
+}
+ul#tickerAnnouncements { /* that's your list */
+position: relative;
+left: 0;
 list-style-type: none;
 margin: 0;
 padding: 0;
 
 }
-ul.newsticker li {
+ul#tickerAnnouncements li {
 float: left; /* important: display inline gives incorrect results when you check for elem's width */
 margin: 0;
 padding: 0;
-background: #fff;
 }
-ul.newsticker a {
+u#tickerAnnouncements a {
 white-space: nowrap;
 padding: 0;
-color: #ff0000;
-font: bold 10px Verdana;
-margin: 0 50px 0 0;
+color: #FFF;
 } 
-ul.newsticker span {
+ul#tickerAnnouncements span {
 margin: 0 10px 0 0;
 } 
+
+.TickerNews{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+	}
+	.ti_wrapper{
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		height: 50px;
+	}
+	.ti_slide{
+		width: 30000px;
+		position: relative;
+		left: 0;
+		top: 0;
+	}
+	.ti_content{
+		width: 100%;
+		position: relative;
+		float:left;
+	}
+	.ti_news{
+		float:left;
+	}
+	.ti_news a{
+		display: block;
+		margin-right: 10px;
+	}
+
+

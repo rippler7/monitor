@@ -651,6 +651,6 @@ $(document).ready(function(){
 		timeout:4000
 	});
 	//$(".TickerNews").newsTicker();
-	$("ul#tickerAnnouncements").liScroll({travelocity: 0.15});
+	$("ul#tickerAnnouncements").liScroll();
 	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });

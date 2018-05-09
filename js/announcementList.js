@@ -1,5 +1,8 @@
 function showAlerts(){
 	var timeOutSet;
+	var greeting = "";
+	var annLine = "";
+	var announce = "";
 	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -16,13 +19,8 @@ function showAlerts(){
 		success:function(data){
 			eval(data);
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
-			timeOutSet = setTimeOut(function(){
-				alertNear(birthdays);
-				showAnnouncements(announcements);
-				
-			},100).then(function(){
-				clearTimeout(timeOutSet);
-			});
+			alertNear(birthdays);
+			showAnnouncements(announcements);
 		}
 	});
 	function alertNear(bdays){
@@ -30,8 +28,6 @@ function showAlerts(){
 		var currYear = currDate.getFullYear();
 		var currentMonth = currDate.getMonth();
 		//console.log(currYear);
-		var greeting = "";
-		var annLine = "";
 		$("ul#tickerAnnouncements").innerHTML = "";
 		bdays.forEach(function(i,v){
 			var currMonth = v;
@@ -55,7 +51,7 @@ function showAlerts(){
 			});
 		});
 		//console.log(annLine);
-		$("ul#tickerAnnouncements").innerHTML = annLine;
+		$("ul#tickerAnnouncements").append(annLine);
 	}
 	function showAnnouncements(ann){
 		var announce = "";
