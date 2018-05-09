@@ -3,6 +3,7 @@ function showAlerts(){
 	var greeting = "";
 	var annLine = "";
 	var announce = "";
+	var speed = 5;
 	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -17,10 +18,19 @@ function showAlerts(){
 		method:"GET",
 		dataType:"script",
 		success:function(data){
+			$("ul#tickerAnnouncements").innerHTML = "";
 			eval(data);
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
 			alertNear(birthdays);
 			showAnnouncements(announcements);
+			console.log($("ul#tickerAnnouncements li").length);
+			for(var i = 0; i<$("ul#tickerAnnouncements li").length;i++){
+				var currList = $("ul#tickerAnnouncements li")[i];
+				console.log(currList);
+				console.log(currList.getBoundingClientRect().left+currList.getBoundingClientRect().width);
+			}
+			//$("ul#tickerAnnouncements").liScroll();
+			$("#newsTicker").newsTicker();
 		}
 	});
 	function alertNear(bdays){

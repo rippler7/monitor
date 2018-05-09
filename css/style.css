@@ -422,6 +422,7 @@ ul#tickerAnnouncements li {
 float: left; /* important: display inline gives incorrect results when you check for elem's width */
 margin: 0;
 padding: 0;
+left:auto;
 }
 u#tickerAnnouncements a {
 white-space: nowrap;

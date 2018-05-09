@@ -31,7 +31,7 @@ jQuery.fn.liScroll = function(settings) {
 				var totalTravel = stripWidth+containerWidth;
 				var defTiming = totalTravel/settings.travelocity;	// thanks to Scott Waye		
 				function scrollnews(spazio, tempo){
-				$strip.animate({left: '-='+ spazio}, tempo, "linear", function(){$strip.css("left", containerWidth); scrollnews(totalTravel, defTiming);});
+					$strip.animate({left: '-='+ spazio}, tempo, "linear", function(){$strip.css("left", containerWidth); scrollnews(totalTravel, defTiming);});
 				}
 				scrollnews(totalTravel, defTiming);				
 				$strip.hover(function(){
