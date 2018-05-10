@@ -667,7 +667,6 @@ $(document).ready(function(){
     	liveTime();
     },1000); 
     var showTweet = setInterval(function(){
-    	showAlerts();
     	//showTwitter();
     	contentModal ="";
     	getSizmekData();
@@ -683,6 +682,9 @@ $(document).ready(function(){
 		container: document.querySelector("#graphs"),
 		timeout:4000
 	});
+	var bdayTime = setInterval(function(){
+			location.reload();
+		},720000);
 	//$(".TickerNews").newsTicker();
 	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });
