@@ -4,15 +4,12 @@ function showAlerts(){
 	var annLine = "";
 	var announce = "";
 	var speed = 5;
-	console.log("bday refresh!");
 	var birthdays = [];
 	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 	var currDatRanomizer = Date.now();
 	//var totalHours = currDatRanomizer.getHours();
 	var getRand = Math.floor(Math.random())+currDatRanomizer;
-	console.log("totalHours: "+getRand);
 	var urlRefresh = "http://jermanation.com/monitor/announcements.js"+"?rand="+getRand.toString();
-	console.log(urlRefresh);
 	$.ajax({
 		url: urlRefresh,
 		method:"GET",
@@ -23,11 +20,8 @@ function showAlerts(){
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
 			alertNear(birthdays);
 			showAnnouncements(announcements);
-			console.log($("ul#tickerAnnouncements li").length);
 			for(var i = 0; i<$("ul#tickerAnnouncements li").length;i++){
 				var currList = $("ul#tickerAnnouncements li")[i];
-				console.log(currList);
-				console.log(currList.getBoundingClientRect().left+currList.getBoundingClientRect().width);
 			}
 			//$("ul#tickerAnnouncements").liScroll();
 			$("#newsTicker").newsTicker();

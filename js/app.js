@@ -253,7 +253,6 @@ function showTwitter(){
 }
 
 function getSizmekData(){
-	showAlerts();
 	callFBC = 0;
 	callPR = 0;
 	var currTeam = getActiveTeams();
