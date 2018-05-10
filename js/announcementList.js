@@ -55,8 +55,8 @@ function showAlerts(){
 				var gap = getGap(bDateFull,"12:00 AM");
 				//console.log("BDAY GAP: "+gap);
 				if(gap <= 120 && gap > 0){
-					greeting = "<span class='redText'>HAPPY BIRTHDAY, "+celeb[0]+"</span>this "+monthNames[currMonth]+" "+bDay+"!!! ";
-					annLine += '<li class="ti_news"><div><span class="blueText">:: BIRTHDAY:</span> '+greeting+'::</div></li>';
+					greeting = "<span class='redText'>It's "+celeb[0]+"'s DAY</span>this "+monthNames[currMonth]+" "+bDay+"!!! ";
+					annLine += '<li class="ti_news"><div><span class="blueText">:: CELEBRATING:</span> '+greeting+'::</div></li>';
 				}
 			});
 		});

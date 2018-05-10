@@ -18,8 +18,8 @@ var PRTracker = [];
 var FBCTracker = [];
 var PRNum = 0;
 var FBCNum = 0;
-var shiftList = ["APAC", "EMEA", "NAM East - Cebu", "NAM Programmatic", "NAM West - Cebu", "NAM in-Market", "Interactive Designer"]
-var nickNames = ["","Khackie","Rey", "Ed", "Gab", "Paski",  "", "Nixon", "Stephen", "Ciano", "Master Ivan",  "Boboi", "Christian", "","Del","JR", "Niko", "Boss","Byakuks", "Sirs", "John", "", "PJ", "Mikee", "Jollie", "Mary", "Erick", "Levin", "Beth", "", "Jeremy" , "Sexy Meng", "Josh", "", "Olivia", "Vince", "Jonathan", "Buttons", "Zach", "Heajin", "Alex", "","James", "Mau"];
+var shiftList = ["APAC", "EMEA", "NAM Non-Automotive", "NAM Programmatic", "Cebu NAM Automotive", "NAM in-Market", "Interactive Designer"]
+var nickNames = ["","Rey", "Ed", "Gab", "Paski","Bethy",  "", "Nixon", "Stephen", "Ciano", "Master Ivan",  "Boboi", "Christian", "","Del","JR", "Niko", "Vin","Byakuks", "Sirs","","Master", "PJ", "Mikee", "Jollie", "Mary", "Erick", "", "Boss", "Sexy Meng", "Josh" , "John", "","Olivia", "Vince", "Jonathan", "Buttons", "Zach", "Heajin", "Alex", "","James", "Mau"];
 var PRColors = [];
 var FBCColors = [];
 
@@ -62,7 +62,7 @@ function checkTracker() {
                     var nnd = new Date(nutc);
                     var dDiff = (nnd.getTime() - curdate) / 86400000
                     if (dDiff < 0 && PRData[j]["Campaign Name"] != "Cebu Training Campaign" && PRData[j]["Campaign Name"] != "Creative Dev Best Practices Training Prep" && PRData[j]["Campaign Name"] != "Fake Demo Campaign") {
-                        PRColors[i] = "red" 
+                        PRColors[i] = "red"
                     } else if (dDiff > 0 && dDiff < 1 && PRColors[i] != "red") {
                         PRColors[i] = "green"
                     } else if (PRColors[i] != "red") {
@@ -149,7 +149,7 @@ function renderXML() {
     for (var i = 0; i < nameList.length; i++) {
         window["name" + i] = document.createElement("button");
         document.getElementById("listNames").appendChild(window["name" + i]);
-        if (nameList[i] == "APAC" || nameList[i] == "EMEA" || nameList[i] == "NAM East - Cebu" || nameList[i] == "NAM West - Cebu" || nameList[i] == "NAM in-Market" || nameList[i] == "NAM Programmatic" || nameList[i] == "Interactive Designer") {
+        if (nameList[i] == "APAC" || nameList[i] == "EMEA" || nameList[i] == "NAM Non-Automotive" || nameList[i] == "Cebu NAM Automotive" || nameList[i] == "NAM in-Market" || nameList[i] == "NAM Programmatic" || nameList[i] == "Interactive Designer") {
             window["name" + i].innerHTML = nameList[i];
             window["name" + i].style.fontWeight = "Bold";
             window["name" + i].style.backgroundColor = "#091f38";
@@ -350,7 +350,7 @@ function collapseExpandList(e) {
         }
         isEMEAOpen = !isEMEAOpen;
         break;
-    case "NAM East - Cebu":
+    case "NAM Non-Automotive":
         if (isNAMCebuOpenEast) {
             for (var i = numList[0] + numList[1] + 3; i < nameList.length; i++) {
                 var temp = window["name" + i].style.top;
@@ -390,7 +390,7 @@ function collapseExpandList(e) {
         }
         isNamProgrammatic = !isNamProgrammatic;
         break;
-    case "NAM West - Cebu":
+    case "Cebu NAM Automotive":
         if (isNAMCebuOpenWest) {
             for (var i = numList[0] + numList[1] + numList[2] + numList[3] + 5; i < nameList.length; i++) {
                 var temp = window["name" + i].style.top;

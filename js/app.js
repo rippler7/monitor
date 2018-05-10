@@ -653,6 +653,7 @@ $(document).ready(function(){
 
 	//console.log("ready");
 	//showTwitter();
+	showAlerts();
 	var dtNow = new Date();
 	var h = dtNow.getHours();
 	var ampmText = "AM";
@@ -666,6 +667,7 @@ $(document).ready(function(){
     	liveTime();
     },1000); 
     var showTweet = setInterval(function(){
+    	showAlerts();
     	//showTwitter();
     	contentModal ="";
     	getSizmekData();
