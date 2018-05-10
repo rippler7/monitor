@@ -253,8 +253,6 @@ function showTwitter(){
 }
 
 function getSizmekData(){
-	callFBC = 0;
-	callPR = 0;
 	var currTeam = getActiveTeams();
 		console.log("currTeam: "+currTeam);
 		if(currTeam == "APAC"){
@@ -311,6 +309,7 @@ function getSizmekData(){
 		success:function(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
+			callPR = 0;
 			console.log("Assigned PR: ");
 			console.log("https://sizmek.quickbase.com/db/bhv6kzfnc"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidAssignedPR+"&apptoken="+apptoken);
 			warningBasket = [];
@@ -388,6 +387,7 @@ function getSizmekData(){
 		success:function(){
 			//console.log(qdb_numcols);
 			//console.log(qdb_numrows);
+			callFBC = 0;
 			console.log("Assigned FBC: ");
 			console.log("https://sizmek.quickbase.com/db/bhtzcnzkd"+"?a=API_GenResultsTable&jsa="+1+"&options=csv&qid="+qidAssignedFBC+"&apptoken="+apptoken);
 			warningBasketFBC = [];
