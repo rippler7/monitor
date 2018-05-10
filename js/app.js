@@ -361,8 +361,12 @@ function getSizmekData(){
 				}
 			}
 			//console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
-			callPR = 1;
-			callModal();
+			if(warningBasket.length <= 0 && warningBasketFBC.length <= 0){
+				callPR = 0;
+			} else {
+				callPR = 1;
+				callModal();
+			}
 		},
 		complete:function(){
 			
@@ -429,10 +433,14 @@ function getSizmekData(){
 					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
-			callFBC = 1;
 			//console.log(teams);
 			//console.log(teams2);
-			callModal();
+			if(warningBasketFBC.length <= 0 && overdueBasketFBC.length <= 0){
+				callFBC = 0;
+			} else {
+				callFBC = 1;
+				callModal();
+			}
 		},
 		complete:function(){
 			
