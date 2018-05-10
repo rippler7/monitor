@@ -358,14 +358,14 @@ function getSizmekData(){
 				if(overdueBasket.length > 0){
 					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+oItems+"</span><br />";
 				}
+				if(warningBasket.length <= 0 && warningBasketFBC.length <= 0){
+					callPR = 0;
+				} else {
+					callPR = 1;
+					callModal();
+				}
 			}
 			//console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
-			if(warningBasket.length <= 0 && warningBasketFBC.length <= 0){
-				callPR = 0;
-			} else {
-				callPR = 1;
-				callModal();
-			}
 		},
 		complete:function(){
 			
@@ -416,7 +416,7 @@ function getSizmekData(){
 					}
 				}
 			});
-			if(warningBasketFBC.lengt > 0 || overdueBasketFBC.length > 0){
+			if(warningBasketFBC.length > 0 || overdueBasketFBC.length > 0){
 					var wItems = "";
 					var oItems = "";
 					for(var w=0;w<warningBasketFBC.length;w++){
@@ -431,16 +431,16 @@ function getSizmekData(){
 					if(overdueBasketFBC.length > 0){
 						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+oItems+"</span><br />";
 					}
+					if(warningBasketFBC.length <= 0 && overdueBasketFBC.length <= 0){
+						callFBC = 0;
+					} else {
+						callFBC = 1;
+						callModal();
+					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
 			//console.log(teams);
 			//console.log(teams2);
-			if(warningBasketFBC.length <= 0 && overdueBasketFBC.length <= 0){
-				callFBC = 0;
-			} else {
-				callFBC = 1;
-				callModal();
-			}
 		},
 		complete:function(){
 			
