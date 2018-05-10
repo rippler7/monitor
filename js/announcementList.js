@@ -108,14 +108,16 @@ function showAlerts(){
 			console.log(v);
 			monthly.forEach(function(b){
 				var c = b.toString();
-				var celeb = c.split("=");
+				var celeb = c.split(" = ");
 				var name = celeb[0];
 				var dateFormat = Date.parse();
 				var bDate = new Date(dateFormat);
-				var bDay = celeb[1].split(" ")[1];
+				var bDay = celeb[1].split(" ")[0];
 				var bDateFull = (currMonth+1)+"/"+bDay+"/"+currYear;
 				//console.log(b=celeb[0]+", "+((currMonth+1)+"/"+bDay+"/"+currYear));
 				//console.log(bDateFull);
+				console.log(name);
+				console.log(bDay);
 				var gap = getGap(bDateFull,"12:00 AM");
 				//console.log("BDAY GAP: "+gap);
 				if(gap <= 120 && gap > 0){
