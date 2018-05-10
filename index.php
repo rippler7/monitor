@@ -272,9 +272,10 @@
 	<script type="text/javascript" src="js/announcementList.js"></script>
 	<script type="text/javascript">
 		showAlerts();
-		var bdayTime = setInterval(function(){
+		var bdayTime = setTimeout(function(){
 			location.reload();
-		},3600000);
+			clearTimeout(bdayTime);
+		},1.8e+6);
 	</script>
 </body>
 </html>
