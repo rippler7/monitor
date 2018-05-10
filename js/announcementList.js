@@ -5,7 +5,79 @@ function showAlerts(){
 	var announce = "";
 	var speed = 5;
 	var birthdays = [];
-	var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	//var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	var jan = {
+		mname:"January",
+		celebrants:[
+		"Joshry = 6",
+		"Arniel = 11"
+		]
+	};
+	var feb = {
+		mname:"February",
+		celebrants:[
+		"Khackie = 26", 
+		"Ryan = 28"
+		]
+	};
+	var mar = {
+		mname:"March",
+		celebrants:[
+		"Ian Haigh = 2", 
+		"Jeremy = 16", 
+		"Lorenciano = 18", 
+		"Christian R. = 30"
+		]
+	};
+	var apr = {
+		mname:"April",
+		celebrants:[
+		"test 2 = 9",
+		"test 2 = 10"
+		]
+	};
+	var may = {
+		mname:"May",
+		celebrants:[
+		"May test 2 = 12",
+		"Automation Test = 13"
+		]
+	};
+	var jun = {
+		mname:"June",
+		celebrants:[
+		]
+	};
+	var jul = {
+		mname:"July",
+		celebrants:[
+		]
+	};
+	var aug = {
+		mname:"August",
+		celebrants:[
+		]
+	};
+	var sep = {
+		mname:"September",
+		celebrants:[
+		]
+	};
+	var oct = {
+		mname:"October",
+		celebrants:[
+		]
+	};
+	var nov = {
+		mname:"November",
+		celebrants:[
+		]
+	};
+	var dec = {
+		mname:"December",
+		celebrants:[
+		]
+	};
 	var currDatRanomizer = Date.now();
 	//var totalHours = currDatRanomizer.getHours();
 	var getRand = Math.floor(Math.random())+currDatRanomizer;
@@ -20,9 +92,6 @@ function showAlerts(){
 			birthdays = [jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec];
 			alertNear(birthdays);
 			showAnnouncements(announcements);
-			for(var i = 0; i<$("ul#tickerAnnouncements li").length;i++){
-				var currList = $("ul#tickerAnnouncements li")[i];
-			}
 			//$("ul#tickerAnnouncements").liScroll();
 			$("#newsTicker").newsTicker();
 		}
@@ -35,8 +104,9 @@ function showAlerts(){
 		$("ul#tickerAnnouncements").innerHTML = "";
 		bdays.forEach(function(i,v){
 			var currMonth = v;
-			//console.log(v);
-			i.forEach(function(b){
+			var monthly = i.celebrants;
+			console.log(v);
+			monthly.forEach(function(b){
 				var c = b.toString();
 				var celeb = c.split("=");
 				var name = celeb[0];
@@ -49,7 +119,7 @@ function showAlerts(){
 				var gap = getGap(bDateFull,"12:00 AM");
 				//console.log("BDAY GAP: "+gap);
 				if(gap <= 120 && gap > 0){
-					greeting = "<span class='redText'>It's "+celeb[0]+"'s DAY</span>this "+monthNames[currMonth]+" "+bDay+"!!! ";
+					greeting = "<span class='redText'>It's "+celeb[0]+"'s DAY</span>this "+i.mname+" "+bDay+"!!! ";
 					annLine += '<li class="ti_news"><div><span class="blueText">:: CELEBRATING:</span> '+greeting+'::</div></li>';
 				}
 			});
