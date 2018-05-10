@@ -109,8 +109,30 @@ function getGap(dateGiven,timeGiven){
 	var dateSample = Date.parse(dateGiven+", "+timeGiven);
 	var testDate = new Date(dateSample);
 	var result = (testDate - nowDate)/36e5;
+	/*
+	var nM = nowDate.getMonth();
+	var tM = testDate.getMonth();
+	var nD = parseInt(nowDate.getHours());
+	var tD = parseInt(testDate.getHours());
+	console.log(result);
+
+	console.log("hour now in EST: "+nowDate.getHours());
+	console.log("hour from given: "+testDate.getHours());
+
+	console.log("month now in EST: "+nM);
+	console.log("month from given: "+tM);
+	console.log(tD-nD);
 	//console.log(testDate+" - "+nowDate+" = "+ (testDate - nowDate)/36e5);
 	//console.log(testDate - nowDate);
+	*/
+	return result;
+}
+
+function isClose(timeRemaining){
+	var result = false;
+	if(timeRemaining.indexOf("hour") >= 0 && timeRemaining.indexOf("-") < 0){
+		result = true;
+	}
 	return result;
 }
 
@@ -304,9 +326,18 @@ function getSizmekData(){
 				//console.log("GAP: "+gap);
 				
 				if(training < 0){
+					console.log(item[2].split(" ")[0]+" "+item[2].split(" ")[1]+" "+isClose(item[2]));
+					/*
 					if(gap <= 24 && gap > 0){
 						warningBasket.push(item[0]);
 					} else if (gap <= 0){
+						overdueBasket.push(item[0]);
+					}
+					*/
+					console.log(training + campaign);
+					if(isClose(item[2]) ==  true){
+						warningBasket.push(item[0]);
+					} else if (Number(item[2].split(" ")[0]) < 0){
 						overdueBasket.push(item[0]);
 					}
 				}
