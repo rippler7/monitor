@@ -168,6 +168,8 @@ hr{
 	position:absolute;
 	top:25vh;
 	height:85vh;
+	width:100%;
+	height: 100%;
 }
 
 
@@ -464,3 +466,27 @@ margin: 0 10px 0 0;
 	}
 
 
+div#photoSlide{
+	position: absolute;
+	width:100%;
+	height:100%;
+	overflow: :hidden;
+}
+
+div.slidepic{
+  position: absolute;
+  width:100%;
+  display:block;
+  float:left;
+  margin:0px auto;
+  transition: opacity .5s ease-in;
+}
+
+div.slidepic img{
+	width:100%;
+	height:auto;
+}
+
+div.slidepic + div.slidepic{
+	opacity:0;
+}

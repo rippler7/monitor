@@ -208,7 +208,27 @@
 						  </tbody>
 						</table>
 						<div id="rightContent">
-							
+							<div id="photoSlide">
+							<?php
+								$dir = 'img/slideshow/*.*';
+								$files = glob($dir);
+								for($i=0;$i<count($files);$i++){
+									echo("<div id='pic".$i."' class='slidepic'><img src='".$files[$i]."' /></div>");
+								}
+							?>
+							<script type="text/javascript">
+								var current = 0,
+								    slides = document.getElementsByClassName("slidepic");
+
+								setInterval(function() {
+								  for (var i = 0; i < slides.length; i++) {
+								    slides[i].style.opacity = 0;
+								  }
+								  current = (current != slides.length - 1) ? current + 1 : 0;
+								  slides[current].style.opacity = 1;
+								}, 3000);
+							</script>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -235,7 +255,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"> 
         &nbsp;
       </div>
       <div class="modal-footer" style="display: none;">
