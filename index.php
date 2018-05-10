@@ -271,6 +271,7 @@
 	<script src="js/app.js"></script>
 	<script type="text/javascript" src="js/announcementList.js"></script>
 	<script type="text/javascript">
+		showAlerts();
 	</script>
 </body>
 </html>

@@ -253,6 +253,7 @@ function showTwitter(){
 }
 
 function getSizmekData(){
+	showAlerts();
 	callFBC = 0;
 	callPR = 0;
 	var currTeam = getActiveTeams();
@@ -653,7 +654,6 @@ $(document).ready(function(){
 
 	//console.log("ready");
 	//showTwitter();
-	showAlerts();
 	var dtNow = new Date();
 	var h = dtNow.getHours();
 	var ampmText = "AM";
@@ -682,9 +682,6 @@ $(document).ready(function(){
 		container: document.querySelector("#graphs"),
 		timeout:4000
 	});
-	var bdayTime = setInterval(function(){
-			location.reload();
-		},720000);
 	//$(".TickerNews").newsTicker();
 	//console.log("time difference: "+Number(getGap("02-28-2018","12:30 AM")));
 });
