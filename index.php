@@ -223,35 +223,67 @@
 								  for (var i = 0; i < slides.length; i++) {
 								  	var mainIDPic = $(slides[current]).attr('id');
 									 var currPicDiv = new Image();
-									 /*
+									 
 									 currPicDiv.src = $("#"+mainIDPic+" img").attr('src');
 									 var currPicDivHeight = currPicDiv.height;
 									 var currPicDivWidth = currPicDiv.width;
 									 var adjDivWidth = $('#photoSlide').width();
 								 	var adjDivHeight = (currPicHeight * adjWidth)/currPicWidth;
 								 	var divId = $(slides[i]).attr("id");
-								    $("#"+divId+" img").css({"height":currPicDivHeight+"px"});
+								 	if(currPicDivWidth >= currPicDivHeight){
+								 		$("#"+divId+" img").css({"top":0+"px","width":"100%"});
+								 	}else{
+								 		$("#"+divId+" img").css({"top":0+"px","height":"100%"});
+								 	}
+								    //$("#"+divId+" img").css({"height":currPicDivHeight+"px"});
 								    $("#"+divId+" img").css({"top":0+"px"});
 								    //$("#"+divId+" img").css("{height:"+currPicDivHeight+"px}");
-								 	*/
+								 	
 								    slides[i].style.opacity = 0;
 								  }
 								  current = (current != slides.length - 1) ? current + 1 : 0;
 								  slides[current].style.opacity = 1;
-								  /*
+								  
 								 var mainID = $(slides[current]).attr('id');
 								 var currPic = new Image();
 								 currPic.src = $("#"+mainID+" img").attr('src');
 								 var currPicHeight = currPic.height;
 								 var currPicWidth = currPic.width;
-								 var adjWidth = $('#photoSlide').width();
-								 var adjHeight = (currPicHeight * adjWidth)/currPicWidth;
+								 var containerWidth = $("#"+mainID).width();
+								 var containerHeight = $("#"+mainID).height();
+								 var adjWidth = (currPicWidth * containerHeight)/currPicHeight;
+								 var adjHeight = (currPicHeight * containerWidth)/currPicWidth;
 								 console.log(currPicHeight+":"+currPicWidth+" "+adjHeight+":"+adjWidth);
-								 $("#"+mainID+" img").animate({
-								 	"height":adjHeight+"px",
-								 	"top":-(currPicDivHeight-adjDivHeight)/2+"px"
-								 },1000);
-								*/
+								 if(currPicWidth >= currPicHeight){
+								 		$("#"+mainID+" img").animate({
+								 			"top":50+"%",
+								 			"left":50+"%",
+								 			"width":"100%",
+								 			"position":"absolute",
+								 			"height":adjHeight,
+								 			"transform":"translate(-50%,-50%)"
+								 		},1000);
+								 		/*
+								 		$("#"+mainID+" img").animate({
+										 	"width":adjWidth+"px"
+										 },1000);
+										 */
+								 	}else{
+								 		$("#"+mainID+" img").animate({
+								 			"top":50+"%",
+								 			"left":50+"%",
+								 			"height":"100%",
+								 			"position":"absolute",
+								 			"width":adjWidth,
+								 			"transform":"translate(-50%,-50%)"
+								 		},1000);
+								 		/*
+								 		$("#"+mainID+" img").animate({
+										 	"height":adjHeight+"px"
+										 },1000);
+										 */
+								 	}
+								
 								}, 3000);
 							</script>
 							</div>

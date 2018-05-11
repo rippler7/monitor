@@ -72,8 +72,8 @@ var warningBasket = [];
 var overdueBasket = [];
 var warningBasketFBC = [];
 var overdueBasketFBC = [];
-callFBC = 0;
-callPR = 0;
+var callFBC = 0;
+var callPR = 0;
 
 function fadeSound(audio){
     if(audio.volume > 0){
@@ -358,13 +358,10 @@ function getSizmekData(){
 				if(overdueBasket.length > 0){
 					contentModal += "<span class='redText'><span class='thickText'>PRs Overdue:</span> "+oItems+"</span><br />";
 				}
-				if(warningBasket.length <= 0 && warningBasketFBC.length <= 0){
-					callPR = 0;
-				} else {
-					callPR = 1;
-					callModal();
-				}
+				
 			}
+			callPR = 1;
+			callModal();
 			//console.log("warningBasket: "+warningBasket+", overdueBasket: "+overdueBasket+"<br />");
 		},
 		complete:function(){
@@ -431,14 +428,10 @@ function getSizmekData(){
 					if(overdueBasketFBC.length > 0){
 						contentModal += "<span class='redText'><span class='thickText'>FBCs Overdue</span>: "+oItems+"</span><br />";
 					}
-					if(warningBasketFBC.length <= 0 && overdueBasketFBC.length <= 0){
-						callFBC = 0;
-					} else {
-						callFBC = 1;
-						callModal();
-					}
 				}
 			$("#fbcPendingText").html(qdb_numrows);
+			callFBC = 1; //meaning this is done being called
+			callModal();
 			//console.log(teams);
 			//console.log(teams2);
 		},
@@ -642,7 +635,7 @@ function getSizmekData(){
 
 
 function callModal(){
-	if(callFBC == 1 && callPR == 1){
+	if(callFBC == 1 || callPR == 1){
 		if(warningBasket.length > 0 || warningBasketFBC.length > 0 || overdueBasket.length > 0 || overdueBasketFBC.length > 0){
 			$("#PRFBC_Modal .modal-dialog .modal-content .modal-body").html(contentModal);
 					//console.log(warningBasket);
