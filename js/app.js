@@ -647,6 +647,8 @@ function callModal(){
 					},7000);
 					alertSound('./audio/klang.wav');
 		}
+		callFBC = 0;
+		callPR = 0;
 	}
 }
 
