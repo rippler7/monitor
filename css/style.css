@@ -485,10 +485,15 @@ div.slidepic{
 
 div.slidepic img{
 	width:95%;
+	top:0px;
 	margin-top:5vh;
-	height:auto;
+}
+
+div.slidepic img + div.slidepic img{
+	transition: height  .5s ease-in;
 }
 
 div.slidepic + div.slidepic{
 	opacity:0;
+	height:100%;
 }

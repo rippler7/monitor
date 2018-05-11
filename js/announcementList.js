@@ -105,7 +105,7 @@ function showAlerts(){
 		bdays.forEach(function(i,v){
 			var currMonth = v;
 			var monthly = i.celebrants;
-			console.log(v);
+			//console.log(v);
 			monthly.forEach(function(b){
 				var c = b.toString();
 				var celeb = c.split(" = ");
@@ -116,8 +116,8 @@ function showAlerts(){
 				var bDateFull = (currMonth+1)+"/"+bDay+"/"+currYear;
 				//console.log(b=celeb[0]+", "+((currMonth+1)+"/"+bDay+"/"+currYear));
 				//console.log(bDateFull);
-				console.log(name);
-				console.log(bDay);
+				//console.log(name);
+				//console.log(bDay);
 				var gap = getGap(bDateFull,"12:00 AM");
 				//console.log("BDAY GAP: "+gap);
 				if(gap <= 120 && gap > 0){

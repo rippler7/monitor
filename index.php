@@ -219,13 +219,39 @@
 							<script type="text/javascript">
 								var current = 0,
 								    slides = document.getElementsByClassName("slidepic");
-
 								setInterval(function() {
 								  for (var i = 0; i < slides.length; i++) {
+								  	var mainIDPic = $(slides[current]).attr('id');
+									 var currPicDiv = new Image();
+									 /*
+									 currPicDiv.src = $("#"+mainIDPic+" img").attr('src');
+									 var currPicDivHeight = currPicDiv.height;
+									 var currPicDivWidth = currPicDiv.width;
+									 var adjDivWidth = $('#photoSlide').width();
+								 	var adjDivHeight = (currPicHeight * adjWidth)/currPicWidth;
+								 	var divId = $(slides[i]).attr("id");
+								    $("#"+divId+" img").css({"height":currPicDivHeight+"px"});
+								    $("#"+divId+" img").css({"top":0+"px"});
+								    //$("#"+divId+" img").css("{height:"+currPicDivHeight+"px}");
+								 	*/
 								    slides[i].style.opacity = 0;
 								  }
 								  current = (current != slides.length - 1) ? current + 1 : 0;
 								  slides[current].style.opacity = 1;
+								  /*
+								 var mainID = $(slides[current]).attr('id');
+								 var currPic = new Image();
+								 currPic.src = $("#"+mainID+" img").attr('src');
+								 var currPicHeight = currPic.height;
+								 var currPicWidth = currPic.width;
+								 var adjWidth = $('#photoSlide').width();
+								 var adjHeight = (currPicHeight * adjWidth)/currPicWidth;
+								 console.log(currPicHeight+":"+currPicWidth+" "+adjHeight+":"+adjWidth);
+								 $("#"+mainID+" img").animate({
+								 	"height":adjHeight+"px",
+								 	"top":-(currPicDivHeight-adjDivHeight)/2+"px"
+								 },1000);
+								*/
 								}, 3000);
 							</script>
 							</div>

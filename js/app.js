@@ -254,9 +254,9 @@ function showTwitter(){
 
 function getSizmekData(){
 	var currTeam = getActiveTeams();
-		console.log("currTeam: "+currTeam);
+		//console.log("currTeam: "+currTeam);
 		if(currTeam == "APAC"){
-			console.log("It's APAC!");
+			//console.log("It's APAC!");
 			document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/red.jpg)";
 		} else if(currTeam == "EMEA"){
 			document.getElementsByTagName("html")[0].style.backgroundImage = "url(./img/purple.jpg)";
@@ -325,7 +325,7 @@ function getSizmekData(){
 				//console.log("GAP: "+gap);
 				
 				if(training < 0){
-					console.log(item[2].split(" ")[0]+" "+item[2].split(" ")[1]+" "+isClose(item[2]));
+					//console.log(item[2].split(" ")[0]+" "+item[2].split(" ")[1]+" "+isClose(item[2]));
 					/*
 					if(gap <= 24 && gap > 0){
 						warningBasket.push(item[0]);
@@ -333,7 +333,7 @@ function getSizmekData(){
 						overdueBasket.push(item[0]);
 					}
 					*/
-					console.log(training + campaign);
+					//console.log(training + campaign);
 					if(isClose(item[2]) ==  true){
 						warningBasket.push(item[0]);
 					} else if (Number(item[2].split(" ")[0]) < 0){
